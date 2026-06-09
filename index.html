@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MEGATAMA - Premium Corporate Construction & Engineering Company. Pengalaman lebih dari 10 tahun melayani proyek konstruksi, engineering, dan pengembangan properti dengan standar internasional.">
+    <meta name="keywords" content="konstruksi, engineering, kontractor, perusahaan konstruksi, properti development">
+    <meta name="author" content="MEGATAMA">
+    <meta property="og:title" content="MEGATAMA - Construction & Engineering Company">
+    <meta property="og:description" content="Premium Corporate Construction & Engineering Services">
+    <meta property="og:image" content="src/assets/images/og-image.jpg">
+    
+    <title>MEGATAMA - Corporate Construction & Engineering</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="src/assets/images/logo.png">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body class="overflow-x-hidden">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Mobile Overlay -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/40 z-40 hidden xl:hidden backdrop-blur transition-opacity duration-300 opacity-0"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container flex items-center justify-between w-full h-[80px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            
+            <!-- Logo (Left) -->
+            <div class="flex-1 flex items-center justify-start z-50 pointer-events-none">
+                <a href="index.html" class="navbar-logo text-white flex items-center flex-shrink-0 whitespace-nowrap pointer-events-auto">
+                    <img src="src/assets/images/logo.png" style="width: 35px;" alt="MEGATAMA Logo">
+                    <div class="flex flex-col justify-center ml-2">
+                        <span class="text-xl font-bold leading-none tracking-wide text-white">MEGATAMA</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Sidebar Menu (Mobile) / Regular (Desktop) -->
+            <div class="navbar-menu text-white fixed top-0 left-0 h-screen w-[85%] max-w-xs bg-corporate-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl xl:relative xl:h-auto xl:w-auto xl:transform-none xl:flex-row xl:items-center xl:justify-center xl:p-0 xl:bg-transparent xl:shadow-none" style="display: flex !important;">
+                <!-- Mobile Header -->
+                <div class="flex justify-between items-center p-5 xl:hidden border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <img src="src/assets/images/logo.png" class="w-9 h-9 object-contain" alt="Logo">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg leading-none">MEGATAMA</span>
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                        </div>
+                    </div>
+                    <button id="closeMenuBtn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors"><i class="fas fa-times"></i></button>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex-grow p-5 space-y-1 overflow-y-auto xl:p-0 xl:flex xl:items-center xl:justify-center xl:space-y-0 xl:gap-5 xl:overflow-visible xl:mx-auto">
+                    <a href="#hero" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap text-corporate-bright">Beranda<span class="absolute -bottom-1.5 left-0 w-full h-[2px] bg-corporate-bright transition-all duration-300 hidden xl:block"></span></a>
+                    <a href="#about" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Tentang Kami<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="#services" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Layanan<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="#projects" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Proyek<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="#portfolio" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Portofolio<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="#clients" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Klien<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="#news" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Berita<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <a href="kontak.html" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Kontak<span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span></a>
+                    <!-- Mobile only portal link -->
+                    <a href="login.html" class="block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:hidden text-corporate-bright font-bold border-t border-white/10 mt-2 pt-4"><i class="fas fa-lock mr-2"></i> Login</a>
+                </nav>
+                <!-- Mobile CTA -->
+                <div class="p-5 mt-auto border-t border-white/10 xl:hidden">
+                    <a href="kontak.html" class="w-full bg-corporate-bright text-white px-4 py-3 rounded-lg text-center font-bold shadow-lg shadow-corporate-bright/30 flex items-center justify-center gap-2"><i class="fas fa-phone"></i> Hubungi Kami</a>
+                </div>
+            </div>
+            
+            <!-- Portal Button (Right) & Mobile Toggle -->
+            <div class="flex-1 flex items-center justify-end gap-4 z-50 relative pointer-events-none">
+                <a href="login.html" class="hidden xl:flex items-center justify-center gap-2 bg-white/10 hover:bg-corporate-bright border border-white/20 hover:border-corporate-bright text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 group whitespace-nowrap flex-shrink-0 pointer-events-auto">
+                    <i class="fas fa-lock text-sm group-hover:scale-110 transition-transform"></i>
+                    <span>Login</span>
+                </a>
+                <button class="navbar-toggle text-white text-2xl xl:hidden p-2 pointer-events-auto"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <!-- Background Video/Image Fallback -->
+        <div class="hero-video-bg" style="background: url('src/assets/images/bg-hero.jpeg') center/cover no-repeat;"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Berpengalaman Lebih Dari 10 Tahun
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-md" data-aos="fade-up">
+                Membangun Masa Depan Dengan Inovasi dan Kualitas
+            </h1>
+            
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Kami menyediakan layanan konstruksi, engineering, konsultasi, mekanikal, elektrikal, plumbing, dan pengembangan properti dengan standar profesional internasional.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn-primary w-full sm:w-auto">
+                    <i class="fas fa-phone-alt mr-2"></i> Konsultasi Sekarang
+                </button>
+                <button class="btn-secondary w-full sm:w-auto">
+                    <i class="fas fa-images mr-2"></i> Lihat Portofolio
+                </button>
+            </div>
+            
+            <!-- Counter Animation -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 w-full max-w-4xl mx-auto" data-aos="zoom-in" data-aos-delay="300">
+                <div class="counter-item">
+                    <div class="counter-number" data-target="10">0</div>
+                    <div class="counter-label">Tahun Pengalaman</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="500">0</div>
+                    <div class="counter-label">Proyek Selesai</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="100">0</div>
+                    <div class="counter-label">Klien Puas</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="50">0</div>
+                    <div class="counter-label">Tenaga Ahli</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="section bg-corporate-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Left: Images -->
+                <div class="relative h-96 md:h-full" data-aos="fade-right">
+                    <div class="absolute inset-0 bg-gradient-to-br from-corporate-bright to-corporate-dark rounded-2xl opacity-10"></div>
+                    <img src="https://placehold.co/500x600/0B1F3A/FFFFFF?text=Perusahaan" alt="Company" class="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10">
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-corporate-bright rounded-xl shadow-lg opacity-20 -z-10"></div>
+                </div>
+                
+                <!-- Right: Content -->
+                <div data-aos="fade-left">
+                    <h2 class="section-title text-left mb-6">Tentang MEGATAMA</h2>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        MEGATAMA adalah perusahaan konstruksi dan engineering terkemuka dengan pengalaman lebih dari 10 tahun melayani berbagai sektor industri. Kami berkomitmen untuk memberikan solusi terbaik dengan standar kualitas internasional.
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Visi Kami</h3>
+                        <p class="text-gray-700">Menjadi perusahaan konstruksi dan engineering pilihan utama di Asia dengan standar kualitas dan inovasi terdepan.</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Misi Kami</h3>
+                        <p class="text-gray-700">Memberikan layanan profesional, inovatif, dan tepat waktu untuk membangun infrastruktur berkualitas yang berkelanjutan.</p>
+                    </div>
+                    
+                    <!-- Values Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up">
+                            <i class="fas fa-handshake text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Integritas</h4>
+                            <p class="text-sm text-gray-600">Komitmen penuh pada kepercayaan</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                            <i class="fas fa-briefcase text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Profesionalisme</h4>
+                            <p class="text-sm text-gray-600">Standar kerja tertinggi</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                            <i class="fas fa-lightbulb text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Inovasi</h4>
+                            <p class="text-sm text-gray-600">Solusi kreatif dan modern</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                            <i class="fas fa-star text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Kualitas</h4>
+                            <p class="text-sm text-gray-600">Hasil kerja terbaik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUSINESS DIVISION SECTION -->
+    <section id="divisions" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Bidang Usaha Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Layanan komprehensif untuk semua kebutuhan konstruksi dan engineering</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konstruksi Bangunan</h3>
+                    <p class="text-gray-700">Pembangunan gedung bertingkat, perkantoran, dan fasilitas komersial dengan teknologi konstruksi modern.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Mechanical Engineering</h3>
+                    <p class="text-gray-700">Desain dan implementasi sistem mekanik untuk HVAC, pneumatik, dan sistem produksi.</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Electrical Engineering</h3>
+                    <p class="text-gray-700">Instalasi sistem kelistrikan, panel kontrol, dan renewable energy solutions.</p>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Plumbing System</h3>
+                    <p class="text-gray-700">Sistem pipa, sanitasi, dan water treatment dengan standar internasional.</p>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konsultan Perencanaan</h3>
+                    <p class="text-gray-700">Konsultasi desain, perencanaan proyek, dan feasibility study mendalam.</p>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Property Development</h3>
+                    <p class="text-gray-700">Pengembangan properti residensial dan komersial dengan lokasi strategis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Layanan Unggulan Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Solusi terpadu untuk semua kebutuhan proyek konstruksi</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-tasks text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Perencanaan Proyek</h3>
+                        <p class="text-gray-700">Perencanaan matang dengan metodologi terbukti untuk hasil maksimal.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-pencil-ruler text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Design Engineering</h3>
+                        <p class="text-gray-700">Desain detail dengan CAD profesional dan simulasi struktur.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-hammer text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pembangunan Gedung</h3>
+                        <p class="text-gray-700">Eksekusi konstruksi dengan standar keselamatan tertinggi.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-tools text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Renovasi Bangunan</h3>
+                        <p class="text-gray-700">Perbaikan dan modernisasi bangunan dengan minimal disruption.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-clipboard-list text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Manajemen Proyek</h3>
+                        <p class="text-gray-700">Pengelolaan terintegrasi dari awal hingga penyelesaian proyek.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="500">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-check-circle text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pengawasan Konstruksi</h3>
+                        <p class="text-gray-700">Quality control dan monitoring real-time selama konstruksi.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Galeri & Portofolio</h2>
+            <p class="section-subtitle" data-aos="fade-up">Dokumentasi lapangan dan hasil proyek unggulan kami</p>
+            
+            <!-- Masonry Gallery -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
+                <!-- Data galeri dari Firestore akan dimuat di sini oleh main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT SHOWCASE SECTION -->
+    <section id="projects" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Proyek Unggulan</h2>
+            <p id="projectsSubtitle" class="section-subtitle" data-aos="fade-up">Memuat data proyek...</p>
+            
+            <div id="publicProjectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Data proyek dari Firestore akan dimuat di sini oleh main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPANY STRENGTH SECTION -->
+    <section id="strength" class="section bg-corporate-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">Kekuatan Perusahaan</h2>
+            <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto" data-aos="fade-up">Komitmen kami terhadap keunggulan dalam setiap aspek bisnis</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-users text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Profesional</h3>
+                    <p class="text-gray-300">Tim bersertifikat dan berpengalaman di bidangnya</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">50+</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-clock text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Tepat Waktu</h3>
+                    <p class="text-gray-300">Penyelesaian proyek sesuai jadwal yang disepakati</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">100%</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-certificate text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Berkualitas</h3>
+                    <p class="text-gray-300">Standar internasional dalam setiap pekerjaan</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">ISO</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-handshake text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Terpercaya</h3>
+                    <p class="text-gray-300">Dipercaya oleh ratusan klien dari berbagai sektor</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">500+</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS SECTION -->
+    <section id="clients" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Klien Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Dipercaya oleh perusahaan terkemuka di Indonesia</p>
+            
+            <div class="swiper clientsSwiper" data-aos="zoom-in">
+                <div class="swiper-wrapper" id="clientWrapper">
+                    <!-- Data klien dari Firestore akan dimuat di sini oleh main.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION -->
+    <!-- <section id="testimonials" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Testimoni Klien</h2>
+            <p class="section-subtitle" data-aos="fade-up">Kepuasan klien adalah prioritas utama kami</p>
+            
+            <div class="swiper testimonialSwiper" data-aos="zoom-in">
+                <div class="swiper-wrapper" id="testimonialWrapper">
+                    <! Data testimoni dari Firestore akan dimuat di sini oleh main.js -->
+                <!-- </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section> --> 
+
+    <!-- NEWS SECTION -->
+    <section id="news" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Berita & Artikel</h2>
+            <p class="section-subtitle" data-aos="fade-up">Update terkini dari MEGATAMA</p>
+            
+            <div id="publicNewsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Data berita dari Firestore akan dimuat di sini oleh main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="cta" class="section bg-gradient-to-r from-corporate-dark to-corporate-bright">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6" data-aos="fade-up">
+                Siap Memulai Proyek Bersama Kami?
+            </h2>
+            <p class="text-xl text-gray-100 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Hubungi tim profesional MEGATAMA untuk konsultasi gratis dan penawaran terbaik untuk proyek Anda.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <button onclick="window.location.href='kontak.html'" class="w-full sm:w-auto px-8 py-4 bg-white text-corporate-dark font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
+                    <i class="fas fa-phone mr-2"></i> Hubungi Kami
+                </button>
+                <button onclick="window.location.href='kontak.html'" class="w-full sm:w-auto px-8 py-4 bg-corporate-dark text-white font-semibold rounded-lg border-2 border-white hover:bg-transparent transition-colors">
+                    <i class="fas fa-calendar mr-2"></i> Konsultasi Gratis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- FOOTER -->
+    <footer class="bg-corporate-dark text-white py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-building text-corporate-bright"></i>
+                        MEGATAMA
+                    </h3>
+                    <p class="text-gray-400 mb-4">Perusahaan konstruksi dan engineering terpercaya dengan standar internasional.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-corporate-bright transition-colors">Tentang Kami</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-corporate-bright transition-colors">Layanan</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-corporate-bright transition-colors">Proyek</a></li>
+                        <li><a href="#news" class="text-gray-400 hover:text-corporate-bright transition-colors">Berita</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Layanan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Konstruksi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Engineering</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Konsultasi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Property Development</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jakarta Selatan</li>
+                        <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>info@megatama.com</li>
+                        <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2024 MEGATAMA Construction & Engineering. All rights reserved.</p>
+                    <div class="flex gap-6 text-sm text-gray-400">
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module" src="src/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Enterprise - MEGATAMA</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="src/assets/images/logo.png">
+
+    <!-- Tailwind via Main Style -->
+    <link rel="stylesheet" href="src/css/style.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-item.active {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563EB;
+            font-weight: 600;
+        }
+        .dark .nav-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60A5FA;
+        }
+        /* Circle Progress Map */
+        .circle-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
+        
+        /* Map Dark Mode filter */
+        .dark .leaflet-layer,
+        .dark .leaflet-control-zoom-in,
+        .dark .leaflet-control-zoom-out,
+        .dark .leaflet-control-attribution {
+            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+        }
+        /* Round Crop Box for Cropper.js (Specific Mode) */
+        .cropper-circle-mode .cropper-view-box, .cropper-circle-mode .cropper-face {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-50 hidden xl:hidden backdrop-blur-sm transition-opacity duration-300 ease-in-out opacity-0"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex-shrink-0 z-[60] absolute xl:relative h-full transform -translate-x-full xl:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-700">
+                <img src="src/assets/images/logo.png" class="w-10 h-10 object-contain mr-3" alt="MEGATAMA Logo">
+                <div class="flex flex-col justify-center">
+                    <span class="text-xl font-bold tracking-wide text-slate-900 dark:text-white leading-none">MEGATAMA</span>
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-orange-600 dark:text-orange-500 mt-1 leading-none">SOLUSINDO</span>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-700">
+                    <img src="https://ui-avatars.com/api/?name=User&background=2563EB&color=fff" id="userAvatarImg" class="w-10 h-10 rounded-full shadow-sm" alt="User">
+                    <div>
+                        <p class="text-sm font-bold text-slate-800 dark:text-slate-100" id="userNameDisplay">User Name</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium" id="userRoleDisplay">Role</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="px-4 space-y-1.5 overflow-y-auto h-[calc(100vh-200px)] text-sm font-medium text-slate-600 dark:text-slate-400">
+                <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-4">Menu Utama</p>
+                <a href="#" class="nav-item active flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-overview">
+                    <i class="fas fa-chart-pie w-5 text-center"></i> <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-projects">
+                    <i class="fas fa-project-diagram w-5 text-center"></i> <span>Projects Board</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-docs">
+                    <i class="fas fa-images w-5 text-center"></i> <span>Portofolio</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-clients">
+                    <i class="fas fa-handshake w-5 text-center"></i> <span>Klien</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-news">
+                    <i class="fas fa-newspaper w-5 text-center"></i> <span>Berita</span>
+                </a>
+                <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports">
+                    <i class="fas fa-file-pdf w-5 text-center"></i> <span>Laporan</span>
+                </a> -->
+                
+                <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 admin-only">Sistem</p>
+                <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-only" data-target="view-users">
+                    <i class="fas fa-users-cog w-5 text-center"></i> <span>User Management</span>
+                </a>
+                
+                <div class="absolute bottom-6 left-4 right-4">
+                    <a href="index.html" class="flex items-center gap-3 px-4 py-2 mb-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+                        <i class="fas fa-globe w-5 text-center"></i> <span>Situs Utama</span>
+                    </a>
+                    <a href="#" id="logoutBtn" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
+                        <i class="fas fa-sign-out-alt w-5 text-center"></i> <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            
+            <!-- Floating Topbar -->
+            <header class="glass-panel mx-8 mt-6 mb-2 rounded-2xl h-16 flex items-center justify-between px-6 z-40 shadow-sm border border-slate-200/50 dark:border-slate-700/50">
+                <div class="flex items-center gap-4 w-full">
+                    
+                    <button id="mobileMenuBtn" class="xl:hidden w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-500 shadow-sm border border-slate-200 dark:border-slate-700">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <!-- Search -->
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-4 py-2 flex-1 max-w-md border border-transparent focus-within:border-orange-500 transition-colors">
+                        <i class="fas fa-search text-slate-400"></i>
+                        <input type="text" placeholder="Cari project, dokumen, atau user..." class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-slate-700 dark:text-slate-200 placeholder-slate-400">
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="text-sm font-medium text-slate-500 dark:text-slate-400 block mr-2" id="currentDate"></div>
+                    
+                    <button id="themeToggle" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-moon text-lg"></i>
+                    </button>
+                    
+                    <button class="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hidden flex h-4 w-4">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span id="notificationCount" class="relative inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-[9px] font-bold text-white border border-white dark:border-slate-800">0</span>
+                        </span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-y-auto p-8">
+                
+                <!-- VIEW: OVERVIEW -->
+                <div id="view-overview" class="view-section">
+                    
+                    <!-- Hero Section -->
+                    <div class="bg-gradient-to-r from-orange-600 to-indigo-700 rounded-3xl p-8 mb-8 text-white relative overflow-hidden shadow-xl shadow-orange-600/20 flex flex-col justify-center min-h-[220px]">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
+                        <div class="relative z-10 w-2/3">
+                            <h1 class="text-4xl font-bold mb-3 tracking-tight">Selamat Datang Kembali, <span id="heroUserName">User</span> 👋</h1>
+                            <p class="text-orange-100 text-lg mb-8 max-w-xl leading-relaxed">Berikut adalah ringkasan progres keseluruhan proyek konstruksi MEGATAMA yang sedang berjalan bulan ini.</p>
+                            
+                            <div class="flex flex-wrap gap-8">
+                                <div>
+                                    <p class="text-orange-200 text-sm font-medium mb-1">Total Proyek Aktif</p>
+                                    <p class="text-3xl font-bold" id="hero-total-proyek">0 <span class="text-base font-medium opacity-80">Proyek</span></p>
+                                </div>
+                                <div class="w-px h-12 bg-white/20 block"></div>
+                                <div>
+                                    <p class="text-orange-200 text-sm font-medium mb-1">Overall Progress</p>
+                                    <div class="flex items-center gap-3">
+                                        <p class="text-3xl font-bold text-green-300" id="hero-overall-progress">0%</p>
+                                        <div class="w-24 h-2 bg-white/20 rounded-full overflow-hidden"><div id="hero-overall-bar" class="h-full bg-green-400 rounded-full transition-all duration-1000" style="width: 0%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/construction-project-management-8114624-6447225.png" class="absolute right-0 bottom-0 h-[120%] object-contain opacity-100 mix-blend-luminosity transform translate-x-10 translate-y-10" alt="Illustration">
+                    </div>
+
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-building"></i></div>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Total Anggaran</p>
+                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-anggaran">Rp 0 M</p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-check-circle"></i></div>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Proyek Selesai</p>
+                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-selesai">0</p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-clock"></i></div>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Dalam Proses</p>
+                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-berjalan">0</p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-exclamation-triangle"></i></div>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Isu & Tertunda</p>
+                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-tertunda">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Trend Progress Pembangunan</h3>
+                            <div class="h-64"><canvas id="lineChart"></canvas></div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Status Proyek</h3>
+                            <div class="h-56 relative flex justify-center"><canvas id="pieChart"></canvas></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map & Activity Feed -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative">
+                            <div class="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Peta Lokasi Proyek</h3>
+                            </div>
+                            <div id="projectMap" class="w-full h-80 rounded-xl z-0"></div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col">
+                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Aktivitas Terkini</h3>
+                            <div id="activity-feed" class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-6 pb-2 flex-1 overflow-y-auto pr-2">
+                                <!-- Aktivitas dirender via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW: PROJECTS -->
+                <div id="view-projects" class="view-section hidden">
+                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Project Board</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Monitor status dan kemajuan semua proyek aktif secara real-time.</p>
+                        </div>
+                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="openAddProjectModal()">
+                            <i class="fas fa-plus mr-2"></i> Tambah Proyek
+                        </button>
+                    </div>
+                    
+                    <!-- Projects Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- VIEW: PROJECT DETAIL -->
+                <div id="view-project-detail" class="view-section hidden">
+                    <div class="mb-8 flex items-center gap-4">
+                        <button class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" onclick="switchView('view-projects')">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white" id="detail-name">Loading...</h2>
+                        <span id="detail-status" class="px-3 py-1 text-xs font-semibold rounded-full">...</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-lg font-bold mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">Informasi Proyek</h3>
+                            <div class="space-y-4 text-sm" id="detail-info"></div>
+                        </div>
+                        
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-lg font-bold mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">Progress Sub-Pekerjaan</h3>
+                            <div class="grid grid-cols-2 gap-x-8 gap-y-8 mt-6" id="detail-tasks"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-8 border-b border-slate-100 dark:border-slate-700 pb-3">Timeline Milestone Modern</h3>
+                        <div class="flex flex-wrap items-center justify-between gap-4 px-4" id="detail-timeline-horizontal">
+                            <!-- Rendered horizontally via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW: DOCS & REPORTS (Mock Views) -->
+                <div id="view-docs" class="view-section hidden">
+                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Portofolio Proyek</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Portofolio visual dari berbagai proyek yang sedang dan telah berjalan.</p>
+                        </div>
+                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahPortofolio()">
+                            <i class="fas fa-upload mr-2"></i> Upload Foto
+                        </button>
+                    </div>
+                    
+                    <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- <div id="view-reports" class="view-section hidden">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 max-w-2xl mx-auto mt-10">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-orange-50 dark:bg-orange-500/10 text-orange-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="fas fa-cloud-download-alt"></i></div>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white">Export Laporan</h3>
+                            <p class="text-slate-500 text-sm mt-2">Unduh progress report untuk direksi atau klien.</p>
+                        </div>
+                        <form id="reportForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Pilih Proyek</label>
+                                <select class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-3 outline-none focus:ring-2 focus:ring-orange-500"><option>Semua Proyek</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Format Laporan</label>
+                                <div class="flex gap-4 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="format" checked class="peer sr-only">
+                                        <div class="text-center py-2 rounded-lg peer-checked:bg-white dark:peer-checked:bg-slate-700 peer-checked:shadow-sm font-medium text-sm transition-all"><i class="fas fa-file-pdf text-red-500 mr-2"></i> PDF Report</div>
+                                    </label>
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="format" class="peer sr-only">
+                                        <div class="text-center py-2 rounded-lg peer-checked:bg-white dark:peer-checked:bg-slate-700 peer-checked:shadow-sm font-medium text-sm transition-all"><i class="fas fa-file-excel text-green-500 mr-2"></i> Excel Data</div>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" onclick="generateReport()" class="w-full bg-orange-600 text-white py-3.5 rounded-xl font-bold hover:bg-orange-700 transition-colors mt-6 shadow-lg shadow-orange-500/30">Download Sekarang</button>
+                        </form>
+                    </div>
+                </div> -->
+
+                <!-- VIEW: CLIENTS -->
+                <div id="view-clients" class="view-section hidden">
+                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Klien</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Kelola daftar logo klien yang bekerja sama dengan perusahaan.</p>
+                        </div>
+                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahKlien()">
+                            <i class="fas fa-plus mr-2"></i> Tambah Klien
+                        </button>
+                    </div>
+                    
+                    <div id="clientsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- VIEW: NEWS -->
+                <div id="view-news" class="view-section hidden">
+                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Berita</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Publikasikan artikel, pembaruan, dan pencapaian terbaru.</p>
+                        </div>
+                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahBerita()">
+                            <i class="fas fa-plus mr-2"></i> Tulis Berita
+                        </button>
+                    </div>
+                    
+                    <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- VIEW: USERS -->
+                <div id="view-users" class="view-section hidden">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-white">Manajemen Tim</h3>
+                        <button class="bg-slate-800 dark:bg-slate-700 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-orange-600 transition-colors" onclick="tambahUser()"><i class="fas fa-user-plus mr-2"></i>Tambah Anggota</button>
+                        </div>
+                    <!-- Dynamic user list container -->
+                    <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2" id="usersListContainer">
+                        <!-- Rendered via JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Proyek -->
+    <div id="modalProject" class="fixed inset-0 bg-slate-900/60 z-[100] hidden items-center justify-center backdrop-blur-sm p-4 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div class="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white">Setup Proyek Baru</h3>
+                <button onclick="closeProjectModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 hover:text-red-500 transition-colors"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="projectForm" class="p-6 grid grid-cols-2 gap-5">
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Kode Proyek</label><input type="text" id="html-p-code" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: PRJ-001" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Nama Proyek</label><input type="text" id="html-p-name" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Klien</label><input type="text" id="html-p-client" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Lokasi / Koordinat Peta</label><input type="text" id="html-p-loc" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: Jakarta Selatan atau -6.2, 106.8" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Nilai Anggaran</label><input type="text" id="html-p-val" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: Rp 45 M" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Tanggal Mulai</label><input type="date" id="html-p-start" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Target Selesai</label><input type="date" id="html-p-end" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
+                <div class="col-span-2 text-sm text-slate-500 dark:text-slate-400 -mt-2 ml-1" id="html-p-duration"></div>
+                
+                <div id="html-p-plan-container" class="col-span-2 hidden mt-2 pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <label class="block text-sm font-medium mb-3 text-slate-700 dark:text-slate-300">Target Progress Rencana Mingguan (%) <span class="text-xs text-orange-500 font-normal ml-2">(Opsional)</span></label>
+                    <div id="html-p-plan-grid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 max-h-40 overflow-y-auto p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner"></div>
+                </div>
+                
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Cover Proyek (Opsional)</label>
+                    <div class="flex flex-col md:flex-row gap-4 items-center">
+                        <input type="file" id="html-p-file" accept="image/*" class="w-full md:w-1/2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2 outline-none dark:text-white file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-100 file:text-orange-700 hover:file:bg-orange-200 dark:file:bg-[#FF7A00]/20 dark:file:text-[#FF7A00] cursor-pointer">
+                        <span class="text-slate-500 text-sm font-bold">— ATAU —</span>
+                        <input type="text" id="html-p-img" class="w-full md:w-1/2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="URL Gambar Online">
+                    </div>
+                    <div id="project-cropper-container" style="display: none; margin-top: 1.5rem; width: 100%;">
+                        <div style="width: 100%; max-height: 350px; overflow: hidden; border-radius: 0.75rem; border: 1px solid #2A2A2A;">
+                            <img id="project-cropper-image" style="max-width: 100%; display: block;">
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">Geser dan perbesar/perkecil gambar untuk menyesuaikan cover proyek.</p>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-2 flex justify-end gap-3 mt-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <button type="button" onclick="closeProjectModal()" class="px-5 py-2.5 text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-xl font-medium transition-colors">Batal</button>
+                    <button type="button" onclick="saveProject()" class="px-6 py-2.5 text-white bg-orange-600 hover:bg-orange-700 rounded-xl font-medium shadow-lg shadow-orange-500/30 transition-colors">Deploy Proyek</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script type="module" src="src/js/dashboard.js"></script>
+</body>
+</html>

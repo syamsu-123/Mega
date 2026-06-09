@@ -1,0 +1,48 @@
+# 1. Create a new movie (accessible only to authenticated users)
+mutation CreateMovie($title: String!, $year: Int!, $summary: String, $genres: [String!], $runtime: Int) @auth(level: USER) {
+  movie_insert(data: {
+    title: $title,
+    year: $year,
+    createdAt_expr: "request.time",
+    summary: $summary,
+    genres: $genres,
+    runtime: $runtime
+  })
+}
+
+# 2. Get all public lists (accessible to anyone)
+query GetAllPublicLists @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  lists(where: {isPublic: {eq: true}}) {
+    id
+    name
+    description
+    user {
+      displayName
+    }
+  }
+}
+
+# 3. Get movies watched by the current user (accessible only to authenticated users)
+query MyWatchedMovies @auth(level: USER) {
+  watches(where: {userId: {eq_expr: "auth.uid"}}) {
+    watchDate
+    movie {
+      title
+      year
+    }
+  }
+}
+
+# 4. Add a review to a movie (accessible only to authenticated users)
+mutation AddMovieReview($movieId: UUID!, $watchId: UUID!, $rating: Int!, $reviewText: String, $isPublic: Boolean) @auth(level: USER) {
+  review_insert(data: {
+    movieId: $movieId,
+    userId_expr: "auth.uid",
+    watchId: $watchId,
+    rating: $rating,
+    createdAt_expr: "request.time",
+    updatedAt_expr: "request.time",
+    reviewText: $reviewText,
+    isPublic: $isPublic
+  })
+}

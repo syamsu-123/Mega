@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MEGATAMA - Premium Corporate Construction & Engineering Company. Pengalaman lebih dari 10 tahun melayani proyek konstruksi, engineering, dan pengembangan properti dengan standar internasional.">
+    <meta name="keywords" content="konstruksi, engineering, kontractor, perusahaan konstruksi, properti development">
+    <meta name="author" content="MEGATAMA">
+    <meta property="og:title" content="MEGATAMA - Construction & Engineering Company">
+    <meta property="og:description" content="Premium Corporate Construction & Engineering Services">
+    <meta property="og:image" content="src/assets/images/og-image.jpg">
+    
+    <title>MEGATAMA - Corporate Construction & Engineering</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="src/assets/images/logo.png" style="width: 35px;" alt="MEGATAMA Logo">
+                <span>MEGATAMA</span>
+            </div>
+            
+            <div class="navbar-menu">
+                <a href="#hero">Beranda</a>
+                <a href="#about">Tentang Kami</a>
+                <a href="#services">Layanan</a>
+                <a href="#projects">Proyek</a>
+                <a href="#portfolio">Portofolio</a>
+                <a href="#clients">Klien</a>
+                <a href="#news">Berita</a>
+                <a href="kontak.html">Kontak</a>
+                <a href="login.html" class="text-corporate-bright font-bold"><i class="fas fa-lock mr-1"></i> Portal</a>
+            </div>
+            
+            <button class="navbar-cta">Hubungi Kami</button>
+            <div class="navbar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <!-- Background Video/Image Fallback -->
+        <div class="hero-video-bg" style="background: url('src/assets/images/bg-hero.jpeg') center/cover no-repeat;"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Berpengalaman Lebih Dari 10 Tahun
+            </div>
+            
+            <h1 class="hero-title" data-aos="fade-up">
+                Membangun Masa Depan Dengan Inovasi dan Kualitas
+            </h1>
+            
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Kami menyediakan layanan konstruksi, engineering, konsultasi, mekanikal, elektrikal, plumbing, dan pengembangan properti dengan standar profesional internasional.
+            </p>
+            
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn-primary">
+                    <i class="fas fa-phone-alt mr-2"></i> Konsultasi Sekarang
+                </button>
+                <button class="btn-secondary">
+                    <i class="fas fa-images mr-2"></i> Lihat Portofolio
+                </button>
+            </div>
+            
+            <!-- Counter Animation -->
+            <div class="counter-grid" data-aos="zoom-in" data-aos-delay="300">
+                <div class="counter-item">
+                    <div class="counter-number" data-target="10">0</div>
+                    <div class="counter-label">Tahun Pengalaman</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="500">0</div>
+                    <div class="counter-label">Proyek Selesai</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="100">0</div>
+                    <div class="counter-label">Klien Puas</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="50">0</div>
+                    <div class="counter-label">Tenaga Ahli</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="section bg-corporate-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Left: Images -->
+                <div class="relative h-96 md:h-full" data-aos="fade-right">
+                    <div class="absolute inset-0 bg-gradient-to-br from-corporate-bright to-corporate-dark rounded-2xl opacity-10"></div>
+                    <img src="https://placehold.co/500x600/0B1F3A/FFFFFF?text=Perusahaan" alt="Company" class="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10">
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-corporate-bright rounded-xl shadow-lg opacity-20 -z-10"></div>
+                </div>
+                
+                <!-- Right: Content -->
+                <div data-aos="fade-left">
+                    <h2 class="section-title text-left mb-6">Tentang MEGATAMA</h2>
+                    
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        MEGATAMA adalah perusahaan konstruksi dan engineering terkemuka dengan pengalaman lebih dari 10 tahun melayani berbagai sektor industri. Kami berkomitmen untuk memberikan solusi terbaik dengan standar kualitas internasional.
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Visi Kami</h3>
+                        <p class="text-gray-700">Menjadi perusahaan konstruksi dan engineering pilihan utama di Asia dengan standar kualitas dan inovasi terdepan.</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Misi Kami</h3>
+                        <p class="text-gray-700">Memberikan layanan profesional, inovatif, dan tepat waktu untuk membangun infrastruktur berkualitas yang berkelanjutan.</p>
+                    </div>
+                    
+                    <!-- Values Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up">
+                            <i class="fas fa-handshake text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Integritas</h4>
+                            <p class="text-sm text-gray-600">Komitmen penuh pada kepercayaan</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                            <i class="fas fa-briefcase text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Profesionalisme</h4>
+                            <p class="text-sm text-gray-600">Standar kerja tertinggi</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                            <i class="fas fa-lightbulb text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Inovasi</h4>
+                            <p class="text-sm text-gray-600">Solusi kreatif dan modern</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg border-l-4 border-corporate-bright shadow-md hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                            <i class="fas fa-star text-corporate-bright text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-corporate-dark mb-1">Kualitas</h4>
+                            <p class="text-sm text-gray-600">Hasil kerja terbaik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUSINESS DIVISION SECTION -->
+    <section id="divisions" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Bidang Usaha Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Layanan komprehensif untuk semua kebutuhan konstruksi dan engineering</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konstruksi Bangunan</h3>
+                    <p class="text-gray-700">Pembangunan gedung bertingkat, perkantoran, dan fasilitas komersial dengan teknologi konstruksi modern.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Mechanical Engineering</h3>
+                    <p class="text-gray-700">Desain dan implementasi sistem mekanik untuk HVAC, pneumatik, dan sistem produksi.</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Electrical Engineering</h3>
+                    <p class="text-gray-700">Instalasi sistem kelistrikan, panel kontrol, dan renewable energy solutions.</p>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Plumbing System</h3>
+                    <p class="text-gray-700">Sistem pipa, sanitasi, dan water treatment dengan standar internasional.</p>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konsultan Perencanaan</h3>
+                    <p class="text-gray-700">Konsultasi desain, perencanaan proyek, dan feasibility study mendalam.</p>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-5xl text-corporate-bright mb-4">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Property Development</h3>
+                    <p class="text-gray-700">Pengembangan properti residensial dan komersial dengan lokasi strategis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Layanan Unggulan Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Solusi terpadu untuk semua kebutuhan proyek konstruksi</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-tasks text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Perencanaan Proyek</h3>
+                        <p class="text-gray-700">Perencanaan matang dengan metodologi terbukti untuk hasil maksimal.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-pencil-ruler text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Design Engineering</h3>
+                        <p class="text-gray-700">Desain detail dengan CAD profesional dan simulasi struktur.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-hammer text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pembangunan Gedung</h3>
+                        <p class="text-gray-700">Eksekusi konstruksi dengan standar keselamatan tertinggi.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-tools text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Renovasi Bangunan</h3>
+                        <p class="text-gray-700">Perbaikan dan modernisasi bangunan dengan minimal disruption.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-clipboard-list text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Manajemen Proyek</h3>
+                        <p class="text-gray-700">Pengelolaan terintegrasi dari awal hingga penyelesaian proyek.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="500">
+                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                    <div class="relative z-10">
+                        <i class="fas fa-check-circle text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pengawasan Konstruksi</h3>
+                        <p class="text-gray-700">Quality control dan monitoring real-time selama konstruksi.</p>
+                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Portfolio Proyek</h2>
+            <p class="section-subtitle" data-aos="fade-up">Koleksi proyek unggulan kami di berbagai sektor</p>
+            
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
+                <button class="btn-tag active" data-filter="all">Semua</button>
+                <button class="btn-tag" data-filter="gedung">Gedung</button>
+                <button class="btn-tag" data-filter="infrastruktur">Infrastruktur</button>
+                <button class="btn-tag" data-filter="industri">Industri</button>
+                <button class="btn-tag" data-filter="properti">Properti</button>
+            </div>
+            
+            <!-- Masonry Gallery -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
+                <!-- Portfolio Item 1 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="gedung" data-aos="zoom-in">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Gedung+Perkantoran" alt="Gedung Perkantoran" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Gedung Perkantoran Pusat</h3>
+                        <p class="text-gray-200 text-sm">Jakarta Selatan | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 2 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer lg:col-span-1 lg:row-span-2" data-category="infrastruktur" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="https://placehold.co/500x600/1E88E5/FFFFFF?text=Jembatan+Interkoneksi" alt="Jembatan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Jembatan Interkoneksi</h3>
+                        <p class="text-gray-200 text-sm">Surabaya | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 3 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="properti" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Kompleks+Residensial" alt="Residensial" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Kompleks Residensial Modern</h3>
+                        <p class="text-gray-200 text-sm">Bandung | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 4 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="industri" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="https://placehold.co/500x400/1E88E5/FFFFFF?text=Pabrik+Modern" alt="Pabrik" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Pabrik Manufacturing</h3>
+                        <p class="text-gray-200 text-sm">Karawang | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 5 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="gedung" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Mall+Modern" alt="Mall" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Pusat Perbelanjaan</h3>
+                        <p class="text-gray-200 text-sm">Medan | 2022</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 6 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="properti" data-aos="zoom-in" data-aos-delay="500">
+                    <img src="https://placehold.co/500x400/1E88E5/FFFFFF?text=Hotel+Mewah" alt="Hotel" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Hotel Bintang Lima</h3>
+                        <p class="text-gray-200 text-sm">Bali | 2022</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 7 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="infrastruktur" data-aos="zoom-in" data-aos-delay="600">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Terminal+Transportasi" alt="Terminal" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Terminal Transportasi</h3>
+                        <p class="text-gray-200 text-sm">Semarang | 2022</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 8 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="gedung" data-aos="zoom-in" data-aos-delay="700">
+                    <img src="https://placehold.co/500x400/1E88E5/FFFFFF?text=Gedung+Sertifikasi" alt="Sertifikasi" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Gedung Sertifikasi LEED</h3>
+                        <p class="text-gray-200 text-sm">Tangerang | 2022</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 9 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="industri" data-aos="zoom-in" data-aos-delay="800">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Data+Center" alt="Data Center" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Data Center Modern</h3>
+                        <p class="text-gray-200 text-sm">Jakarta | 2021</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 10 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="properti" data-aos="zoom-in" data-aos-delay="900">
+                    <img src="https://placehold.co/500x400/1E88E5/FFFFFF?text=Apartemen+Mewah" alt="Apartemen" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Apartemen Luxury</h3>
+                        <p class="text-gray-200 text-sm">Jakarta Pusat | 2021</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 11 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="gedung" data-aos="zoom-in" data-aos-delay="1000">
+                    <img src="https://placehold.co/500x400/0B1F3A/FFFFFF?text=Kampus+Modern" alt="Kampus" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Kampus Internasional</h3>
+                        <p class="text-gray-200 text-sm">Yogyakarta | 2021</p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 12 -->
+                <div class="portfolio-item group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer" data-category="infrastruktur" data-aos="zoom-in" data-aos-delay="1100">
+                    <img src="https://placehold.co/500x400/1E88E5/FFFFFF?text=Jalan+Tol" alt="Jalan Tol" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Jalan Tol Internasional</h3>
+                        <p class="text-gray-200 text-sm">Sumatra | 2021</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT SHOWCASE SECTION -->
+    <section id="projects" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Proyek Unggulan</h2>
+            <p class="section-subtitle" data-aos="fade-up">6 Proyek Terbaik dengan Nilai Signifikan</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Featured Project 1 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-right">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/0B1F3A/FFFFFF?text=Gedung+Metropolitan" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Gedung Metropolitan Tower</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jakarta</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2023-2024</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Gedung bertingkat 45 lantai dengan fasilitas modern dan arsitektur ikonik.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $45 Juta</p>
+                    </div>
+                </div>
+
+                <!-- Featured Project 2 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-left">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/1E88E5/FFFFFF?text=Jembatan+Interkoneksi" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Jembatan Internasional</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Surabaya</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2023-2025</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Jembatan sepanjang 2km dengan teknologi engineering terdepan.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">72%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $85 Juta</p>
+                    </div>
+                </div>
+
+                <!-- Featured Project 3 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-right" data-aos-delay="200">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/0B1F3A/FFFFFF?text=Kompleks+Residensial" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Kompleks Residensial Mewah</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Bandung</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2022-2024</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Kompleks residensial dengan 500+ unit dan fasilitas premium.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $125 Juta</p>
+                    </div>
+                </div>
+
+                <!-- Featured Project 4 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-left" data-aos-delay="200">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/1E88E5/FFFFFF?text=Pabrik+Modern" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Pabrik Manufacturing Otomatis</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Karawang</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2023-2024</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Pabrik berteknologi tinggi dengan sistem otomasi terkini.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $95 Juta</p>
+                    </div>
+                </div>
+
+                <!-- Featured Project 5 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-right" data-aos-delay="400">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/0B1F3A/FFFFFF?text=Mall+Internasional" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Pusat Perbelanjaan Internasional</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Medan</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2022-2024</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Mall premium dengan 300+ tenant dan fasilitas kelas dunia.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $150 Juta</p>
+                    </div>
+                </div>
+
+                <!-- Featured Project 6 -->
+                <div class="group overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300" data-aos="fade-left" data-aos-delay="400">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://via.placeholder.com/600x400/1E88E5/FFFFFF?text=Hotel+Bintang+Lima" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6 bg-white">
+                        <h3 class="text-2xl font-bold text-corporate-dark mb-2">Hotel Bintang Lima</h3>
+                        <div class="flex items-center gap-6 mb-4 text-gray-600 text-sm">
+                            <span><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Bali</span>
+                            <span><i class="fas fa-calendar text-corporate-bright mr-2"></i>2022-2023</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">Resort mewah dengan 250 kamar dan standar internasional.</p>
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-semibold text-corporate-dark">Progress Konstruksi</span>
+                                <span class="text-sm font-bold text-corporate-bright">100%</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-corporate-bright h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <p class="text-corporate-bright font-semibold">Nilai: $75 Juta</p>
+                    </div>
+                </div>
+            <div id="publicProjectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Data proyek dari Firestore akan dimuat di sini oleh main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPANY STRENGTH SECTION -->
+    <section id="strength" class="section bg-corporate-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">Kekuatan Perusahaan</h2>
+            <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto" data-aos="fade-up">Komitmen kami terhadap keunggulan dalam setiap aspek bisnis</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-users text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Profesional</h3>
+                    <p class="text-gray-300">Tim bersertifikat dan berpengalaman di bidangnya</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">50+</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-clock text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Tepat Waktu</h3>
+                    <p class="text-gray-300">Penyelesaian proyek sesuai jadwal yang disepakati</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">100%</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-certificate text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Berkualitas</h3>
+                    <p class="text-gray-300">Standar internasional dalam setiap pekerjaan</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">ISO</p>
+                </div>
+
+                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-handshake text-corporate-bright"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Terpercaya</h3>
+                    <p class="text-gray-300">Dipercaya oleh ratusan klien dari berbagai sektor</p>
+                    <p class="text-4xl font-bold text-corporate-bright mt-4">500+</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS SECTION -->
+    <section id="clients" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Klien Kami</h2>
+            <p class="section-subtitle" data-aos="fade-up">Dipercaya oleh perusahaan terkemuka di Indonesia</p>
+            
+            <div class="swiper clientsSwiper" data-aos="zoom-in">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+1" alt="Client 1" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+2" alt="Client 2" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+3" alt="Client 3" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+4" alt="Client 4" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+5" alt="Client 5" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 6 -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+6" alt="Client 6" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 7 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+1" alt="Client 1" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 8 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+2" alt="Client 2" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 9 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+3" alt="Client 3" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 10 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+4" alt="Client 4" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 11 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/0B1F3A/FFFFFF?text=CLIENT+5" alt="Client 5" class="h-20 object-contain">
+                        </div>
+                    </div>
+                    <!-- Slide 12 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow">
+                            <img src="https://placehold.co/200x80/1E88E5/FFFFFF?text=CLIENT+6" alt="Client 6" class="h-20 object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION -->
+    <section id="testimonials" class="section bg-corporate-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Testimoni Klien</h2>
+            <p class="section-subtitle" data-aos="fade-up">Kepuasan klien adalah prioritas utama kami</p>
+            
+            <div class="swiper testimonialSwiper" data-aos="zoom-in">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/0B1F3A/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Budi Santoso</h4>
+                                    <p class="text-sm text-gray-600">CEO PT ABC Konstruksi</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"MEGATAMA adalah partner terpercaya kami. Profesionalisme dan kualitas pekerjaan mereka luar biasa. Sangat merekomendasikan!"</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/1E88E5/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Siti Nurhaliza</h4>
+                                    <p class="text-sm text-gray-600">Project Manager XYZ Development</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"Tepat waktu, berkualitas, dan profesional. MEGATAMA selalu deliver hasil yang melampaui ekspektasi kami."</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/0B1F3A/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Ahmad Wijaya</h4>
+                                    <p class="text-sm text-gray-600">Director PT Industri Maju</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"Bekerja dengan MEGATAMA adalah keputusan terbaik kami. Tim mereka sangat responsif dan solusinya selalu tepat sasaran."</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/0B1F3A/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Budi Santoso</h4>
+                                    <p class="text-sm text-gray-600">CEO PT ABC Konstruksi</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"MEGATAMA adalah partner terpercaya kami. Profesionalisme dan kualitas pekerjaan mereka luar biasa. Sangat merekomendasikan!"</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/1E88E5/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Siti Nurhaliza</h4>
+                                    <p class="text-sm text-gray-600">Project Manager XYZ Development</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"Tepat waktu, berkualitas, dan profesional. MEGATAMA selalu deliver hasil yang melampaui ekspektasi kami."</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 (Duplicate for loop) -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                            <div class="flex items-center mb-4">
+                                <img src="https://placehold.co/50x50/0B1F3A/FFFFFF?text=Client" alt="Client" class="w-14 h-14 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-bold text-corporate-dark">Ahmad Wijaya</h4>
+                                    <p class="text-sm text-gray-600">Director PT Industri Maju</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 mb-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-700">"Bekerja dengan MEGATAMA adalah keputusan terbaik kami. Tim mereka sangat responsif dan solusinya selalu tepat sasaran."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWS SECTION -->
+    <section id="news" class="section bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title" data-aos="fade-up">Berita & Artikel</h2>
+            <p class="section-subtitle" data-aos="fade-up">Update terkini dari MEGATAMA</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- News 1 -->
+                <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://placehold.co/400x250/0B1F3A/FFFFFF?text=Berita+1" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <span class="absolute top-4 right-4 bg-corporate-bright text-white px-4 py-1 rounded-full text-xs font-semibold">Terbaru</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-gray-500 mb-2"><i class="fas fa-calendar mr-2"></i>June 1, 2024</p>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">MEGATAMA Raih Penghargaan Konstruksi Terbaik 2024</h3>
+                        <p class="text-gray-700 mb-4">MEGATAMA telah memenangkan penghargaan Excellence in Construction 2024 dari asosiasi kontraktor nasional...</p>
+                        <button class="text-corporate-bright font-semibold hover:text-corporate-dark transition-colors">Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+
+                <!-- News 2 -->
+                <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://placehold.co/400x250/1E88E5/FFFFFF?text=Berita+2" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <span class="absolute top-4 right-4 bg-corporate-bright text-white px-4 py-1 rounded-full text-xs font-semibold">Terbaru</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-gray-500 mb-2"><i class="fas fa-calendar mr-2"></i>May 28, 2024</p>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Inovasi Teknologi BIM dalam Proyek Metropolitan Tower</h3>
+                        <p class="text-gray-700 mb-4">Kami mengimplementasikan Building Information Modeling untuk meningkatkan efisiensi proyek hingga 40%...</p>
+                        <button class="text-corporate-bright font-semibold hover:text-corporate-dark transition-colors">Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+
+                <!-- News 3 -->
+                <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://placehold.co/400x250/0B1F3A/FFFFFF?text=Berita+3" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <span class="absolute top-4 right-4 bg-gray-500 text-white px-4 py-1 rounded-full text-xs font-semibold">Artikel</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-gray-500 mb-2"><i class="fas fa-calendar mr-2"></i>May 20, 2024</p>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pentingnya Safety Management dalam Konstruksi Modern</h3>
+                        <p class="text-gray-700 mb-4">Keselamatan kerja adalah prioritas utama. Berikut adalah panduan lengkap implementasi safety...</p>
+                        <button class="text-corporate-bright font-semibold hover:text-corporate-dark transition-colors">Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section id="cta" class="section bg-gradient-to-r from-corporate-dark to-corporate-bright">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6" data-aos="fade-up">
+                Siap Memulai Proyek Bersama Kami?
+            </h2>
+            <p class="text-xl text-gray-100 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Hubungi tim profesional MEGATAMA untuk konsultasi gratis dan penawaran terbaik untuk proyek Anda.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <button onclick="window.location.href='kontak.html'" class="px-8 py-4 bg-white text-corporate-dark font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
+                    <i class="fas fa-phone mr-2"></i> Hubungi Kami
+                </button>
+                <button class="px-8 py-4 bg-corporate-dark text-white font-semibold rounded-lg border-2 border-white hover:bg-transparent transition-colors">
+                    <i class="fas fa-calendar mr-2"></i> Konsultasi Gratis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- FOOTER -->
+    <footer class="bg-corporate-dark text-white py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-building text-corporate-bright"></i>
+                        MEGATAMA
+                    </h3>
+                    <p class="text-gray-400 mb-4">Perusahaan konstruksi dan engineering terpercaya dengan standar internasional.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-corporate-bright/20 rounded-full flex items-center justify-center hover:bg-corporate-bright text-xs transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-corporate-bright transition-colors">Tentang Kami</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-corporate-bright transition-colors">Layanan</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-corporate-bright transition-colors">Proyek</a></li>
+                        <li><a href="#news" class="text-gray-400 hover:text-corporate-bright transition-colors">Berita</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Layanan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Konstruksi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Engineering</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Konsultasi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-corporate-bright transition-colors">Property Development</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jakarta Selatan</li>
+                        <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>info@megatama.com</li>
+                        <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2024 MEGATAMA Construction & Engineering. All rights reserved.</p>
+                    <div class="flex gap-6 text-sm text-gray-400">
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-corporate-bright transition-colors">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module" src="src/js/main.js"></script>
+</body>
+</html>

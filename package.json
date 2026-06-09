@@ -1,0 +1,26 @@
+{
+  "name": "corporate-company-profile-megatama",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Corporate company profile website for construction & engineering company",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
+    "aos": "^2.3.4",
+    "firebase": "^12.14.0",
+    "swiper": "^11.0.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.1",
+    "terser": "^5.48.0",
+    "vite": "^5.4.0"
+  }
+}

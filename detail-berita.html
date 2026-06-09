@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - MEGATAMA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="src/assets/images/logo.png">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar bg-corporate-dark scrolled border-b border-white/5" style="background-color: #0B1F3A !important;">
+        <div class="navbar-container flex items-center justify-between w-full h-[80px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            
+            <!-- Logo (Left) -->
+            <div class="flex-1 flex items-center justify-start z-50 pointer-events-none">
+                <a href="index.html" class="navbar-logo text-white flex items-center flex-shrink-0 whitespace-nowrap pointer-events-auto">
+                    <img src="src/assets/images/logo.png" style="width: 35px;" alt="MEGATAMA Logo">
+                    <div class="flex flex-col justify-center ml-2">
+                        <span class="text-xl font-bold leading-none tracking-wide text-white">MEGATAMA</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Mobile Overlay -->
+            <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/60 z-40 hidden xl:hidden backdrop-blur-md transition-opacity duration-300 opacity-0"></div>
+            
+            <!-- Sidebar Menu (Mobile) / Regular (Desktop) -->
+            <div class="navbar-menu text-white fixed top-0 left-0 h-screen w-[85%] max-w-xs bg-corporate-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl xl:relative xl:h-auto xl:w-auto xl:transform-none xl:flex-row xl:items-center xl:justify-center xl:p-0 xl:bg-transparent xl:shadow-none" style="display: flex !important;">
+                <!-- Mobile Header -->
+                <div class="flex justify-between items-center p-5 xl:hidden border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <img src="src/assets/images/logo.png" class="w-9 h-9 object-contain" alt="Logo">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg leading-none">MEGATAMA</span>
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                        </div>
+                    </div>
+                    <button id="closeMenuBtn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors"><i class="fas fa-times"></i></button>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex-grow p-5 space-y-1 overflow-y-auto xl:p-0 xl:flex xl:items-center xl:justify-center xl:space-y-0 xl:gap-5 xl:overflow-visible xl:mx-auto">
+                    <a href="index.html#hero" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Beranda
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#about" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Tentang Kami
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#services" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Layanan
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#projects" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Proyek
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#portfolio" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Portofolio
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#clients" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Klien
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <a href="index.html#news" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent text-corporate-bright font-medium text-[15px] whitespace-nowrap">
+                        Berita
+                        <span class="absolute -bottom-1.5 left-0 w-full h-[2px] bg-corporate-bright transition-all duration-300 hidden xl:block"></span>
+                    </a>
+                    <a href="kontak.html" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">
+                        Kontak
+                        <span class="absolute -bottom-1.5 left-0 w-0 h-[2px] bg-corporate-bright transition-all duration-300 group-hover:w-full hidden xl:block"></span>
+                    </a>
+                    <!-- Mobile only portal link -->
+                    <a href="login.html" class="block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:hidden text-corporate-bright font-bold border-t border-white/10 mt-2 pt-4">
+                        <i class="fas fa-lock mr-2"></i> Portal
+                    </a>
+                </nav>
+                <!-- Mobile CTA -->
+                <div class="p-5 mt-auto border-t border-white/10 xl:hidden">
+                    <a href="kontak.html" class="w-full bg-corporate-bright text-white px-4 py-3 rounded-lg text-center font-bold shadow-lg shadow-corporate-bright/30 flex items-center justify-center gap-2"><i class="fas fa-phone"></i> Hubungi Kami</a>
+                </div>
+            </div>
+            
+            <!-- Portal Button (Right) & Mobile Toggle -->
+            <div class="flex-1 flex items-center justify-end gap-4 z-50 relative pointer-events-none">
+                <a href="login.html" class="hidden xl:flex items-center justify-center gap-2 bg-white/10 hover:bg-corporate-bright border border-white/20 hover:border-corporate-bright text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 group whitespace-nowrap flex-shrink-0 pointer-events-auto">
+                    <i class="fas fa-lock text-sm group-hover:scale-110 transition-transform"></i>
+                    <span>Portal</span>
+                </a>
+                <button class="navbar-toggle text-white text-2xl xl:hidden p-2 pointer-events-auto"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow pt-32 pb-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full" id="news-content">
+        <div id="loading-indicator" class="text-center py-20">
+            <i class="fas fa-spinner fa-spin text-4xl text-orange-500 mb-4"></i>
+            <p class="text-gray-500">Memuat artikel...</p>
+        </div>
+
+        <article id="article-container" class="hidden bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+            <div class="p-8 md:p-12 border-b border-gray-100">
+                <div class="flex items-center gap-3 mb-4">
+                    <span id="news-category" class="bg-corporate-bright text-white px-3 py-1 rounded-full text-xs font-semibold">Kategori</span>
+                    <span id="news-date" class="text-sm text-gray-500 font-medium"></span>
+                </div>
+                <h1 id="news-title" class="text-3xl md:text-4xl font-bold text-corporate-dark leading-tight mb-6">Judul Artikel</h1>
+                
+                <img id="news-image" src="" alt="Cover Berita" class="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-sm hidden">
+            </div>
+
+            <div class="p-8 md:p-12">
+                <!-- Article Body -->
+                <div id="news-body" class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                    <!-- Konten artikel dimasukkan secara dinamis di sini -->
+                </div>
+                
+                <div class="mt-12 pt-8 border-t border-gray-100">
+                    <a href="index.html#news" class="inline-flex items-center text-corporate-bright font-semibold hover:text-corporate-dark transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i> Kembali ke Beranda
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-corporate-dark text-white py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2024 MEGATAMA Construction & Engineering. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="src/js/main.js"></script>
+    <script type="module" src="src/js/detail-berita.js"></script>
+</body>
+</html>

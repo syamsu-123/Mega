@@ -12,6 +12,7 @@ export default defineConfig({
         kontak: resolve(__dirname, 'kontak.html'),
         detailBerita: resolve(__dirname, 'detail-berita.html'),
         monitoringMaterial: resolve(__dirname, 'monitoring-material.html'),
+        monitoringSupplier: resolve(__dirname, 'monitoring-supplier.html'),
       }
     }
   }

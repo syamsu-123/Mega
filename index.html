@@ -98,52 +98,67 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="hero">
-        <!-- Background Video/Image Fallback -->
-        <div class="hero-video-bg" style="background: url('src/assets/images/bg-hero.jpeg') center/cover no-repeat;"></div>
-        <div class="hero-overlay"></div>
+    <section id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-corporate-dark pt-20">
         
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-star"></i> Berpengalaman Lebih Dari 10 Tahun
+        <!-- Background Layer (Memastikan tidak meluber dan proporsional) -->
+        <div class="absolute inset-0 w-full h-full z-0">
+            <div class="w-full h-full object-cover opacity-40" style="background: url('src/assets/images/bg-hero.jpeg') center/cover no-repeat;"></div>
+            <!-- Overlay Gradien yang menutupi seluruh dimensi absolute parent-nya -->
+            <div class="absolute inset-0 bg-gradient-to-b from-corporate-dark/90 via-corporate-dark/60 to-corporate-dark"></div>
+        </div>
+
+        <!-- Content Container (Dibatasi dengan max-w-7xl agar rapi di Desktop) -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center text-center">
+            
+            <div class="inline-block px-4 py-2 bg-corporate-bright/20 border border-corporate-bright text-corporate-bright rounded-full text-sm font-medium mb-6 backdrop-blur-md" data-aos="fade-down">
+                <i class="fas fa-star mr-1"></i> Berpengalaman Lebih Dari 10 Tahun
             </div>
             
-            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-md" data-aos="fade-up">
-                Membangun Masa Depan Dengan Inovasi dan Kualitas
+            <!-- Hero Title (Ukuran teks dinamis dari mobile -> desktop) -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-md" data-aos="fade-up">
+                Membangun Masa Depan <br class="hidden sm:block" />
+                <span class="text-corporate-bright">Dengan Inovasi & Kualitas</span>
             </h1>
             
-            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+            <!-- Hero Description -->
+            <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 drop-shadow-sm" data-aos="fade-up" data-aos-delay="100">
                 Kami menyediakan layanan konstruksi, engineering, konsultasi, mekanikal, elektrikal, plumbing, dan pengembangan properti dengan standar profesional internasional.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center w-full" data-aos="fade-up" data-aos-delay="200">
-                <button class="btn-primary w-full sm:w-auto">
-                    <i class="fas fa-phone-alt mr-2"></i> Konsultasi Sekarang
+            <!-- CTA Buttons (Stack Vertikal di Mobile, Horizontal di layar >= 640px) -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-16" data-aos="fade-up" data-aos-delay="200">
+                <button onclick="window.location.href='kontak.html'" class="w-full sm:w-auto px-8 py-4 bg-corporate-bright hover:bg-orange-600 text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(255,107,53,0.4)] hover:shadow-[0_0_25px_rgba(255,107,53,0.6)] flex items-center justify-center gap-2">
+                    <i class="fas fa-phone-alt"></i> Konsultasi Sekarang
                 </button>
-                <button class="btn-secondary w-full sm:w-auto">
-                    <i class="fas fa-images mr-2"></i> Lihat Portofolio
+                <button onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' })" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-images"></i> Lihat Portofolio
                 </button>
+            </div>
+
+            <!-- Statistics Grid (Mobile: 1 Kolom, Tablet: 2 Kolom, Desktop: 4 Kolom) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full max-w-6xl mx-auto" data-aos="zoom-in" data-aos-delay="300">
+                <!-- Stat Item 1 -->
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="10">0+</div>
+                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Tahun Pengalaman</p>
+                </div>
+                <!-- Stat Item 2 -->
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="500">0</div>
+                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Proyek Selesai</p>
+                </div>
+                <!-- Stat Item 3 -->
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="100">0</div>
+                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Klien Puas</p>
+                </div>
+                <!-- Stat Item 4 -->
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="50">0</div>
+                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Tenaga Ahli</p>
+                </div>
             </div>
             
-            <!-- Counter Animation -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 w-full max-w-4xl mx-auto" data-aos="zoom-in" data-aos-delay="300">
-                <div class="counter-item">
-                    <div class="counter-number" data-target="10">0</div>
-                    <div class="counter-label">Tahun Pengalaman</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-number" data-target="500">0</div>
-                    <div class="counter-label">Proyek Selesai</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-number" data-target="100">0</div>
-                    <div class="counter-label">Klien Puas</div>
-                </div>
-                <div class="counter-item">
-                    <div class="counter-number" data-target="50">0</div>
-                    <div class="counter-label">Tenaga Ahli</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -163,17 +178,53 @@
                     <h2 class="section-title text-left mb-6">Tentang MEGATAMA</h2>
                     
                     <p class="text-gray-700 mb-6 leading-relaxed">
-                        MEGATAMA adalah perusahaan konstruksi dan engineering terkemuka dengan pengalaman lebih dari 10 tahun melayani berbagai sektor industri. Kami berkomitmen untuk memberikan solusi terbaik dengan standar kualitas internasional.
+                        MEGATAMA Didirikan di Kota Bandung pada
+tahun 2010, kota yang dikenal
+sebagai pusat kreativitas dan
+pendidikan, PT. Megatama
+Solusindo hadir sebagai perusahaan
+jasa konstruksi yang meliputi bidang
+mekanikal elektrikal, plumbing,
+arsitektur, sipil, clean room, hingga
+utilisasi rumah sakit. Kami terus
+berkembang mengikuti kemajuan
+teknologi dan dinamika zaman.
+Pengalaman kami dalam
+membangun berbagai proyek
+strategis seperti gedung
+perkantoran, sekolah, universitas,
+rumah sakit, apartemen, fasilitas
+pemerintahan, pusat
+perbelanjaan hingga pabrik
+untuk berbagai macam industri,
+telah membuktikan komitmen
+kami dalam menyiapkan tim
+terbaik, dengan niat baik
+untuk menghadirkan karya
+terbaik bagi negeri.
                     </p>
                     
                     <div class="mb-8">
                         <h3 class="text-xl font-bold text-corporate-dark mb-3">Visi Kami</h3>
-                        <p class="text-gray-700">Menjadi perusahaan konstruksi dan engineering pilihan utama di Asia dengan standar kualitas dan inovasi terdepan.</p>
+                        <p class="text-gray-700">Berkontribusi di setiap
+bangunan dan infrastruktur
+yang berkualitas kokoh
+dan berteknologi.</p>
                     </div>
                     
                     <div class="mb-8">
                         <h3 class="text-xl font-bold text-corporate-dark mb-3">Misi Kami</h3>
-                        <p class="text-gray-700">Memberikan layanan profesional, inovatif, dan tepat waktu untuk membangun infrastruktur berkualitas yang berkelanjutan.</p>
+                        <p class="text-gray-700">Mengutamakan kualitas kerja yang
+terbaik dan ramah lingkungan
+Membangun dan menerapkan SOP
+kebijakan
+Menerapkan budaya kesehatan
+dan keselamatan kerja
+Senantiasa meningkatkan
+kualitas pelayanan dan
+sumberdaya yang
+dimiliki.
+</p>
                     </div>
                     
                     <!-- Values Cards -->
@@ -198,6 +249,13 @@
                             <h4 class="font-semibold text-corporate-dark mb-1">Kualitas</h4>
                             <p class="text-sm text-gray-600">Hasil kerja terbaik</p>
                         </div>
+                    </div>
+
+                    <!-- Download Compro Button -->
+                    <div class="mt-10" data-aos="fade-up" data-aos-delay="400">
+                        <a href="/Compro_Megatama.pdf" target="_blank" download="Compro_Megatama.pdf" class="inline-flex items-center justify-center gap-3 px-8 py-3.5 bg-corporate-dark text-white rounded-xl hover:bg-corporate-bright transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(30,136,229,0.4)] font-bold w-full sm:w-auto">
+                            <i class="fas fa-file-pdf text-xl text-red-400"></i> Download Company Profile (PDF)
+                        </a>
                     </div>
                 </div>
             </div>
@@ -274,13 +332,22 @@
             <h2 class="section-title" data-aos="fade-up">Layanan Unggulan Kami</h2>
             <p class="section-subtitle" data-aos="fade-up">Solusi terpadu untuk semua kebutuhan proyek konstruksi</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-tasks text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Perencanaan Proyek</h3>
-                        <p class="text-gray-700">Perencanaan matang dengan metodologi terbukti untuk hasil maksimal.</p>
+                        <i class="fas fa-industry text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pabrikasi Panel & Manufaktur</h3>
+                        <p class="text-gray-700 mb-3">Kami melayani perancangan dan produksi berbagai jenis panel kelistrikan, antara lain:</p>
+                        <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
+                            <li>Panel Tegangan Menengah</li>
+                            <li>Panel Daya Tegangan Rendah</li>
+                            <li>Panel ATS (Automatic Transfer Switch)</li>
+                            <li>Panel Pompa</li>
+                            <li>Panel Kontrol & Otomasi</li>
+                            <li>Sistem Otomasi Gedung</li>
+                            <li>Sistem Manajemen Gedung</li>
+                        </ul>
                         <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
                     </div>
                 </div>
@@ -288,9 +355,21 @@
                 <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-pencil-ruler text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Design Engineering</h3>
-                        <p class="text-gray-700">Desain detail dengan CAD profesional dan simulasi struktur.</p>
+                        <i class="fas fa-tools text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan Khusus</h3>
+                        <p class="text-gray-700 mb-3">Kami menyediakan solusi untuk lingkungan dengan standar tinggi dan regulasi ketat, seperti:</p>
+                        <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
+                            <li>Clean Room</li>
+                            <li>Ruang Operasi & Modular Operating Theater</li>
+                            <li>Ruang Radiologi</li>
+                            <li>Laboratorium</li>
+                            <li>Fasilitas Industri Farmasi</li>
+                            <li>Fasilitas Industri Makanan & Minuman (F&B)</li>
+                            <li>Ruang Pendingin</li>
+                            <li>Fasilitas Gudang</li>
+                            <li>Sistem Proteksi Kebakaran</li>
+                            <li>Mekanikal, Elektrikal, & Perpipaan</li>
+                        </ul>
                         <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
                     </div>
                 </div>
@@ -298,9 +377,16 @@
                 <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-hammer text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pembangunan Gedung</h3>
-                        <p class="text-gray-700">Eksekusi konstruksi dengan standar keselamatan tertinggi.</p>
+                        <i class="fas fa-building text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan Arsitektur, Sipil & Interior</h3>
+                        <p class="text-gray-700 mb-3">Kami menangani proyek konstruksi dan desain untuk berbagai jenis bangunan, antara lain:</p>
+                        <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
+                            <li>Rumah Tinggal</li>
+                            <li>Sarana Pendidikan</li>
+                            <li>Gedung Perkantoran</li>
+                            <li>Rumah Sakit</li>
+                            <li>Pabrik Industri</li>
+                        </ul>
                         <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
                     </div>
                 </div>
@@ -308,29 +394,16 @@
                 <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-tools text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Renovasi Bangunan</h3>
-                        <p class="text-gray-700">Perbaikan dan modernisasi bangunan dengan minimal disruption.</p>
-                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
-                    </div>
-                </div>
-
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="400">
-                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
-                        <i class="fas fa-clipboard-list text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Manajemen Proyek</h3>
-                        <p class="text-gray-700">Pengelolaan terintegrasi dari awal hingga penyelesaian proyek.</p>
-                        <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
-                    </div>
-                </div>
-
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="500">
-                    <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
-                    <div class="relative z-10">
-                        <i class="fas fa-check-circle text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pengawasan Konstruksi</h3>
-                        <p class="text-gray-700">Quality control dan monitoring real-time selama konstruksi.</p>
+                        <i class="fas fa-bolt text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan MEP untuk Gedung Umum</h3>
+                        <p class="text-gray-700 mb-3">Kami menyediakan layanan instalasi Mekanikal, Elektrikal, dan Plumbing (MEP) untuk:</p>
+                        <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
+                            <li>Gedung Perkantoran</li>
+                            <li>Gedung Sekolah</li>
+                            <li>Hotel</li>
+                            <li>Gedung Komersial</li>
+                            <li>Gedung Pabrik</li>
+                        </ul>
                         <div class="mt-4 inline-block w-1 h-1 bg-corporate-bright rounded-full group-hover:w-8 transition-all duration-300"></div>
                     </div>
                 </div>
@@ -525,7 +598,7 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jakarta Selatan</li>
+                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jl. Sarimadu Barat No.18, Sarijadi, Kec. Sukajadi, Kota Bandung, Jawa Barat 40164</li>
                         <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>info@megatama.com</li>
                         <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
                     </ul>
@@ -544,6 +617,11 @@
             </div>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 bg-corporate-bright text-white w-12 h-12 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,107,53,0.4)] cursor-pointer transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none hover:bg-orange-600 hover:shadow-[0_0_25px_rgba(255,107,53,0.6)] hover:-translate-y-1" title="Kembali ke atas">
+        <i class="fas fa-arrow-up text-lg"></i>
+    </button>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

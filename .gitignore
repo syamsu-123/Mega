@@ -1,0 +1,24 @@
+# Dependencies
+/node_modules
+/.pnp
+.pra
+
+# Build output
+/dist
+/build
+
+# Env files
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Misc
+*.log
+

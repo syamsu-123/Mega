@@ -1,15 +1,81 @@
-import { getSuppliers, addSupplier, updateSupplier, deleteSupplier } from './firebase-service.js';
+import { getSuppliers, addSupplier, updateSupplier, deleteSupplier } from './src/js/firebase-service.js';
 
 let suppliersList = [];
 let currentSearchQuery = '';
 let userRole = localStorage.getItem('userRole') || 'Viewer';
 
+// --- Multi-Language System (Google Translate Auto-Switch) ---
+function initLanguageToggle() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .goog-te-banner-frame.skiptranslate, .skiptranslate > iframe { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+    `;
+    document.head.appendChild(style);
+
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({ pageLanguage: 'id', includedLanguages: 'en,id', autoDisplay: false }, 'google_translate_element');
+    };
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
+
+    const gtDiv = document.createElement('div');
+    gtDiv.id = 'google_translate_element';
+    document.body.appendChild(gtDiv);
+
+    const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    };
+
+    let currentLang = getCookie('googtrans') === '/id/en' ? 'EN' : 'ID';
+
+    const handleLangSwitch = (e) => {
+        if(e) e.preventDefault();
+        const targetLang = currentLang === 'ID' ? '/id/en' : '/id/id';
+        document.cookie = `googtrans=${targetLang}; path=/`;
+        document.cookie = `googtrans=${targetLang}; domain=.${location.hostname}; path=/`;
+        window.location.reload();
+    };
+
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn && !document.getElementById('langToggleBtn')) {
+        const langBtn = document.createElement('button');
+        langBtn.id = 'langToggleBtn';
+        langBtn.className = 'flex items-center justify-center gap-1.5 w-10 h-10 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors';
+        langBtn.innerHTML = `<i class="fas fa-globe text-lg"></i>`;
+        langBtn.title = currentLang === 'ID' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia';
+        langBtn.addEventListener('click', handleLangSwitch);
+        themeBtn.parentNode.insertBefore(langBtn, themeBtn);
+    }
+}
+initLanguageToggle();
+
 document.addEventListener('DOMContentLoaded', async () => {
+    const themeToggleBtn = document.getElementById('themeToggle');
+
     // Cek preferensi tema dari localStorage
     if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
+        if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun text-lg"></i>';
     } else {
         document.documentElement.classList.remove('dark');
+        if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.innerHTML = isDark ? '<i class="fas fa-sun text-lg"></i>' : '<i class="fas fa-moon text-lg"></i>';
+        });
     }
 
     // Show admin buttons if user has access
@@ -123,7 +189,7 @@ function renderTable() {
                 <th class="p-4 font-semibold">Bahan Material</th>
                 <th class="p-4 font-semibold text-right">Harga Update</th>
                 <th class="p-4 font-semibold">Kontak</th>
-                <th class="p-4 font-semibold">Tanggal Masuk</th>
+                <th class="p-4 font-semibold">Tanggal Update</th>
                 <th class="p-4 font-semibold text-center">Status</th>
                 ${userRole !== 'Viewer' ? '<th class="p-4 font-semibold text-center">Aksi</th>' : ''}
             </tr>
@@ -176,7 +242,7 @@ window.editSupplierItem = function(id) {
                 <option value="Aktif" ${supplier.status === 'Aktif' ? 'selected' : ''}>Status: Aktif</option><option value="Non-Aktif" ${supplier.status === 'Non-Aktif' ? 'selected' : ''}>Status: Non-Aktif</option>
             </select>`,
         showCancelButton: true, confirmButtonColor: '#FF7A00', cancelButtonColor: isDark ? '#2A2A2A' : '#64748B', confirmButtonText: 'Update',
-        preConfirm: () => ({ name: document.getElementById('swal-s-name').value, material: document.getElementById('swal-s-mat').value, price: parseFloat(document.getElementById('swal-s-price').value) || 0, unit: document.getElementById('swal-s-unit').value, contact: document.getElementById('swal-s-contact').value, status: document.getElementById('swal-s-status').value })
+        preConfirm: () => ({ name: document.getElementById('swal-s-name').value, material: document.getElementById('swal-s-mat').value, price: parseFloat(document.getElementById('swal-s-price').value) || 0, unit: document.getElementById('swal-s-unit').value, contact: document.getElementById('swal-s-contact').value, status: document.getElementById('swal-s-status').value, timestamp: Date.now() })
     }).then(async (result) => {
         if (result.isConfirmed) { Swal.fire({ title: 'Menyimpan Perubahan...', didOpen: () => Swal.showLoading() }); await updateSupplier(id, result.value); Swal.fire('Berhasil!', 'Data diperbarui.', 'success'); loadSuppliers(); }
     });

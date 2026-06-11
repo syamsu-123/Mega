@@ -9,16 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Leaflet CSS for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    
     <!-- Cropper.js CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/logo-APzS9lAT.png">
+    <link rel="icon" type="image/png" href="src/assets/images/logo.png">
 
-    <!-- Tailwind via Main Style -->
+    <!-- Tailwind via Main Style -->
+    <link rel="stylesheet" href="src/css/style.css">
     
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -50,21 +48,11 @@
         /* Circle Progress Map */
         .circle-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
         
-        /* Map Dark Mode filter */
-        .dark .leaflet-layer,
-        .dark .leaflet-control-zoom-in,
-        .dark .leaflet-control-zoom-out,
-        .dark .leaflet-control-attribution {
-            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-        }
         /* Round Crop Box for Cropper.js (Specific Mode) */
         .cropper-circle-mode .cropper-view-box, .cropper-circle-mode .cropper-face {
             border-radius: 50%;
         }
     </style>
-  <script type="module" crossorigin src="/assets/dashboard-HnHYE5FI.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-service-D13OLJ5a.js">
-  <link rel="stylesheet" crossorigin href="/assets/firebase-service-j9W6uKTA.css">
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
 
@@ -76,7 +64,7 @@
         <!-- Sidebar -->
         <aside id="sidebar" class="w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex-shrink-0 z-[60] absolute xl:relative h-full transform -translate-x-full xl:translate-x-0 transition-transform duration-300 ease-in-out">
             <div class="h-20 flex items-center px-6 border-b border-slate-100 dark:border-slate-700">
-                <img src="/assets/logo-APzS9lAT.png" class="w-10 h-10 object-contain mr-3" alt="MEGATAMA Logo">
+                <img src="src/assets/images/logo.png" class="w-10 h-10 object-contain mr-3" alt="MEGATAMA Logo">
                 <div class="flex flex-col justify-center">
                     <span class="text-xl font-bold tracking-wide text-slate-900 dark:text-white leading-none">MEGATAMA</span>
                     <span class="text-[10px] font-bold tracking-[0.2em] text-orange-600 dark:text-orange-500 mt-1 leading-none">SOLUSINDO</span>
@@ -110,6 +98,9 @@
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-news">
                     <i class="fas fa-newspaper w-5 text-center"></i> <span>Berita</span>
                 </a>
+                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
+                    <i class="fas fa-truck-loading w-5 text-center"></i> <span>Monitoring Supplier</span>
+                </a>
                 <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports">
                     <i class="fas fa-file-pdf w-5 text-center"></i> <span>Laporan</span>
                 </a> -->
@@ -117,9 +108,6 @@
                 <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 admin-only">Sistem</p>
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-only" data-target="view-users">
                     <i class="fas fa-users-cog w-5 text-center"></i> <span>User Management</span>
-                </a>
-                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
-                    <i class="fas fa-truck-loading w-5 text-center"></i> <span>Monitoring Supplier</span>
                 </a>
                 
                 <div class="absolute bottom-6 left-4 right-4">
@@ -159,7 +147,7 @@
                     
                     <button class="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <i class="fas fa-bell text-lg"></i>
-                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hidden h-4 w-4">
+                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hidden flex h-4 w-4">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span id="notificationCount" class="relative inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-[9px] font-bold text-white border border-white dark:border-slate-800">0</span>
                         </span>
@@ -244,14 +232,14 @@
                     
                     <!-- Map & Activity Feed -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative h-[336px]">
                             <div class="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-lg shadow border border-slate-200 dark:border-slate-700">
-                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Peta Lokasi Proyek</h3>
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Lokasi Kantor</h3>
                             </div>
-                            <div id="projectMap" class="w-full h-80 rounded-xl z-0"></div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.026363740263!2d107.57508491537494!3d-6.887462095022831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6873a8cc5a1%3A0x6a0a75f1b203c9d7!2sJl.%20Sarimadu%20Barat%20No.18%2C%20Sarijadi%2C%20Kec.%20Sukajadi%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040164!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" class="w-full h-full rounded-xl z-0 border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col h-[336px]">
                             <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Aktivitas Terkini</h3>
                             <div id="activity-feed" class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-6 pb-2 flex-1 overflow-y-auto pr-2">
                                 <!-- Aktivitas dirender via JS -->
@@ -453,9 +441,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script type="module" src="src/js/dashboard.js"></script>
 </body>
 </html>

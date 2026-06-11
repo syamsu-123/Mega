@@ -108,7 +108,7 @@ function renderStats() {
                     <p class="text-slate-500 dark:text-[#A1A1AA] text-xs font-semibold uppercase tracking-wider mb-1">Total Supplier Terdata</p>
                     <h3 class="text-3xl font-bold text-slate-800 dark:text-white">${total}</h3>
                 </div>
-                <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-500"><i class="fas fa-users"></i></div>
+                <div class="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center text-orange-500"><i class="fas fa-users"></i></div>
             </div>
         </div>
         <div class="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-slate-200 dark:border-[#2A2A2A] shadow-sm transition-colors duration-300">
@@ -172,7 +172,7 @@ function renderTable() {
                 ${userRole !== 'Viewer' ? `
                 <td class="p-4 text-center">
                     <div class="flex items-center justify-center gap-2">
-                        <button onclick="editSupplierItem('${s.id}')" class="w-8 h-8 rounded bg-blue-50 dark:bg-blue-500/10 text-blue-500 dark:text-blue-400 hover:bg-blue-500 hover:text-white transition-all flex items-center justify-center border border-blue-100 dark:border-transparent" title="Edit"><i class="fas fa-edit text-xs"></i></button>
+                        <button onclick="editSupplierItem('${s.id}')" class="w-8 h-8 rounded bg-orange-50 dark:bg-orange-500/10 text-orange-500 dark:text-orange-400 hover:bg-orange-500 hover:text-white transition-all flex items-center justify-center border border-orange-100 dark:border-transparent" title="Edit"><i class="fas fa-edit text-xs"></i></button>
                         <button onclick="deleteSupplierItem('${s.id}')" class="w-8 h-8 rounded bg-red-50 dark:bg-red-500/10 text-red-500 dark:text-red-400 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center border border-red-100 dark:border-transparent" title="Hapus"><i class="fas fa-trash text-xs"></i></button>
                     </div>
                 </td>
@@ -231,17 +231,17 @@ window.editSupplierItem = function(id) {
     Swal.fire({
         title: 'Edit Data Supplier', background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b',
         html: `
-            <input id="swal-s-name" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00]" placeholder="Nama Supplier / Vendor" value="${supplier.name || ''}">
-            <input id="swal-s-mat" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00]" placeholder="Material Barang (cth: Besi Beton)" value="${supplier.material || ''}">
+            <input id="swal-s-name" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-blue-500" placeholder="Nama Supplier / Vendor" value="${supplier.name || ''}">
+            <input id="swal-s-mat" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-blue-500" placeholder="Material Barang (cth: Besi Beton)" value="${supplier.material || ''}">
             <div class="flex gap-3 mb-3">
-                <input id="swal-s-price" type="number" class="w-2/3 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00]" placeholder="Harga Satuan (Rp)" value="${supplier.price || ''}">
-                <input id="swal-s-unit" class="w-1/3 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00]" placeholder="Satuan (cth: Kg)" value="${supplier.unit || ''}">
+                <input id="swal-s-price" type="number" class="w-2/3 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-blue-500" placeholder="Harga Satuan (Rp)" value="${supplier.price || ''}">
+                <input id="swal-s-unit" class="w-1/3 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-blue-500" placeholder="Satuan (cth: Kg)" value="${supplier.unit || ''}">
             </div>
-            <input id="swal-s-contact" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00]" placeholder="Kontak (No Telepon / Email)" value="${supplier.contact || ''}">
-            <select id="swal-s-status" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none cursor-pointer focus:border-[#FF7A00]">
+            <input id="swal-s-contact" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 mb-3 text-slate-800 dark:text-white outline-none focus:border-blue-500" placeholder="Kontak (No Telepon / Email)" value="${supplier.contact || ''}">
+            <select id="swal-s-status" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none cursor-pointer focus:border-blue-500">
                 <option value="Aktif" ${supplier.status === 'Aktif' ? 'selected' : ''}>Status: Aktif</option><option value="Non-Aktif" ${supplier.status === 'Non-Aktif' ? 'selected' : ''}>Status: Non-Aktif</option>
             </select>`,
-        showCancelButton: true, confirmButtonColor: '#FF7A00', cancelButtonColor: isDark ? '#2A2A2A' : '#64748B', confirmButtonText: 'Update',
+        showCancelButton: true, confirmButtonColor: '#3B82F6', cancelButtonColor: isDark ? '#2A2A2A' : '#64748B', confirmButtonText: 'Update',
         preConfirm: () => ({ name: document.getElementById('swal-s-name').value, material: document.getElementById('swal-s-mat').value, price: parseFloat(document.getElementById('swal-s-price').value) || 0, unit: document.getElementById('swal-s-unit').value, contact: document.getElementById('swal-s-contact').value, status: document.getElementById('swal-s-status').value, timestamp: Date.now() })
     }).then(async (result) => {
         if (result.isConfirmed) { Swal.fire({ title: 'Menyimpan Perubahan...', didOpen: () => Swal.showLoading() }); await updateSupplier(id, result.value); Swal.fire('Berhasil!', 'Data diperbarui.', 'success'); loadSuppliers(); }

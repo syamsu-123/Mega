@@ -20,6 +20,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     
@@ -102,26 +105,26 @@
                 <!-- Contact Form -->
                 <div data-aos="fade-right">
                     <h3 class="text-2xl font-bold text-corporate-dark mb-6">Kirim Pesan Kami</h3>
-                    <form class="space-y-4">
+                    <form action="https://formspree.io/f/meewvyrn" method="POST" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nama Lengkap</label>
-                            <input type="text" class="form-input" placeholder="Nama Anda">
+                            <input type="text" name="from_name" class="form-input" placeholder="Nama Anda" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Email</label>
-                            <input type="email" class="form-input" placeholder="email@example.com">
+                            <input type="email" name="from_email" class="form-input" placeholder="email@example.com" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nomor Telepon</label>
-                            <input type="tel" class="form-input" placeholder="+62 xxx xxxx xxxx">
+                            <input type="tel" name="from_phone" class="form-input" placeholder="+62 xxx xxxx xxxx">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nama Perusahaan</label>
-                            <input type="text" class="form-input" placeholder="Nama Perusahaan Anda">
+                            <input type="text" name="from_company" class="form-input" placeholder="Nama Perusahaan Anda">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Pesan</label>
-                            <textarea class="form-textarea" placeholder="Tuliskan pesan Anda..."></textarea>
+                            <textarea name="message" class="form-textarea" placeholder="Tuliskan pesan Anda..." required></textarea>
                         </div>
                         <button type="submit" class="w-full btn-primary">
                             <i class="fas fa-paper-plane mr-2"></i> Kirim Pesan

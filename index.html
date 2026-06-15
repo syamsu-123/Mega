@@ -23,6 +23,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="src/assets/images/logo.png">
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     
@@ -485,11 +488,13 @@ dimiliki.
     <!-- CLIENTS SECTION -->
     <section id="clients" class="section bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title" data-aos="fade-up">Klien Kami</h2>
-            <p class="section-subtitle" data-aos="fade-up">Dipercaya oleh perusahaan terkemuka di Indonesia</p>
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-corporate-dark mb-3">Klien Kami</h2>
+                <p class="text-gray-600">Dipercaya oleh perusahaan terkemuka di Indonesia</p>
+            </div>
             
-            <div class="swiper clientsSwiper" data-aos="zoom-in">
-                <div class="swiper-wrapper" id="clientWrapper">
+            <div data-aos="zoom-in">
+                <div id="clientWrapper" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     <!-- Data klien dari Firestore akan dimuat di sini oleh main.js -->
                 </div>
             </div>
@@ -599,7 +604,7 @@ dimiliki.
                     <h4 class="text-lg font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-gray-400">
                         <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jl. Sarimadu Barat No.18, Sarijadi, Kec. Sukajadi, Kota Bandung, Jawa Barat 40164</li>
-                        <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>info@megatama.com</li>
+                        <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>amegatamasolusindo@gmail.com</li>
                         <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
                     </ul>
                 </div>

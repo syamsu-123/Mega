@@ -247,3 +247,171 @@ window.editSupplierItem = function(id) {
         if (result.isConfirmed) { Swal.fire({ title: 'Menyimpan Perubahan...', didOpen: () => Swal.showLoading() }); await updateSupplier(id, result.value); Swal.fire('Berhasil!', 'Data diperbarui.', 'success'); loadSuppliers(); }
     });
 };
+
+window.showImportInstructions = function() {
+    const isDark = document.documentElement.classList.contains('dark');
+    Swal.fire({
+        title: 'Panduan Import Excel',
+        width: '600px',
+        background: isDark ? '#1A1A1A' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1e293b',
+        html: `
+            <div class="text-left text-sm mb-4 text-slate-600 dark:text-[#A1A1AA]">
+                <p class="mb-3">Pastikan file Excel Anda memiliki struktur kolom (baris pertama) seperti contoh tabel berikut:</p>
+                <div class="overflow-x-auto border border-slate-200 dark:border-[#2A2A2A] rounded-lg mb-4">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-slate-100 dark:bg-[#121212] font-semibold text-slate-700 dark:text-white">
+                            <tr>
+                                <th class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">No</th>
+                                <th class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">Nama Supplier/Vendor</th>
+                                <th class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">Bahan Material</th>
+                                <th class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">Harga</th>
+                                <th class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">Kontak</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600 dark:text-[#A1A1AA]">
+                            <tr>
+                                <td class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">1</td>
+                                <td class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">PT. Contoh Makmur</td>
+                                <td class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">Semen</td>
+                                <td class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">50000</td>
+                                <td class="p-2 border-b border-slate-200 dark:border-[#2A2A2A]">08123456789</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="list-disc pl-5 space-y-1 text-xs mb-4">
+                    <li>Sistem dapat mendeteksi variasi nama kolom secara otomatis.</li>
+                    <li>Kolom <b>Nama Supplier</b> wajib ada.</li>
+                </ul>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fas fa-file-upload mr-2"></i> Pilih File',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#3B82F6',
+        cancelButtonColor: isDark ? '#2A2A2A' : '#64748B',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('import-excel-file').click();
+        }
+    });
+};
+
+window.handleImportExcel = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const reader = new FileReader();
+
+    reader.onload = async function(e) {
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheet = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheet];
+            const json = XLSX.utils.sheet_to_json(worksheet);
+            
+            if (json.length === 0) {
+                event.target.value = '';
+                return Swal.fire({ icon: 'warning', title: 'Data Kosong', text: 'File Excel kosong!', background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b' });
+            }
+
+            // Kumpulkan Header
+            let excelHeaders = new Set();
+            json.forEach(row => Object.keys(row).forEach(k => excelHeaders.add(k)));
+            excelHeaders = Array.from(excelHeaders);
+
+            const fields = [
+                { id: 'map-name', label: 'Nama Supplier/Vendor *', aliases: ['nama', 'supplier', 'vendor', 'perusahaan'], required: true },
+                { id: 'map-material', label: 'Bahan Material', aliases: ['bahan', 'material', 'kategori', 'barang', 'jenis'] },
+                { id: 'map-price', label: 'Harga', aliases: ['harga', 'price', 'biaya', 'keterangan'] },
+                { id: 'map-contact', label: 'Kontak', aliases: ['kontak', 'no', 'telp', 'hp', 'email', 'telepon'] }
+            ];
+
+            let mapHtml = `<div class="text-left text-sm text-slate-600 dark:text-[#A1A1AA] mb-4">Pilih kolom Excel yang sesuai dengan format sistem:</div><div class="space-y-3 text-left">`;
+            fields.forEach(f => {
+                let options = '<option value="">-- Abaikan / Tidak Ada --</option>';
+                let matched = false;
+                excelHeaders.forEach(h => {
+                    let hLower = h.toLowerCase();
+                    let baseLabel = f.label.toLowerCase().replace(' *', '');
+                    let isMatch = !matched && (hLower.includes(baseLabel) || f.aliases.some(a => hLower.includes(a)));
+                    if (isMatch) matched = true;
+                    options += `<option value="${h}" ${isMatch ? 'selected' : ''}>${h}</option>`;
+                });
+                mapHtml += `<div><label class="block text-xs font-semibold text-slate-800 dark:text-white mb-1">${f.label}</label><select id="${f.id}" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded p-2 outline-none text-slate-800 dark:text-white text-sm focus:border-blue-500">${options}</select></div>`;
+            });
+            mapHtml += '</div>';
+
+            const mappingResult = await Swal.fire({
+                title: 'Mapping Kolom',
+                html: mapHtml,
+                background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b',
+                showCancelButton: true, confirmButtonColor: '#3B82F6', cancelButtonColor: isDark ? '#2A2A2A' : '#64748B',
+                confirmButtonText: 'Lanjut Pratinjau',
+                preConfirm: () => {
+                    const mapped = {};
+                    let missing = [];
+                    fields.forEach(f => {
+                        const val = document.getElementById(f.id).value;
+                        if (f.required && !val) missing.push(f.label.replace(' *', ''));
+                        mapped[f.id] = val;
+                    });
+                    if (missing.length > 0) { Swal.showValidationMessage(`Kolom ${missing.join(', ')} wajib dipetakan!`); return false; }
+                    return mapped;
+                }
+            });
+
+            if (!mappingResult.isConfirmed) { event.target.value = ''; return; }
+            const mappings = mappingResult.value;
+
+            const parsedData = [];
+            for (const row of json) {
+                const name = mappings['map-name'] ? row[mappings['map-name']] : '';
+                const material = mappings['map-material'] ? row[mappings['map-material']] : '';
+                const price = mappings['map-price'] ? row[mappings['map-price']] : '';
+                const contact = mappings['map-contact'] ? row[mappings['map-contact']] : '';
+
+                if (name) {
+                    parsedData.push({ 
+                        name: String(name).trim(), 
+                        material: material ? String(material).trim() : '',
+                        price: price ? parseFloat(String(price).replace(/[^0-9]/g, '')) || 0 : 0,
+                        unit: '', 
+                        contact: contact ? String(contact).trim() : '', 
+                        status: 'Aktif',
+                        timestamp: Date.now() 
+                    });
+                }
+            }
+
+            if (parsedData.length === 0) { event.target.value = ''; return Swal.fire({ icon: 'warning', title: 'Kosong', text: 'Tidak ada data valid yang bisa diimport.', background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b'}); }
+
+            Swal.fire({
+                title: 'Konfirmasi Import',
+                text: `Ditemukan ${parsedData.length} data supplier. Import sekarang?`,
+                icon: 'question',
+                showCancelButton: true, confirmButtonColor: '#3B82F6', cancelButtonColor: isDark ? '#2A2A2A' : '#64748B',
+                confirmButtonText: 'Ya, Import',
+                background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b'
+            }).then(async (res) => {
+                if (res.isConfirmed) {
+                    Swal.fire({ title: 'Memproses...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                    let s_count = 0;
+                    for (const item of parsedData) {
+                        await addSupplier(item);
+                        s_count++;
+                    }
+                    Swal.fire({ icon: 'success', title: 'Selesai', text: `${s_count} data berhasil diimport.`, background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b' });
+                    loadSuppliers();
+                }
+            }).finally(() => { event.target.value = ''; });
+        } catch (error) { 
+            Swal.fire({ icon: 'error', title: 'Error', text: 'Gagal memproses file.', background: isDark ? '#1A1A1A' : '#ffffff', color: isDark ? '#ffffff' : '#1e293b' }); 
+            event.target.value = ''; 
+        }
+    };
+    reader.readAsArrayBuffer(file);
+};

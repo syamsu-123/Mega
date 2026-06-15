@@ -7,7 +7,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 const projectsCollection = collection(db, 'projects');
 
 // Reference ke koleksi 'testimonials'
-const testimonialsCollection = collection(db, 'testimonials');
+// const testimonialsCollection = collection(db, 'testimonials');
 
 // Reference ke koleksi 'news'
 const newsCollection = collection(db, 'news');
@@ -84,7 +84,7 @@ export const getMaterialsByProjectId = async (projectId) => {
         const snapshot = await getDocs(q);
         const materials = [];
         snapshot.forEach((doc) => {
-            materials.push({ id: doc.id, ...doc.data() });
+            materials.push({ ...doc.data(), id: doc.id }); // Mencegah ID asli tertimpa oleh id nyasar dari import excel lama
         });
         return materials;
     } catch (error) {
@@ -95,8 +95,9 @@ export const getMaterialsByProjectId = async (projectId) => {
 
 export const addMaterial = async (materialData) => {
     try {
-        const docRef = await addDoc(materialsCollection, materialData);
-        return { id: docRef.id, ...materialData };
+        const { id, ...cleanData } = materialData; // Cegah field id sementara ikut masuk ke database
+        const docRef = await addDoc(materialsCollection, cleanData);
+        return { ...cleanData, id: docRef.id };
     } catch (error) {
         console.error("Error adding material: ", error);
         return null;
@@ -105,7 +106,8 @@ export const addMaterial = async (materialData) => {
 
 export const updateMaterial = async (id, materialData) => {
     try {
-        await setDoc(doc(db, 'materials', String(id)), materialData, { merge: true });
+        const { id: ignoreId, ...cleanData } = materialData; // Cegah field id ikut masuk ke database
+        await setDoc(doc(db, 'materials', String(id)), cleanData, { merge: true });
         return true;
     } catch (error) {
         console.error("Error updating material: ", error);
@@ -115,7 +117,9 @@ export const updateMaterial = async (id, materialData) => {
 
 export const deleteMaterial = async (id) => {
     try {
-        await deleteDoc(doc(db, 'materials', id));
+        if (!id || id === 'undefined') return false;
+        const cleanId = String(id).trim(); // Membersihkan spasi tak terlihat
+        await deleteDoc(doc(db, 'materials', cleanId));
         return true;
     } catch (error) {
         console.error("Error deleting material: ", error);
@@ -123,7 +127,7 @@ export const deleteMaterial = async (id) => {
     }
 };
 
-// --- CRUD SUPPLIER ---
+// --- CRUD SUPPLIERS ---
 
 export const getSuppliers = async () => {
     try {
@@ -151,7 +155,8 @@ export const addSupplier = async (supplierData) => {
 
 export const updateSupplier = async (id, supplierData) => {
     try {
-        await setDoc(doc(db, 'suppliers', String(id)), supplierData, { merge: true });
+        const docRef = doc(db, 'suppliers', String(id));
+        await setDoc(docRef, supplierData, { merge: true });
         return true;
     } catch (error) {
         console.error("Error updating supplier: ", error);
@@ -161,7 +166,8 @@ export const updateSupplier = async (id, supplierData) => {
 
 export const deleteSupplier = async (id) => {
     try {
-        await deleteDoc(doc(db, 'suppliers', id));
+        const docRef = doc(db, 'suppliers', id);
+        await deleteDoc(docRef);
         return true;
     } catch (error) {
         console.error("Error deleting supplier: ", error);

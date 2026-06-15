@@ -1,0 +1,306 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom Base Styles */
+* {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  @apply bg-white text-corporate-dark;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-corporate-bright rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-corporate-dark;
+}
+
+/* Navbar Styles */
+.navbar {
+  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+  background-color: rgba(26, 26, 26, 0);
+  backdrop-filter: blur(0px);
+}
+
+.navbar.scrolled,
+.navbar.solid-nav {
+  @apply shadow-lg;
+  background-color: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.navbar-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center;
+}
+
+.navbar-logo {
+  @apply text-2xl font-bold text-white flex items-center gap-2;
+  letter-spacing: 0.05em;
+}
+
+.navbar-logo span {
+  @apply text-corporate-bright;
+}
+
+.navbar-menu {
+  @apply hidden xl:flex gap-8 items-center;
+}
+
+.navbar-menu a {
+  @apply text-white text-sm font-medium transition-colors duration-300 hover:text-corporate-bright;
+}
+
+.navbar-cta {
+  @apply px-6 py-2 bg-corporate-bright text-white rounded-lg font-medium transition-all duration-300 hover:bg-corporate-dark hover:shadow-lg;
+}
+
+.navbar-toggle {
+  @apply xl:hidden text-white cursor-pointer text-2xl;
+}
+
+/* Hero Section */
+.hero {
+  @apply relative w-full h-screen flex items-center justify-center overflow-hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #FF6B35 100%);
+}
+
+.hero-video-bg {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.hero-overlay {
+  @apply absolute top-0 left-0 w-full h-full;
+  background: linear-gradient(180deg, rgba(26, 26, 26, 0.4) 0%, rgba(26, 26, 26, 0.7) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  @apply relative z-10 max-w-4xl mx-auto px-4 text-center;
+}
+
+.hero-badge {
+  @apply inline-block px-4 py-2 bg-corporate-bright/20 border border-corporate-bright text-corporate-bright rounded-full text-sm font-medium mb-6;
+  backdrop-filter: blur(10px);
+}
+
+.hero-title {
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+  @apply text-lg md:text-xl text-gray-100 mb-8 max-w-2xl mx-auto;
+}
+
+.hero-buttons {
+  @apply flex flex-col sm:flex-row gap-4 justify-center items-center;
+}
+
+.btn-primary {
+  @apply px-8 py-4 bg-corporate-bright text-white font-semibold rounded-lg transition-all duration-300 hover:bg-corporate-dark hover:shadow-2xl transform hover:-translate-y-1;
+}
+
+.btn-secondary {
+  @apply px-8 py-4 bg-white/20 text-white font-semibold rounded-lg border-2 border-white transition-all duration-300 hover:bg-white/30 hover:shadow-xl backdrop-filter backdrop-blur-sm;
+}
+
+/* Counter Section */
+.counter-grid {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12;
+}
+
+.counter-item {
+  @apply text-center;
+}
+
+.counter-number {
+  @apply text-4xl md:text-5xl font-bold text-corporate-bright mb-2;
+}
+
+.counter-label {
+  @apply text-gray-100 text-sm md:text-base;
+}
+
+/* Section Styles */
+.section {
+  @apply py-16 md:py-24;
+}
+
+.section-title {
+  @apply text-4xl md:text-5xl font-bold text-corporate-dark mb-4 text-center;
+}
+
+.section-subtitle {
+  @apply text-lg text-gray-600 text-center max-w-2xl mx-auto mb-12;
+}
+
+/* Card Hover Effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+}
+
+.card-shine {
+  @apply relative overflow-hidden rounded-xl;
+}
+
+.card-shine::after {
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+  transform: translateX(-100%);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-gradient-to-r from-corporate-dark to-corporate-bright bg-clip-text text-transparent;
+}
+
+/* Blur Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button Group */
+.btn-group {
+  @apply flex gap-3 flex-wrap;
+}
+
+.btn-tag {
+  @apply px-4 py-2 bg-corporate-gray text-corporate-dark rounded-full text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-corporate-bright hover:text-white;
+}
+
+.btn-tag.active {
+  @apply bg-corporate-bright text-white;
+}
+
+/* Loading Animation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  @apply fixed top-0 left-0 h-1 bg-corporate-bright z-50;
+  width: 0%;
+  transition: width 0.2s;
+}
+
+/* Forms */
+.form-input {
+  @apply w-full px-4 py-3 border border-corporate-gray rounded-lg focus:outline-none focus:border-corporate-bright focus:ring-2 focus:ring-corporate-bright/20 transition-all duration-300;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 border border-corporate-gray rounded-lg focus:outline-none focus:border-corporate-bright focus:ring-2 focus:ring-corporate-bright/20 transition-all duration-300 resize-none;
+  min-height: 120px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    @apply text-3xl;
+  }
+
+  .hero-subtitle {
+    @apply text-base;
+  }
+
+  .navbar-menu {
+    @apply hidden;
+  }
+
+  .section-title {
+    @apply text-2xl;
+  }
+
+  .grid-auto {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+/* Smooth Transitions */
+* {
+  @apply transition-colors duration-300;
+}
+
+/* Animation Utilities */
+.fade-up {
+  animation: fadeUp 0.6s ease-out;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-left {
+  animation: fadeLeft 0.6s ease-out;
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-right {
+  animation: fadeRight 0.6s ease-out;
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

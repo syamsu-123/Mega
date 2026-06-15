@@ -1,5 +1,69 @@
 import { getProjects, getTestimonials, getNews, getClients, getGallery } from './firebase-service.js';
 
+// --- Multi-Language System (Google Translate Auto-Switch) ---
+function initLanguageToggle() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .goog-te-banner-frame.skiptranslate, .skiptranslate > iframe { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+    `;
+    document.head.appendChild(style);
+
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({ pageLanguage: 'id', includedLanguages: 'en,id', autoDisplay: false }, 'google_translate_element');
+    };
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
+
+    const gtDiv = document.createElement('div');
+    gtDiv.id = 'google_translate_element';
+    document.body.appendChild(gtDiv);
+
+    const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    };
+
+    let currentLang = getCookie('googtrans') === '/id/en' ? 'EN' : 'ID';
+
+    const handleLangSwitch = (e) => {
+        if(e) e.preventDefault();
+        const targetLang = currentLang === 'ID' ? '/id/en' : '/id/id';
+        document.cookie = `googtrans=${targetLang}; path=/`;
+        document.cookie = `googtrans=${targetLang}; domain=.${location.hostname}; path=/`;
+        window.location.reload();
+    };
+
+    const rightNavContainer = document.querySelector('.navbar-container > div:last-child');
+    if (rightNavContainer && !document.getElementById('langToggleBtnDesktop')) {
+        const desktopBtn = document.createElement('button');
+        desktopBtn.id = 'langToggleBtnDesktop';
+        desktopBtn.className = 'hidden xl:flex items-center justify-center gap-2 bg-white/10 hover:bg-corporate-bright border border-white/20 hover:border-corporate-bright text-white px-4 py-2.5 rounded-full font-semibold transition-all duration-300 pointer-events-auto';
+        desktopBtn.innerHTML = `<i class="fas fa-globe"></i> <span class="lang-text">${currentLang}</span>`;
+        desktopBtn.addEventListener('click', handleLangSwitch);
+        const portalBtn = rightNavContainer.querySelector('a[href="login.html"]');
+        if (portalBtn) rightNavContainer.insertBefore(desktopBtn, portalBtn);
+        else rightNavContainer.prepend(desktopBtn);
+    }
+
+    const mobileNavContainer = document.querySelector('.navbar-menu > nav');
+    if (mobileNavContainer && !document.getElementById('langToggleBtnMobile')) {
+        const mobileBtn = document.createElement('button');
+        mobileBtn.id = 'langToggleBtnMobile';
+        mobileBtn.className = 'w-[calc(100%-2rem)] mx-4 mt-2 mb-4 py-3 px-4 bg-white/10 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-colors flex items-center justify-center gap-2 xl:hidden pointer-events-auto';
+        mobileBtn.innerHTML = `<i class="fas fa-globe"></i> <span class="lang-text">${currentLang}</span>`;
+        mobileBtn.addEventListener('click', handleLangSwitch);
+        mobileNavContainer.appendChild(mobileBtn);
+    }
+}
+initLanguageToggle();
+
 // Initialize AOS (Animate On Scroll)
 if (typeof AOS !== 'undefined') {
     AOS.init({
@@ -13,6 +77,7 @@ if (typeof AOS !== 'undefined') {
 // Navbar Scroll Effect
 const navbar = document.querySelector('.navbar');
 const scrollProgressBar = document.querySelector('.scroll-progress');
+const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
 window.addEventListener('scroll', () => {
     if (scrollProgressBar) {
@@ -27,13 +92,30 @@ window.addEventListener('scroll', () => {
             navbar.classList.remove('scrolled');
         }
     }
+    
+    // Tampilkan/Sembunyikan Scroll to Top Button
+    if (scrollToTopBtn) {
+        if (window.scrollY > 400) {
+            scrollToTopBtn.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            scrollToTopBtn.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        } else {
+            scrollToTopBtn.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            scrollToTopBtn.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        }
+    }
 });
 
-// Smooth Scroll for Navbar Links
-document.querySelectorAll('.navbar-menu a').forEach(link => {
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// Smooth Scroll for Navbar and Footer Links
+document.querySelectorAll('.navbar-menu a, footer a').forEach(link => {
     link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
+        if (href && href.startsWith('#') && href !== '#') {
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) target.scrollIntoView({ behavior: 'smooth' });
@@ -163,6 +245,12 @@ if (navbarMenu) { navbarMenu.addEventListener('touchstart', touchStart, {passive
 
 // CTA Buttons
 document.querySelectorAll('.navbar-cta, .btn-primary, .btn-secondary, a, button').forEach(btn => {
+    // Abaikan link anchor internal (seperti href="#clients") agar tidak bentrok dengan fungsi scroll
+    if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href').startsWith('#')) return;
+
+    // Abaikan tombol yang memiliki aksi onclick spesifik agar tidak memicu global redirect
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes('viewAllClients')) return;
+
     const text = btn.textContent.toLowerCase();
     
     if (text.includes('hubungi') || text.includes('konsultasi')) {
@@ -187,22 +275,49 @@ document.querySelectorAll('.navbar-cta, .btn-primary, .btn-secondary, a, button'
 // Form Submission
 const contactForm = document.querySelector('#contact form');
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
+        // Tampilkan popup loading
+        Swal.fire({
+            title: 'Mengirim Pesan...',
+            text: 'Mohon tunggu sebentar.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         
-        // Simple validation
-        if (!data.name || !data.email || !data.message) {
-            alert('Mohon isi semua field yang wajib diisi');
-            return;
+        try {
+            // Kirim form menggunakan Formspree via AJAX
+            const response = await fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pesan Terkirim!',
+                    text: 'Terima kasih! Tim kami akan segera menghubungi Anda.',
+                    confirmButtonColor: '#FF7A00'
+                });
+                contactForm.reset(); // Reset form setelah berhasil
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('FAILED...', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Terjadi Kesalahan',
+                text: 'Gagal mengirim pesan. Silakan coba lagi atau hubungi kami langsung.',
+                confirmButtonColor: '#FF7A00'
+            });
         }
-        
-        // Show success message
-        alert('Terima kasih! Pesan Anda telah kami terima. Kami akan menghubungi Anda segera.');
-        contactForm.reset();
     });
 }
 
@@ -431,36 +546,20 @@ async function loadClients() {
 
     try {
         const clients = await getClients();
+        
 
         if (clients.length === 0) {
-            wrapper.innerHTML = '<div class="swiper-slide"><div class="text-center text-zinc-500 py-10">Belum ada logo klien yang diunggah.</div></div>';
+            wrapper.innerHTML = '<div class="col-span-full text-center text-zinc-500 py-10">Belum ada logo klien yang diunggah.</div>';
             return;
         }
 
         wrapper.innerHTML = clients.map(c => `
-            <div class="swiper-slide">
-                <div class="flex items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-lg transition-shadow p-4">
-                    <img src="${c.logoUrl}" alt="${c.name}" title="${c.name}" class="w-20 h-20 rounded-full object-cover mx-auto filter grayscale hover:grayscale-0 transition-all duration-300 shadow-sm border border-gray-200">
-                </div>
+            <div class="flex flex-col items-center justify-center h-32 bg-corporate-light rounded-lg hover:shadow-md transition-shadow p-4 border border-gray-100">
+                <img src="${c.logoUrl}" alt="${c.name}" title="${c.name}" class="${c.shape === 'square' ? 'h-16 w-auto max-w-full rounded-lg object-contain' : 'w-16 h-16 rounded-full object-cover bg-white'} mx-auto transition-all duration-300 shadow-sm border border-gray-200 mb-2">
+                <span class="text-xs font-semibold text-corporate-dark text-center line-clamp-1">${c.name}</span>
             </div>
         `).join('');
 
-        // Initialize Swiper for Clients setelah elemennya selesai di-render
-        if (typeof Swiper !== 'undefined') {
-            new Swiper('.clientsSwiper', {
-                loop: clients.length > 4, // Loop hanya jika datanya mencukupi untuk menghindari glitch visual
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                slidesPerView: 2,
-                spaceBetween: 20,
-                breakpoints: {
-                    640: { slidesPerView: 3 },
-                    1024: { slidesPerView: 5 },
-                },
-            });
-        }
     } catch (error) {
         console.error("Error loading clients:", error);
     }
@@ -521,7 +620,7 @@ async function loadPublicProjects() {
         // Update Teks Subtitle agar sinkron dengan jumlah yang ditampilkan
         const subtitle = document.getElementById('projectsSubtitle');
         if (subtitle) {
-            subtitle.textContent = `${sortedProjects.length} Proyek Terbaik dengan Nilai Signifikan`;
+            subtitle.textContent = `Menampilkan ${sortedProjects.length} Proyek Unggulan Kami`;
         }
 
         container.innerHTML = sortedProjects.map(p => {

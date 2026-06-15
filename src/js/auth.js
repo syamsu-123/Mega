@@ -2,6 +2,58 @@ import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from './firebase-config.js';
 import { getUserByEmail } from './firebase-service.js';
 
+// --- Multi-Language System (Google Translate Auto-Switch) ---
+function initLoginLanguageToggle() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .goog-te-banner-frame.skiptranslate, .skiptranslate > iframe { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+    `;
+    document.head.appendChild(style);
+
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({ pageLanguage: 'id', includedLanguages: 'en,id', autoDisplay: false }, 'google_translate_element');
+    };
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
+
+    const gtDiv = document.createElement('div');
+    gtDiv.id = 'google_translate_element';
+    document.body.appendChild(gtDiv);
+
+    const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    };
+
+    let currentLang = getCookie('googtrans') === '/id/en' ? 'EN' : 'ID';
+
+    const handleLangSwitch = (e) => {
+        if(e) e.preventDefault();
+        const targetLang = currentLang === 'ID' ? '/id/en' : '/id/id';
+        document.cookie = `googtrans=${targetLang}; path=/`;
+        document.cookie = `googtrans=${targetLang}; domain=.${location.hostname}; path=/`;
+        window.location.reload();
+    };
+
+    const backBtnContainer = document.querySelector('.absolute.top-6.left-6.z-20') || document.querySelector('.absolute.z-20');
+    if (backBtnContainer && !document.getElementById('langToggleLogin')) {
+        const langBtn = document.createElement('button');
+        langBtn.id = 'langToggleLogin';
+        langBtn.className = 'mt-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white lg:text-slate-500 border border-white/20 lg:border-slate-300 hover:bg-white/10 lg:hover:bg-slate-100 transition-colors backdrop-blur-sm';
+        langBtn.innerHTML = `<i class="fas fa-globe"></i> <span>${currentLang === 'ID' ? 'English' : 'Indonesia'}</span>`;
+        langBtn.addEventListener('click', handleLangSwitch);
+        backBtnContainer.appendChild(langBtn);
+    }
+}
+initLoginLanguageToggle();
+
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof AOS !== 'undefined') AOS.init();
 

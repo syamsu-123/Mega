@@ -38,7 +38,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('proj-start').textContent = project.start;
     document.getElementById('proj-end').textContent = project.end;
     document.getElementById('proj-pic').textContent = project.pic || 'Tidak Ditentukan';
-    document.getElementById('proj-value').textContent = project.value || 'Tidak Ditentukan';
+    
+    // Pengecekan role pengguna untuk menyembunyikan nilai proyek bagi Viewer
+    const userRole = localStorage.getItem('userRole') || 'Viewer';
+    const valueElement = document.getElementById('proj-value');
+    if (userRole === 'Viewer') {
+        if (valueElement && valueElement.parentElement) {
+            valueElement.parentElement.style.display = 'none';
+        }
+    } else {
+        valueElement.textContent = project.value || 'Tidak Ditentukan';
+    }
     
     // Pewarnaan Status
     const statusEl = document.getElementById('proj-status');

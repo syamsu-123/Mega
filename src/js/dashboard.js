@@ -2,6 +2,59 @@ import { getProjects, updateProject, addProject, deleteProject, getTestimonials,
 import { auth } from './firebase-config.js';
 import { signOut } from 'firebase/auth';
 
+// --- Multi-Language System (Google Translate Auto-Switch) ---
+function initDashboardLanguageToggle() {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .goog-te-banner-frame.skiptranslate, .skiptranslate > iframe { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+    `;
+    document.head.appendChild(style);
+
+    window.googleTranslateElementInit = function() {
+        new google.translate.TranslateElement({ pageLanguage: 'id', includedLanguages: 'en,id', autoDisplay: false }, 'google_translate_element');
+    };
+    const gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(gtScript);
+
+    const gtDiv = document.createElement('div');
+    gtDiv.id = 'google_translate_element';
+    document.body.appendChild(gtDiv);
+
+    const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    };
+
+    let currentLang = getCookie('googtrans') === '/id/en' ? 'EN' : 'ID';
+
+    const handleLangSwitch = (e) => {
+        if(e) e.preventDefault();
+        const targetLang = currentLang === 'ID' ? '/id/en' : '/id/id';
+        document.cookie = `googtrans=${targetLang}; path=/`;
+        document.cookie = `googtrans=${targetLang}; domain=.${location.hostname}; path=/`;
+        window.location.reload();
+    };
+
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn && !document.getElementById('langToggleDashboard')) {
+        const langBtn = document.createElement('button');
+        langBtn.id = 'langToggleDashboard';
+        langBtn.className = 'flex items-center justify-center gap-1.5 w-10 h-10 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors';
+        langBtn.innerHTML = `<i class="fas fa-globe text-lg"></i>`;
+        langBtn.title = currentLang === 'ID' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia';
+        langBtn.addEventListener('click', handleLangSwitch);
+        themeBtn.parentNode.insertBefore(langBtn, themeBtn);
+    }
+}
+initDashboardLanguageToggle();
+
 document.addEventListener('DOMContentLoaded', () => {
     // Cek Autentikasi
     if (!localStorage.getItem('isLoggedIn')) {
@@ -158,11 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.warn(`Elemen view untuk menu '${target}' tidak ditemukan di HTML.`);
             }
-
-            // Invalidate Map Size if shown to fix Leaflet rendering bug
-            if(target === 'view-overview' && map) {
-                setTimeout(() => map.invalidateSize(), 100);
-            }
         });
     });
 
@@ -295,6 +343,35 @@ document.addEventListener('DOMContentLoaded', () => {
         startInput.addEventListener('change', updateDuration);
         endInput.addEventListener('change', updateDuration);
     }
+    
+    // Inject Divisi Checkboxes untuk Setup Modal Proyek
+    const endInputNode = document.getElementById('html-p-end');
+    if (endInputNode && !document.getElementById('divisi-checkboxes')) {
+        const divisiHtml = `
+            <div id="divisi-checkboxes" class="col-span-full mt-2">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Divisi yang Terlibat pada Proyek</label>
+                <div class="flex flex-wrap gap-4">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="html-p-has-sipil" checked class="w-4 h-4 rounded text-[#FF7A00] bg-slate-50 border-slate-200 focus:ring-[#FF7A00]">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">Sipil</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="html-p-has-ars" checked class="w-4 h-4 rounded text-[#FF7A00] bg-slate-50 border-slate-200 focus:ring-[#FF7A00]">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">Arsitektur</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="html-p-has-mep" checked class="w-4 h-4 rounded text-[#FF7A00] bg-slate-50 border-slate-200 focus:ring-[#FF7A00]">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">MEP</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="html-p-has-int" checked class="w-4 h-4 rounded text-[#FF7A00] bg-slate-50 border-slate-200 focus:ring-[#FF7A00]">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">Interior</span>
+                    </label>
+                </div>
+            </div>
+        `;
+        endInputNode.parentElement.insertAdjacentHTML('afterend', divisiHtml);
+    }
 });
 
 let currentProjects = [];
@@ -318,7 +395,6 @@ async function loadProjectsData() {
         renderProjectCards();
         updateDashboardStats();
         initCharts(); // Memperbarui grafik agar sinkron dengan data dari Firebase
-        initMap();
         if (typeof window.updateActivityFeed === 'function') window.updateActivityFeed();
     } catch (error) {
         console.error("Error loading projects:", error);
@@ -378,8 +454,20 @@ function updateDashboardStats() {
     
     // Format String Anggaran untuk UI
     let strAnggaran = "Rp 0";
+    let fullAnggaran = "Rp 0";
     if (totalAnggaran > 0) {
-        strAnggaran = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalAnggaran);
+        fullAnggaran = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalAnggaran);
+        const formatSingkat = (num) => num.toFixed(2).replace(/\.?0+$/, '').replace('.', ',');
+        
+        if (totalAnggaran >= 1000000000000) {
+            strAnggaran = "Rp " + formatSingkat(totalAnggaran / 1000000000000) + " T";
+        } else if (totalAnggaran >= 1000000000) {
+            strAnggaran = "Rp " + formatSingkat(totalAnggaran / 1000000000) + " M";
+        } else if (totalAnggaran >= 100000000) {
+            strAnggaran = "Rp " + formatSingkat(totalAnggaran / 1000000) + " Jt";
+        } else {
+            strAnggaran = fullAnggaran;
+        }
     }
 
     // DOM Updates
@@ -396,6 +484,8 @@ function updateDashboardStats() {
             if (card) card.style.display = 'none';
         } else {
             anggaranEl.innerText = strAnggaran;
+            anggaranEl.title = fullAnggaran;
+            anggaranEl.classList.add('cursor-help');
         }
     }
     if(document.getElementById('stat-selesai')) document.getElementById('stat-selesai').innerText = selesai;
@@ -458,6 +548,8 @@ window.updateActivityFeed = function() {
     activities.sort((a, b) => b.timestamp - a.timestamp);
     activities = activities.slice(0, 10); // Ambil 10 teratas
 
+    window.latestActivities = activities;
+
     // Update Notifikasi Lonceng (Hitung aktivitas 7 hari terakhir)
     const recentActivities = activities.filter(act => (Date.now() - act.timestamp) < (7 * 24 * 60 * 60 * 1000));
     const notifContainer = document.getElementById('notificationBadgeContainer');
@@ -468,6 +560,17 @@ window.updateActivityFeed = function() {
             notifContainer.classList.remove('hidden');
         } else {
             notifContainer.classList.add('hidden');
+        }
+
+        // Tambahkan event listener pada tombol notifikasi untuk membuka modal riwayat
+        const notifBtn = notifContainer.closest('button') || notifContainer.parentElement;
+        if (notifBtn && !notifBtn.dataset.hasClickListener) {
+            notifBtn.dataset.hasClickListener = "true";
+            notifBtn.style.cursor = 'pointer';
+            notifBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.showNotificationsModal(window.latestActivities);
+            });
         }
     }
 
@@ -488,36 +591,50 @@ window.updateActivityFeed = function() {
     feedContainer.innerHTML = activities.map(act => `<div class="relative pl-6"><div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${act.color} ring-4 ring-white dark:ring-slate-800"></div><p class="text-sm font-semibold text-slate-800 dark:text-white">${act.title}</p><p class="text-xs text-slate-500 mt-1">${act.desc}</p>${act.note ? `<p class="text-[11px] text-slate-400 italic mt-1 line-clamp-1">"${act.note}"</p>` : ''}<span class="text-[10px] text-slate-400 mt-1 block">${timeAgo(act.timestamp)}</span></div>`).join('');
 };
 
-let map;
-function initMap() {
-    if (typeof L === 'undefined') return; // Mencegah crash jika library Leaflet map belum ter-load
-    if (!document.getElementById('projectMap')) return; // Mencegah crash jika container id projectMap tidak ada
-
-    if (map) {
-        map.eachLayer(layer => {
-            if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-            }
-        });
-    } else {
-        map = L.map('projectMap').setView([-6.5, 107.0], 8);
-        // CartoDB Dark Matter Base map - premium dark industrial
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO'
-        }).addTo(map);
-    }
+window.showNotificationsModal = function(activities) {
+    const isDark = document.documentElement.classList.contains('dark');
+    let htmlContent = '';
     
-    currentProjects.forEach(p => {
-        if (p.coords && p.coords.length === 2) {
-            let color = p.status === 'Selesai' ? '#22C55E' : (p.status === 'Berjalan' ? '#FF7A00' : '#EF4444');
-            let glow = p.status === 'Berjalan' ? 'box-shadow: 0 0 15px 4px rgba(255,122,0,0.6);' : 'box-shadow: 0 0 4px rgba(0,0,0,0.8);';
-            let markerHtml = `<div style="background-color: ${color}; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #1A1A1A; ${glow}"></div>`;
-            let icon = L.divIcon({ html: markerHtml, className: '' });
-            
-            L.marker(p.coords, { icon }).addTo(map).bindPopup(`<b>${p.name}</b><br>Progress: ${p.progress || 0}%`);
-        }
+    if (!activities || activities.length === 0) {
+        htmlContent = '<p class="text-sm text-slate-500 dark:text-[#A1A1AA] italic mt-4 text-center">Belum ada aktivitas terekam.</p>';
+    } else {
+        const timeAgo = (ts) => {
+            const diff = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+            if (diff < 60) return 'Baru saja';
+            if (diff < 3600) return `${Math.floor(diff/60)} Menit lalu`;
+            if (diff < 86400) return `${Math.floor(diff/3600)} Jam lalu`;
+            if (diff < 172800) return 'Kemarin';
+            return `${Math.floor(diff/86400)} Hari lalu`;
+        };
+        
+        htmlContent = '<div class="space-y-6 mt-4 ml-2 border-l-2 border-slate-200 dark:border-[#2A2A2A] pb-2 text-left max-h-[60vh] overflow-y-auto px-2">';
+        htmlContent += activities.map(act => `
+            <div class="relative pl-6">
+                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${act.color} ring-4 ring-white dark:ring-slate-800"></div>
+                <p class="text-sm font-semibold text-slate-800 dark:text-white">${act.title}</p>
+                <p class="text-xs text-slate-500 mt-1">${act.desc}</p>
+                ${act.note ? `<div class="mt-1.5"><p class="text-[11px] text-slate-500 dark:text-[#A1A1AA] bg-slate-50 dark:bg-[#121212] p-2 rounded-lg border border-slate-200 dark:border-[#2A2A2A] italic">"${act.note}"</p></div>` : ''}
+                <span class="text-[10px] text-slate-400 mt-1.5 block font-medium"><i class="far fa-clock mr-1"></i> ${timeAgo(act.timestamp)}</span>
+            </div>
+        `).join('');
+        htmlContent += '</div>';
+    }
+
+    Swal.fire({
+        title: '<div class="text-left text-xl font-bold border-b border-slate-200 dark:border-[#2A2A2A] pb-3">Riwayat Aktivitas</div>',
+        html: htmlContent,
+        background: isDark ? '#1A1A1A' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1e293b',
+        width: '500px',
+        showConfirmButton: true,
+        confirmButtonText: 'Tutup',
+        confirmButtonColor: '#FF7A00'
+    }).then(() => {
+        // Sembunyikan badge angka merah (tandai sebagai sudah dibaca) setelah ditutup
+        const notifContainer = document.getElementById('notificationBadgeContainer');
+        if (notifContainer) notifContainer.classList.add('hidden');
     });
-}
+};
 
 function getColor(p, format = 'class') {
     if (format === 'hex') {
@@ -590,7 +707,7 @@ function renderProjectCards() {
                             'bg-[#F59E0B] text-white border-transparent');
         
         return `
-        <div class="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-[#2A2A2A] hover:border-[#FF7A00]/50 hover:shadow-[0_8px_30px_rgba(255,122,0,0.15)] transition-all duration-300 cursor-pointer relative overflow-hidden group flex flex-col h-72" onclick="viewDetail('${p.id}')">
+        <div class="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-[#2A2A2A] hover:border-[#FF7A00]/50 hover:shadow-[0_8px_30px_rgba(255,122,0,0.15)] transition-all duration-300 cursor-pointer relative overflow-hidden group flex flex-col h-[19rem] sm:h-72" onclick="viewDetail('${p.id}')">
             
             ${p.imageUrl ? `
             <img src="${p.imageUrl}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70 z-0">
@@ -601,25 +718,25 @@ function renderProjectCards() {
             <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-[#FF7A00] rounded-full opacity-0 group-hover:opacity-[0.15] blur-3xl transition-opacity duration-500 z-0"></div>
             `}
 
-            <div class="p-6 flex-1 flex flex-col relative z-10 h-full">
+            <div class="p-4 sm:p-6 flex-1 flex flex-col relative z-10 h-full">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
                         <span class="px-3 py-1 rounded-lg text-xs font-bold ${statusBadge}">${p.status}</span>
                     </div>
-                    ${!isViewer ? `<div class="flex gap-2"><button class="w-8 h-8 rounded-full bg-black/50 text-[#A1A1AA] hover:text-[#FF7A00] hover:bg-black transition-all flex items-center justify-center border border-white/10" title="Edit" onclick="event.stopPropagation(); editProyek('${p.id}')"><i class="fas fa-edit text-xs"></i></button>
+                    ${!isViewer ? `<div class="flex gap-1.5 sm:gap-2"><button class="w-8 h-8 rounded-full bg-black/50 text-[#A1A1AA] hover:text-[#FF7A00] hover:bg-black transition-all flex items-center justify-center border border-white/10" title="Edit" onclick="event.stopPropagation(); editProyek('${p.id}')"><i class="fas fa-edit text-xs"></i></button>
                     <button class="w-8 h-8 rounded-full bg-red-500/20 text-red-400 hover:text-white hover:bg-red-500 transition-all flex items-center justify-center border border-red-500/30" title="Hapus" onclick="event.stopPropagation(); hapusProyek('${p.id}', '${p.fileId || ''}')"><i class="fas fa-trash text-xs"></i></button></div>` : ''}
                 </div>
                 
                 <div class="mt-auto">
-                    <h3 class="text-xl font-bold text-[#FFFFFF] mb-1 group-hover:text-[#FF7A00] transition-colors drop-shadow-md line-clamp-1">${p.name}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-[#FFFFFF] mb-1 group-hover:text-[#FF7A00] transition-colors drop-shadow-md line-clamp-1">${p.name}</h3>
                     <p class="text-gray-300 text-sm mb-4 drop-shadow-md line-clamp-1"><i class="fas fa-map-marker-alt mr-1 text-[#FF7A00]"></i> ${p.location}</p>
                     
                     <div class="flex items-center justify-between border-t border-white/20 pt-4">
                         <div>
-                            <p class="text-[10px] text-gray-400 mb-1 uppercase font-bold tracking-wider">Deadline</p>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mb-1 uppercase font-bold tracking-wider">Deadline</p>
                             <p class="text-sm font-semibold text-[#FFFFFF]">${p.end || '-'}</p>
                         </div>
-                        <div class="flex items-center gap-3 w-1/2 justify-end">
+                        <div class="flex items-center gap-2 sm:gap-3 w-auto flex-1 justify-end ml-2">
                             <div class="w-full bg-black/50 rounded-full h-2 overflow-hidden border border-white/5">
                                 <div class="h-full rounded-full ${p.progress === 100 ? 'bg-[#22C55E]' : (p.progress > 0 ? 'bg-[#FF7A00]' : 'bg-[#FFA726]')}" style="width: ${p.progress}%"></div>
                             </div>
@@ -650,12 +767,28 @@ window.viewDetail = function(id) {
     const divSipil = p.divSipil || 0;
     const divArs = p.divArs || 0;
     const divMep = p.divMep || 0;
+    const divInt = p.divInt || 0;
     const dashOffset = 440 - (440 * p.progress) / 100;
     
     const parsedAnggaran = window.parseAnggaranValue(p.value);
     const displayAnggaran = parsedAnggaran > 900000 
         ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(parsedAnggaran) 
         : (p.value || '-');
+        
+    const hasSipil = p.hasSipil !== false;
+    const hasArs = p.hasArs !== false;
+    const hasMep = p.hasMep !== false;
+    const hasInt = p.hasInt !== false;
+    
+    let divisionHtml = '';
+    if (hasSipil) divisionHtml += `<div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">Sipil</span><span class="font-bold text-[#FF7A00]">${divSipil}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#FF7A00] h-full rounded-full shadow-[0_0_8px_#FF7A00]" style="width: ${divSipil}%"></div></div></div>`;
+    if (hasArs) divisionHtml += `<div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">Arsitektur</span><span class="font-bold text-[#FFA726]">${divArs}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#FFA726] h-full rounded-full shadow-[0_0_8px_#FFA726]" style="width: ${divArs}%"></div></div></div>`;
+    if (hasMep) divisionHtml += `<div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">MEP</span><span class="font-bold text-[#F59E0B]">${divMep}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#F59E0B] h-full rounded-full shadow-[0_0_8px_#F59E0B]" style="width: ${divMep}%"></div></div></div>`;
+    if (hasInt) divisionHtml += `<div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">Interior</span><span class="font-bold text-[#3B82F6]">${divInt}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#3B82F6] h-full rounded-full shadow-[0_0_8px_#3B82F6]" style="width: ${divInt}%"></div></div></div>`;
+
+    if (divisionHtml === '') {
+        divisionHtml = '<p class="text-[#A1A1AA] text-sm italic">Tidak ada divisi yang dipilih untuk proyek ini.</p>';
+    }
 
     // Generate Log History secara Dinamis dari Data Update
     let logHtml = '';
@@ -664,11 +797,18 @@ window.viewDetail = function(id) {
         logHtml = weeks.map((w, i) => {
             const data = p.weeklyUpdates[w];
             const isLatest = i === 0;
+            const logDivs = [];
+            if (hasSipil) logDivs.push(`Sipil: ${data.sipil}%`);
+            if (hasArs) logDivs.push(`Ars: ${data.ars}%`);
+            if (hasMep) logDivs.push(`MEP: ${data.mep}%`);
+            if (hasInt) logDivs.push(`Interior: ${data.int || 0}%`);
+            const logDivsStr = logDivs.length > 0 ? `<span class="text-xs text-[#A1A1AA] font-normal">(${logDivs.join(', ')})</span>` : '';
+            
             return `
                 <div class="relative pl-6">
                     <div class="absolute w-3.5 h-3.5 ${isLatest ? 'bg-[#FF7A00] shadow-[0_0_10px_#FF7A00]' : 'bg-[#2A2A2A]'} rounded-full -left-[8.5px] top-1"></div>
                     <p class="text-xs ${isLatest ? 'text-[#FF7A00]' : 'text-[#A1A1AA]'} font-semibold mb-1">Update Minggu ke-${w}</p>
-                    <p class="text-sm text-white font-medium">Total: ${data.total}% <span class="text-xs text-[#A1A1AA] font-normal">(Sipil: ${data.sipil}%, Ars: ${data.ars}%, MEP: ${data.mep}%)</span></p>
+                    <p class="text-sm text-white font-medium">Total: ${data.total}% ${logDivsStr}</p>
                     ${data.note ? `<p class="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed bg-[#121212] p-2.5 rounded-lg border border-[#2A2A2A]">${data.note}</p>` : ''}
                     ${data.photos && data.photos.length > 0 ? `
                     <div class="mt-2 flex flex-wrap gap-2">
@@ -724,17 +864,17 @@ window.viewDetail = function(id) {
     detailView.innerHTML = `
         <!-- Header & Toolbar -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-            <div class="flex items-center gap-4">
-                <button onclick="closeProjectDetail()" class="w-10 h-10 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] text-[#A1A1AA] hover:text-[#FF7A00] hover:border-[#FF7A00] hover:shadow-[0_0_10px_rgba(255,122,0,0.3)] flex items-center justify-center transition-all">
-                    <i class="fas fa-arrow-left"></i>
+            <div class="flex items-start sm:items-center gap-3 sm:gap-4 w-full">
+                <button onclick="closeProjectDetail()" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1A1A1A] border border-[#2A2A2A] text-[#A1A1AA] hover:text-[#FF7A00] hover:border-[#FF7A00] hover:shadow-[0_0_10px_rgba(255,122,0,0.3)] flex items-center justify-center transition-all flex-shrink-0 mt-1 sm:mt-0">
+                    <i class="fas fa-arrow-left text-sm sm:text-base"></i>
                 </button>
-                <div>
-                    <h2 class="text-2xl font-bold text-white mb-1 flex items-center gap-3">
-                        ${p.code ? `<span class="text-[#FF7A00] text-lg">[${p.code}]</span>` : ''}
-                        ${p.name}
-                        <span class="px-3 py-1 text-xs font-bold rounded-lg ${p.status === 'Selesai' ? 'bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20' : (p.status === 'Berjalan' ? 'bg-[#FF7A00]/10 text-[#FF7A00] border border-[#FF7A00]/30 shadow-[0_0_10px_rgba(255,122,0,0.2)]' : 'bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20')}">${p.status}</span>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-lg sm:text-2xl font-bold text-white mb-1 flex flex-wrap items-center gap-2 sm:gap-3 leading-tight">
+                        ${p.code ? `<span class="text-[#FF7A00] text-base sm:text-lg break-words">[${p.code}]</span>` : ''}
+                        <span class="break-words">${p.name}</span>
+                        <span class="px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-bold rounded-lg whitespace-nowrap ${p.status === 'Selesai' ? 'bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20' : (p.status === 'Berjalan' ? 'bg-[#FF7A00]/10 text-[#FF7A00] border border-[#FF7A00]/30 shadow-[0_0_10px_rgba(255,122,0,0.2)]' : 'bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20')}">${p.status}</span>
                     </h2>
-                    <p class="text-[#A1A1AA] text-sm"><i class="fas fa-map-marker-alt text-[#FF7A00] mr-2"></i>${p.location}</p>
+                    <p class="text-[#A1A1AA] text-xs sm:text-sm truncate"><i class="fas fa-map-marker-alt text-[#FF7A00] mr-2"></i>${p.location}</p>
                 </div>
             </div>
             <div class="flex flex-wrap gap-3">
@@ -759,13 +899,13 @@ window.viewDetail = function(id) {
                     <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A] flex flex-col items-center justify-center relative overflow-hidden group hover:border-[#FF7A00]/30 transition-all">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#FF7A00] rounded-full opacity-[0.05] group-hover:opacity-[0.15] blur-3xl transition-opacity"></div>
                         <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-6">Progress Keseluruhan</h3>
-                        <div class="relative w-44 h-44">
-                            <svg class="w-full h-full transform -rotate-90 drop-shadow-xl">
+                    <div class="relative w-36 h-36 sm:w-44 sm:h-44">
+                        <svg class="w-full h-full transform -rotate-90 drop-shadow-xl" viewBox="0 0 176 176">
                                 <circle cx="88" cy="88" r="70" stroke="#2A2A2A" stroke-width="12" fill="transparent" />
                                 <circle cx="88" cy="88" r="70" stroke="currentColor" stroke-width="12" fill="transparent" stroke-dasharray="440" stroke-dashoffset="${dashOffset}" class="${getColor(p.progress)}" stroke-linecap="round" style="filter: drop-shadow(0 0 8px currentColor); transition: stroke-dashoffset 2s ease-out;" />
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span class="text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">${p.progress}%</span>
+                            <span class="text-3xl sm:text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">${p.progress}%</span>
                             </div>
                         </div>
                     </div>
@@ -775,11 +915,11 @@ window.viewDetail = function(id) {
                         <div class="absolute top-0 right-0 w-24 h-24 bg-[#FF7A00] rounded-full opacity-[0.03] blur-2xl"></div>
                         <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-4">Informasi Proyek</h3>
                         <div class="space-y-4 relative z-10">
-                            ${p.code ? `<div class="flex justify-between items-center border-b border-[#2A2A2A] pb-3"><span class="text-[#A1A1AA] text-sm"><i class="fas fa-hashtag mr-2 text-center w-5"></i>Kode Proyek</span><span class="text-white font-semibold text-right">${p.code}</span></div>` : ''}
-                            <div class="flex justify-between items-center border-b border-[#2A2A2A] pb-3"><span class="text-[#A1A1AA] text-sm"><i class="fas fa-building mr-2 text-center w-5"></i>Klien</span><span class="text-white font-semibold text-right">${p.client}</span></div>
-                            <div class="flex justify-between items-center border-b border-[#2A2A2A] pb-3"><span class="text-[#A1A1AA] text-sm"><i class="fas fa-user-tie mr-2 text-center w-5"></i>Project Manager</span><span class="text-white font-semibold text-right">${p.pic}</span></div>
-                            ${!isViewer ? `<div class="flex justify-between items-center border-b border-[#2A2A2A] pb-3"><span class="text-[#A1A1AA] text-sm"><i class="fas fa-money-bill-wave mr-2 text-center w-5"></i>Anggaran</span><span class="text-[#FF7A00] font-bold drop-shadow-[0_0_5px_rgba(255,122,0,0.5)] text-right">${displayAnggaran}</span></div>` : ''}
-                            <div class="flex justify-between items-center"><span class="text-[#A1A1AA] text-sm"><i class="fas fa-calendar-alt mr-2 text-center w-5"></i>Deadline</span><span class="text-white font-semibold text-right">${p.end}</span></div>
+                        ${p.code ? `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-hashtag mr-2 text-center w-5"></i>Kode Proyek</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.code}</span></div>` : ''}
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-building mr-2 text-center w-5"></i>Klien</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.client}</span></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-user-tie mr-2 text-center w-5"></i>Project Manager</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.pic}</span></div>
+                        ${!isViewer ? `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-money-bill-wave mr-2 text-center w-5"></i>Anggaran</span><span class="text-[#FF7A00] font-bold drop-shadow-[0_0_5px_rgba(255,122,0,0.5)] text-left sm:text-right break-words">${displayAnggaran}</span></div>` : ''}
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-calendar-alt mr-2 text-center w-5"></i>Deadline</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.end}</span></div>
                         </div>
                     </div>
                 </div>
@@ -790,9 +930,7 @@ window.viewDetail = function(id) {
                     <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A]">
                         <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-5">Progress Per Divisi</h3>
                         <div class="space-y-6">
-                            <div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">Sipil</span><span class="font-bold text-[#FF7A00]">${divSipil}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#FF7A00] h-full rounded-full shadow-[0_0_8px_#FF7A00]" style="width: ${divSipil}%"></div></div></div>
-                            <div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">Arsitektur</span><span class="font-bold text-[#FFA726]">${divArs}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#FFA726] h-full rounded-full shadow-[0_0_8px_#FFA726]" style="width: ${divArs}%"></div></div></div>
-                            <div><div class="flex justify-between text-sm mb-2"><span class="text-white font-medium">MEP</span><span class="font-bold text-[#F59E0B]">${divMep}%</span></div><div class="w-full bg-[#0A0A0A] border border-[#2A2A2A] rounded-full h-2.5 overflow-hidden"><div class="bg-[#F59E0B] h-full rounded-full shadow-[0_0_8px_#F59E0B]" style="width: ${divMep}%"></div></div></div>
+                            ${divisionHtml}
                         </div>
                     </div>
 
@@ -806,7 +944,7 @@ window.viewDetail = function(id) {
                                 const isDone = mProg >= m;
                                 const isCurrent = mProg >= m - 1 && mProg < m;
                                 const btnClass = isDone ? 'bg-[#22C55E] text-white shadow-[0_0_10px_rgba(34,197,94,0.5)] border-transparent' : (isCurrent ? 'bg-[#121212] text-[#FF7A00] border-[#FF7A00] shadow-[0_0_15px_rgba(255,122,0,0.6)]' : 'bg-[#121212] border-[#2A2A2A] text-[#A1A1AA]');
-                                return `<div class="flex flex-col items-center group cursor-pointer relative" onclick="viewMilestoneData('${p.id}', ${m})"><div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${btnClass}">${isDone ? '<i class="fas fa-check"></i>' : 'M'+m}</div><span class="text-[11px] mt-3 font-medium ${isDone || isCurrent ? 'text-white' : 'text-[#A1A1AA]'}">Tahap ${m}</span></div>`
+                            return `<div class="flex flex-col items-center group cursor-pointer relative" onclick="viewMilestoneData('${p.id}', ${m})"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center text-[10px] sm:text-xs font-bold transition-all ${btnClass}">${isDone ? '<i class="fas fa-check"></i>' : 'M'+m}</div><span class="text-[9px] sm:text-[11px] mt-2 sm:mt-3 font-medium text-center leading-tight ${isDone || isCurrent ? 'text-white' : 'text-[#A1A1AA]'}">Tahap<br class="block sm:hidden">${m}</span></div>`
                             }).join('')}
                         </div>
                     </div>
@@ -846,6 +984,7 @@ window.viewDetail = function(id) {
                     </div>
                 </div>
 
+                ${!isViewer ? `
                 <!-- Monitoring Material Button -->
                 <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A]">
                     <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-4">Logistik & Material</h3>
@@ -853,6 +992,7 @@ window.viewDetail = function(id) {
                         <i class="fas fa-boxes"></i> Monitoring Material
                     </button>
                 </div>
+                ` : ''}
             </div>
         </div>
     `;
@@ -934,6 +1074,17 @@ window.viewMilestoneData = function(projectId, m) {
         `;
     }
     
+    const hasSipil = p.hasSipil !== false;
+    const hasArs = p.hasArs !== false;
+    const hasMep = p.hasMep !== false;
+    const hasInt = p.hasInt !== false;
+    
+    let divDetailsHtml = '';
+    if (hasSipil) divDetailsHtml += `<div class="flex justify-between items-center mb-1"><span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi Sipil</span><span class="text-[#FF7A00] font-medium text-xs">${updateData.sipil}%</span></div>`;
+    if (hasArs) divDetailsHtml += `<div class="flex justify-between items-center mb-1"><span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi Arsitektur</span><span class="text-[#FFA726] font-medium text-xs">${updateData.ars}%</span></div>`;
+    if (hasMep) divDetailsHtml += `<div class="flex justify-between items-center mb-1"><span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi MEP</span><span class="text-[#F59E0B] font-medium text-xs">${updateData.mep}%</span></div>`;
+    if (hasInt) divDetailsHtml += `<div class="flex justify-between items-center mb-4"><span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi Interior</span><span class="text-[#3B82F6] font-medium text-xs">${updateData.int || 0}%</span></div>`;
+
     Swal.fire({
         title: `Tahap ${m} Tercapai!`,
         html: `
@@ -943,18 +1094,7 @@ window.viewMilestoneData = function(projectId, m) {
                     <span class="text-slate-500 dark:text-[#A1A1AA] text-sm font-semibold">Total Progress Mingguan</span>
                     <span class="${isDark ? 'text-white' : 'text-slate-800'} font-bold text-lg">${updateData.total}%</span>
                 </div>
-                <div class="flex justify-between items-center mb-1">
-                    <span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi Sipil</span>
-                    <span class="text-[#FF7A00] font-medium text-xs">${updateData.sipil}%</span>
-                </div>
-                <div class="flex justify-between items-center mb-1">
-                    <span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi Arsitektur</span>
-                    <span class="text-[#FFA726] font-medium text-xs">${updateData.ars}%</span>
-                </div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-slate-500 dark:text-[#A1A1AA] text-xs">Divisi MEP</span>
-                    <span class="text-[#F59E0B] font-medium text-xs">${updateData.mep}%</span>
-                </div>
+                ${divDetailsHtml}
                 ${updateData.note ? `
                 <div class="mb-2">
                     <span class="text-slate-500 dark:text-[#A1A1AA] text-xs font-semibold block mb-1">Catatan Lapangan:</span>
@@ -1010,13 +1150,22 @@ window.updateSwalTotal = function() {
     const chkSipil = document.getElementById('check-sipil');
     const chkArs = document.getElementById('check-ars');
     const chkMep = document.getElementById('check-mep');
+    const chkInt = document.getElementById('check-int');
 
-    const s = (chkSipil && !chkSipil.checked) ? 0 : (parseFloat(document.getElementById('input-sipil').value) || 0);
-    const a = (chkArs && !chkArs.checked) ? 0 : (parseFloat(document.getElementById('input-ars').value) || 0);
-    const m = (chkMep && !chkMep.checked) ? 0 : (parseFloat(document.getElementById('input-mep').value) || 0);
+    const s = (chkSipil && !chkSipil.checked) ? 0 : (parseFloat(document.getElementById('input-sipil')?.value) || 0);
+    const a = (chkArs && !chkArs.checked) ? 0 : (parseFloat(document.getElementById('input-ars')?.value) || 0);
+    const m = (chkMep && !chkMep.checked) ? 0 : (parseFloat(document.getElementById('input-mep')?.value) || 0);
+    const i = (chkInt && !chkInt.checked) ? 0 : (parseFloat(document.getElementById('input-int')?.value) || 0);
+    
+    let activeDivs = 0;
+    if (document.getElementById('input-sipil')) activeDivs++;
+    if (document.getElementById('input-ars')) activeDivs++;
+    if (document.getElementById('input-mep')) activeDivs++;
+    if (document.getElementById('input-int')) activeDivs++;
+    if (activeDivs === 0) activeDivs = 1;
 
     const prevTotal = parseFloat(document.getElementById('swal-prev-total').value) || 0;
-    const addedAvg = (s + a + m) / 3;
+    const addedAvg = (s + a + m + i) / activeDivs;
     const avg = Number((prevTotal + addedAvg).toFixed(2));
     document.getElementById('swal-progress-val').innerText = avg + '%';
     const incEl = document.getElementById('swal-progress-inc');
@@ -1026,9 +1175,10 @@ window.updateSwalTotal = function() {
 };
 
 window.enableEditProgress = function() {
-    document.getElementById('input-sipil').disabled = false;
-    document.getElementById('input-ars').disabled = false;
-    document.getElementById('input-mep').disabled = false;
+    if (document.getElementById('input-sipil')) document.getElementById('input-sipil').disabled = false;
+    if (document.getElementById('input-ars')) document.getElementById('input-ars').disabled = false;
+    if (document.getElementById('input-mep')) document.getElementById('input-mep').disabled = false;
+    if (document.getElementById('input-int')) document.getElementById('input-int').disabled = false;
     document.getElementById('swal-input-note').disabled = false;
     const photoInp = document.getElementById('swal-update-photos');
     if(photoInp) photoInp.disabled = false;
@@ -1036,9 +1186,11 @@ window.enableEditProgress = function() {
     const chkSipil = document.getElementById('check-sipil');
     const chkArs = document.getElementById('check-ars');
     const chkMep = document.getElementById('check-mep');
+    const chkInt = document.getElementById('check-int');
     if(chkSipil) chkSipil.disabled = false;
     if(chkArs) chkArs.disabled = false;
     if(chkMep) chkMep.disabled = false;
+    if(chkInt) chkInt.disabled = false;
 
     const btnSimpan = Swal.getConfirmButton();
     if (btnSimpan) {
@@ -1056,7 +1208,7 @@ window.onWeekChange = function(id) {
     const minggu = parseInt(document.getElementById('input-minggu').value);
     const data = p.weeklyUpdates && p.weeklyUpdates[minggu];
     
-    let prev = { sipil: 0, ars: 0, mep: 0, total: 0, note: '' };
+    let prev = { sipil: 0, ars: 0, mep: 0, int: 0, total: 0, note: '' };
     for(let i = minggu - 1; i >= 1; i--) {
         if(p.weeklyUpdates && p.weeklyUpdates[i]) { prev = p.weeklyUpdates[i]; break; }
     }
@@ -1067,29 +1219,34 @@ window.onWeekChange = function(id) {
     const inpSipil = document.getElementById('input-sipil');
     const inpArs = document.getElementById('input-ars');
     const inpMep = document.getElementById('input-mep');
+    const inpInt = document.getElementById('input-int');
     const noteInp = document.getElementById('swal-input-note');
     const photoInp = document.getElementById('swal-update-photos');
     const btnSimpan = Swal.getConfirmButton();
     const statusLabel = document.getElementById('status-minggu');
     
     if(data) {
-        inpSipil.value = parseFloat(Math.max(0, data.sipil - prev.sipil).toFixed(2));
-        inpArs.value = parseFloat(Math.max(0, data.ars - prev.ars).toFixed(2));
-        inpMep.value = parseFloat(Math.max(0, data.mep - prev.mep).toFixed(2));
+        if (inpSipil) inpSipil.value = parseFloat(Math.max(0, data.sipil - prev.sipil).toFixed(2));
+        if (inpArs) inpArs.value = parseFloat(Math.max(0, data.ars - prev.ars).toFixed(2));
+        if (inpMep) inpMep.value = parseFloat(Math.max(0, data.mep - prev.mep).toFixed(2));
+        if (inpInt) inpInt.value = parseFloat(Math.max(0, (data.int || 0) - (prev.int || 0)).toFixed(2));
         noteInp.value = data.note || '';
         
-        inpSipil.disabled = true;
-        inpArs.disabled = true;
-        inpMep.disabled = true;
+        if (inpSipil) inpSipil.disabled = true;
+        if (inpArs) inpArs.disabled = true;
+        if (inpMep) inpMep.disabled = true;
+        if (inpInt) inpInt.disabled = true;
         noteInp.disabled = true;
         if(photoInp) photoInp.disabled = true;
 
         const chkSipil = document.getElementById('check-sipil');
         const chkArs = document.getElementById('check-ars');
         const chkMep = document.getElementById('check-mep');
+        const chkInt = document.getElementById('check-int');
         if(chkSipil) { chkSipil.checked = true; chkSipil.disabled = true; }
         if(chkArs) { chkArs.checked = true; chkArs.disabled = true; }
         if(chkMep) { chkMep.checked = true; chkMep.disabled = true; }
+        if(chkInt) { chkInt.checked = true; chkInt.disabled = true; }
 
         window.selectedUpdatePhotos = [];
         if (data.photos && data.photos.length > 0) {
@@ -1107,23 +1264,27 @@ window.onWeekChange = function(id) {
         }
         if (statusLabel) statusLabel.innerHTML = '<span class="text-[#22C55E] text-xs font-bold"><i class="fas fa-check-circle mr-1"></i>Sudah Diupdate</span> <button type="button" onclick="enableEditProgress()" class="ml-2 text-blue-500 hover:text-blue-400 underline text-xs transition-colors">Edit</button>';
     } else {
-        inpSipil.value = '';
-        inpArs.value = '';
-        inpMep.value = '';
+        if (inpSipil) inpSipil.value = '';
+        if (inpArs) inpArs.value = '';
+        if (inpMep) inpMep.value = '';
+        if (inpInt) inpInt.value = '';
         noteInp.value = '';
         
-        inpSipil.disabled = false;
-        inpArs.disabled = false;
-        inpMep.disabled = false;
+        if (inpSipil) inpSipil.disabled = false;
+        if (inpArs) inpArs.disabled = false;
+        if (inpMep) inpMep.disabled = false;
+        if (inpInt) inpInt.disabled = false;
         noteInp.disabled = false;
         if(photoInp) { photoInp.disabled = false; photoInp.value = ''; }
 
         const chkSipil = document.getElementById('check-sipil');
         const chkArs = document.getElementById('check-ars');
         const chkMep = document.getElementById('check-mep');
+        const chkInt = document.getElementById('check-int');
         if(chkSipil) { chkSipil.checked = true; chkSipil.disabled = false; }
         if(chkArs) { chkArs.checked = true; chkArs.disabled = false; }
         if(chkMep) { chkMep.checked = true; chkMep.disabled = false; }
+        if(chkInt) { chkInt.checked = true; chkInt.disabled = false; }
 
         window.selectedUpdatePhotos = [];
         if (typeof window.renderPreviews === 'function') window.renderPreviews();
@@ -1146,6 +1307,69 @@ window.updateProgressSystem = function(id) {
     const isDark = document.documentElement.classList.contains('dark');
     const projectTotalWeeks = p.totalWeeks || 25;
     
+    const hasSipil = p.hasSipil !== false;
+    const hasArs = p.hasArs !== false;
+    const hasMep = p.hasMep !== false;
+    const hasInt = p.hasInt !== false;
+    
+    let divisionsHtml = '';
+    if (hasSipil) {
+        divisionsHtml += `
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan Sipil (%)</label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Sertakan</span>
+                        <input type="checkbox" id="check-sipil" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
+                    </div>
+                </div>
+                <input type="number" id="input-sipil" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 75.5">
+            </div>
+        `;
+    }
+    if (hasArs) {
+        divisionsHtml += `
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan Arsitektur (%)</label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Sertakan</span>
+                        <input type="checkbox" id="check-ars" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
+                    </div>
+                </div>
+                <input type="number" id="input-ars" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FFA726] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 40.25">
+            </div>
+        `;
+    }
+    if (hasMep) {
+        divisionsHtml += `
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan MEP (%)</label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Sertakan</span>
+                        <input type="checkbox" id="check-mep" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
+                    </div>
+                </div>
+                <input type="number" id="input-mep" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#F59E0B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 80">
+            </div>
+        `;
+    }
+    if (hasInt) {
+        divisionsHtml += `
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan Interior (%)</label>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Sertakan</span>
+                        <input type="checkbox" id="check-int" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-blue-500 focus:ring-blue-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
+                    </div>
+                </div>
+                <input type="number" id="input-int" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#3B82F6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 30.5">
+            </div>
+        `;
+    }
+
     Swal.fire({
         title: 'Update Progress Mingguan',
         width: '500px',
@@ -1163,36 +1387,7 @@ window.updateProgressSystem = function(id) {
                     </select>
                 </div>
                 <input type="hidden" id="swal-prev-total" value="0">
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan Sipil (%)</label>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-500">Sertakan</span>
-                            <input type="checkbox" id="check-sipil" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
-                        </div>
-                    </div>
-                    <input type="number" id="input-sipil" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FF7A00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 75.5">
-                </div>
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan Arsitektur (%)</label>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-500">Sertakan</span>
-                            <input type="checkbox" id="check-ars" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
-                        </div>
-                    </div>
-                    <input type="number" id="input-ars" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#FFA726] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 40.25">
-                </div>
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="block text-sm font-medium text-slate-800 dark:text-white">Penambahan MEP (%)</label>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-500">Sertakan</span>
-                            <input type="checkbox" id="check-mep" checked onchange="updateSwalTotal()" class="w-4 h-4 rounded text-orange-500 focus:ring-orange-500 bg-slate-50 dark:bg-[#121212] border-slate-200 dark:border-[#2A2A2A] cursor-pointer">
-                        </div>
-                    </div>
-                    <input type="number" id="input-mep" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 text-slate-800 dark:text-white outline-none focus:border-[#F59E0B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" min="0" max="100" step="0.01" oninput="updateSwalTotal()" placeholder="Contoh: 80">
-                </div>
+                ${divisionsHtml}
                 
                 <div class="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-200 dark:border-[#2A2A2A] text-center mt-6">
                     <p class="text-xs text-slate-500 dark:text-[#A1A1AA] uppercase tracking-wider font-semibold mb-1">Estimasi Progress Keseluruhan</p>
@@ -1268,10 +1463,12 @@ window.updateProgressSystem = function(id) {
             const chkSipil = document.getElementById('check-sipil');
             const chkArs = document.getElementById('check-ars');
             const chkMep = document.getElementById('check-mep');
+            const chkInt = document.getElementById('check-int');
             
-            const valSipil = parseFloat(document.getElementById('input-sipil').value) || 0;
-            const valArs = parseFloat(document.getElementById('input-ars').value) || 0;
-            const valMep = parseFloat(document.getElementById('input-mep').value) || 0;
+            const valSipil = parseFloat(document.getElementById('input-sipil')?.value) || 0;
+            const valArs = parseFloat(document.getElementById('input-ars')?.value) || 0;
+            const valMep = parseFloat(document.getElementById('input-mep')?.value) || 0;
+            const valInt = parseFloat(document.getElementById('input-int')?.value) || 0;
 
             if (chkSipil && !chkSipil.checked && valSipil > 0) {
                 Swal.showValidationMessage('Peringatan: Checklist Sipil tidak dicentang tetapi ada nilainya!');
@@ -1285,6 +1482,10 @@ window.updateProgressSystem = function(id) {
                 Swal.showValidationMessage('Peringatan: Checklist MEP tidak dicentang tetapi ada nilainya!');
                 return false;
             }
+            if (chkInt && !chkInt.checked && valInt > 0) {
+                Swal.showValidationMessage('Peringatan: Checklist Interior tidak dicentang tetapi ada nilainya!');
+                return false;
+            }
             
             return true;
         }
@@ -1295,13 +1496,15 @@ window.updateProgressSystem = function(id) {
             const chkSipil = document.getElementById('check-sipil');
             const chkArs = document.getElementById('check-ars');
             const chkMep = document.getElementById('check-mep');
+            const chkInt = document.getElementById('check-int');
 
-            const addSipil = (chkSipil && !chkSipil.checked) ? 0 : (parseFloat(document.getElementById('input-sipil').value) || 0);
-            const addArs = (chkArs && !chkArs.checked) ? 0 : (parseFloat(document.getElementById('input-ars').value) || 0);
-            const addMep = (chkMep && !chkMep.checked) ? 0 : (parseFloat(document.getElementById('input-mep').value) || 0);
+            const addSipil = (chkSipil && !chkSipil.checked) ? 0 : (parseFloat(document.getElementById('input-sipil')?.value) || 0);
+            const addArs = (chkArs && !chkArs.checked) ? 0 : (parseFloat(document.getElementById('input-ars')?.value) || 0);
+            const addMep = (chkMep && !chkMep.checked) ? 0 : (parseFloat(document.getElementById('input-mep')?.value) || 0);
+            const addInt = (chkInt && !chkInt.checked) ? 0 : (parseFloat(document.getElementById('input-int')?.value) || 0);
             const note = document.getElementById('swal-input-note').value;
             
-            let prev = { sipil: 0, ars: 0, mep: 0, total: 0 };
+            let prev = { sipil: 0, ars: 0, mep: 0, int: 0, total: 0 };
             for(let i = minggu - 1; i >= 1; i--) {
                 if(p.weeklyUpdates && p.weeklyUpdates[i]) { prev = p.weeklyUpdates[i]; break; }
             }
@@ -1309,7 +1512,16 @@ window.updateProgressSystem = function(id) {
             const newSipil = Math.min(100, Number((prev.sipil + addSipil).toFixed(2)));
             const newArs = Math.min(100, Number((prev.ars + addArs).toFixed(2)));
             const newMep = Math.min(100, Number((prev.mep + addMep).toFixed(2)));
-            const newProgress = Math.min(100, Number(((newSipil + newArs + newMep) / 3).toFixed(2)));
+            const newInt = Math.min(100, Number(((prev.int || 0) + addInt).toFixed(2)));
+            
+            let activeDivs = 0;
+            if (p.hasSipil !== false) activeDivs++;
+            if (p.hasArs !== false) activeDivs++;
+            if (p.hasMep !== false) activeDivs++;
+            if (p.hasInt !== false) activeDivs++;
+            if (activeDivs === 0) activeDivs = 1;
+            
+            const newProgress = Math.min(100, Number(((newSipil + newArs + newMep + newInt) / activeDivs).toFixed(2)));
             
             if(!p.weeklyUpdates) p.weeklyUpdates = {};
             
@@ -1335,7 +1547,7 @@ window.updateProgressSystem = function(id) {
                 }
             }
 
-            p.weeklyUpdates[minggu] = { sipil: newSipil, ars: newArs, mep: newMep, total: newProgress, note: note, timestamp: Date.now(), photos: uploadedPhotos };
+            p.weeklyUpdates[minggu] = { sipil: newSipil, ars: newArs, mep: newMep, int: newInt, total: newProgress, note: note, timestamp: Date.now(), photos: uploadedPhotos };
             
             const updatedWeeks = Object.keys(p.weeklyUpdates).map(Number);
             const maxWeek = Math.max(...updatedWeeks);
@@ -1345,6 +1557,7 @@ window.updateProgressSystem = function(id) {
                 p.divSipil = newSipil;
                 p.divArs = newArs;
                 p.divMep = newMep;
+                p.divInt = newInt;
                 p.progress = newProgress;
                 
                 if (newProgress === 100) p.status = 'Selesai';
@@ -1448,7 +1661,7 @@ window.tambahUser = function() {
             <input id="swal-u-email" type="text" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 outline-none mb-3 text-slate-800 dark:text-white" placeholder="Email (untuk Admin) / Kode Proyek (untuk Klien)">
             <div class="relative mb-3">
                 <input id="swal-u-pass" type="password" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2.5 pr-10 outline-none text-slate-800 dark:text-white" placeholder="Password (Min. 6 Karakter)">
-                <button type="button" id="toggle-swal-pass" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-orange-500 transition-colors">
+                <button type="button" id="toggle-swal-pass" class="absolute inset-y-0 right-0 px-4 flex items-center text-slate-400 hover:text-orange-500 transition-colors z-10" title="Tampilkan/Sembunyikan Password">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
@@ -1469,7 +1682,7 @@ window.tambahUser = function() {
                 toggleBtn.addEventListener('click', () => {
                     const type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passInput.setAttribute('type', type);
-                    toggleBtn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                    toggleBtn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash text-orange-500"></i>';
                 });
             }
                 const roleSelect = document.getElementById('swal-u-role');
@@ -1801,6 +2014,7 @@ window.editProyek = function(id) {
     document.getElementById('html-p-code').value = p.code || '';
     document.getElementById('html-p-name').value = p.name || '';
     document.getElementById('html-p-client').value = p.client || '';
+    if(document.getElementById('html-p-pic')) document.getElementById('html-p-pic').value = p.pic || '';
     document.getElementById('html-p-loc').value = p.location || '';
     document.getElementById('html-p-val').value = p.value || '';
     document.getElementById('html-p-start').value = p.start || '';
@@ -1811,6 +2025,15 @@ window.editProyek = function(id) {
     }
     if(document.getElementById('html-p-img')) document.getElementById('html-p-img').value = p.imageUrl || '';
     if(document.getElementById('html-p-file')) document.getElementById('html-p-file').value = '';
+
+    const chkSipil = document.getElementById('html-p-has-sipil');
+    const chkArs = document.getElementById('html-p-has-ars');
+    const chkMep = document.getElementById('html-p-has-mep');
+    const chkInt = document.getElementById('html-p-has-int');
+    if (chkSipil) chkSipil.checked = p.hasSipil !== false;
+    if (chkArs) chkArs.checked = p.hasArs !== false;
+    if (chkMep) chkMep.checked = p.hasMep !== false;
+    if (chkInt) chkInt.checked = p.hasInt !== false;
 
     document.querySelector('#modalProject h3').innerText = 'Edit Proyek';
     const saveBtn = document.querySelector('#modalProject button.bg-blue-600') || document.querySelector('#modalProject button.bg-orange-600');
@@ -1824,12 +2047,18 @@ window.updateProjectData = async function(id) {
     const code = document.getElementById('html-p-code').value;
     const name = document.getElementById('html-p-name').value;
     const client = document.getElementById('html-p-client').value;
+    const pic = document.getElementById('html-p-pic') ? document.getElementById('html-p-pic').value : '';
     const location = document.getElementById('html-p-loc').value;
     const value = document.getElementById('html-p-val').value;
     const start = document.getElementById('html-p-start').value;
     const end = document.getElementById('html-p-end').value;
     const imageUrl = document.getElementById('html-p-img') ? document.getElementById('html-p-img').value : '';
     const fileInput = document.getElementById('html-p-file');
+    
+    const hasSipil = document.getElementById('html-p-has-sipil') ? document.getElementById('html-p-has-sipil').checked : true;
+    const hasArs = document.getElementById('html-p-has-ars') ? document.getElementById('html-p-has-ars').checked : true;
+    const hasMep = document.getElementById('html-p-has-mep') ? document.getElementById('html-p-has-mep').checked : true;
+    const hasInt = document.getElementById('html-p-has-int') ? document.getElementById('html-p-has-int').checked : true;
 
     if(!code) return Swal.fire('Gagal', 'Kode proyek wajib diisi', 'error');
     if(!name) return Swal.fire('Gagal', 'Nama proyek wajib diisi', 'error');
@@ -1854,7 +2083,8 @@ window.updateProjectData = async function(id) {
     });
 
     let updatedProject = {
-        ...p, code, name, client, location, value, start, end, imageUrl, totalWeeks, weeklyPlans
+        ...p, code, name, client, pic, location, value, start, end, imageUrl, totalWeeks, weeklyPlans,
+        hasSipil, hasArs, hasMep, hasInt
     };
     delete updatedProject.id;
 
@@ -1903,6 +2133,10 @@ window.resetProjectForm = function() {
     if (durationEl) durationEl.innerHTML = '';
     const planContainer = document.getElementById('html-p-plan-container');
     if (planContainer) planContainer.classList.add('hidden');
+    if(document.getElementById('html-p-has-sipil')) document.getElementById('html-p-has-sipil').checked = true;
+    if(document.getElementById('html-p-has-ars')) document.getElementById('html-p-has-ars').checked = true;
+    if(document.getElementById('html-p-has-mep')) document.getElementById('html-p-has-mep').checked = true;
+    if(document.getElementById('html-p-has-int')) document.getElementById('html-p-has-int').checked = true;
     document.querySelector('#modalProject h3').innerText = 'Setup Proyek Baru';
     const saveBtn = document.querySelector('#modalProject button[onclick^="updateProjectData"]') || document.querySelector('#modalProject button[onclick="saveProject()"]');
     if (saveBtn) {
@@ -1933,12 +2167,18 @@ window.saveProject = async function() {
     const code = document.getElementById('html-p-code').value;
     const name = document.getElementById('html-p-name').value;
     const client = document.getElementById('html-p-client').value;
+    const pic = document.getElementById('html-p-pic') ? document.getElementById('html-p-pic').value : '';
     const location = document.getElementById('html-p-loc').value;
     const value = document.getElementById('html-p-val').value;
     const start = document.getElementById('html-p-start').value;
     const end = document.getElementById('html-p-end').value;
     const imageUrl = document.getElementById('html-p-img') ? document.getElementById('html-p-img').value : '';
     const fileInput = document.getElementById('html-p-file');
+    
+    const hasSipil = document.getElementById('html-p-has-sipil') ? document.getElementById('html-p-has-sipil').checked : true;
+    const hasArs = document.getElementById('html-p-has-ars') ? document.getElementById('html-p-has-ars').checked : true;
+    const hasMep = document.getElementById('html-p-has-mep') ? document.getElementById('html-p-has-mep').checked : true;
+    const hasInt = document.getElementById('html-p-has-int') ? document.getElementById('html-p-has-int').checked : true;
 
     if(!code) return Swal.fire('Gagal', 'Kode proyek wajib diisi', 'error');
     if(!name) return Swal.fire('Gagal', 'Nama proyek wajib diisi', 'error');
@@ -1960,11 +2200,12 @@ window.saveProject = async function() {
     });
 
     let newProject = {
-        code, name, client, location, value, start, end,
+        code, name, client, pic, location, value, start, end,
         imageUrl: imageUrl,
         status: "Perencanaan",
         progress: 0,
-        divSipil: 0, divArs: 0, divMep: 0, totalWeeks: totalWeeks,
+        divSipil: 0, divArs: 0, divMep: 0, divInt: 0, totalWeeks: totalWeeks,
+        hasSipil, hasArs, hasMep, hasInt,
         weeklyUpdates: {},
         weeklyPlans: weeklyPlans,
         timestamp: Date.now()
@@ -2513,7 +2754,7 @@ function renderClients() {
     container.innerHTML = currentClients.map(c => `
         <div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-md border border-slate-100 dark:border-slate-700 flex flex-col items-center justify-center relative group">
             <button onclick="hapusKlien('${c.id}', '${c.fileId || ''}')" class="absolute top-2 right-2 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity bg-red-100 dark:bg-red-900/30 w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-trash text-xs"></i></button>
-            <img src="${c.logoUrl}" alt="${c.name}" class="h-16 w-16 object-cover rounded-full shadow-sm mb-3 filter grayscale hover:grayscale-0 transition-all">
+            <img src="${c.logoUrl}" alt="${c.name}" class="${c.shape === 'square' ? 'h-16 w-auto max-w-full rounded-lg object-contain' : 'h-16 w-16 rounded-full object-cover bg-white'} shadow-sm mb-3 transition-all">
             <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 text-center">${c.name}</span>
         </div>
     `).join('');
@@ -2533,6 +2774,20 @@ window.tambahKlien = function() {
                 <input type="file" id="swal-c-file" accept="image/*" class="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2A2A2A] rounded-lg p-2 outline-none text-slate-800 dark:text-white file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-100 file:text-orange-700 hover:file:bg-orange-200 dark:file:bg-[#FF7A00]/20 dark:file:text-[#FF7A00] cursor-pointer">
             </div>
             
+            <div id="crop-shape-selector" style="display: none;" class="mb-3 text-left">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-400 mb-2">Bentuk Potongan Logo</label>
+                <div class="flex gap-4 p-1 bg-slate-100 dark:bg-[#121212] rounded-xl border border-slate-200 dark:border-[#2A2A2A]">
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="crop_shape" value="circle" checked class="peer sr-only" onchange="if(window.clientCropper) { document.getElementById('cropper-container').classList.add('cropper-circle-mode'); window.clientCropper.setAspectRatio(1); }">
+                        <div class="text-center py-2 rounded-lg peer-checked:bg-white dark:peer-checked:bg-[#2A2A2A] peer-checked:shadow-sm font-medium text-sm transition-all text-slate-500 peer-checked:text-slate-800 dark:text-slate-400 dark:peer-checked:text-white"><i class="fas fa-circle mr-2"></i> Bulat (1:1)</div>
+                    </label>
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="crop_shape" value="square" class="peer sr-only" onchange="if(window.clientCropper) { document.getElementById('cropper-container').classList.remove('cropper-circle-mode'); window.clientCropper.setAspectRatio(NaN); }">
+                        <div class="text-center py-2 rounded-lg peer-checked:bg-white dark:peer-checked:bg-[#2A2A2A] peer-checked:shadow-sm font-medium text-sm transition-all text-slate-500 peer-checked:text-slate-800 dark:text-slate-400 dark:peer-checked:text-white"><i class="fas fa-expand mr-2"></i> Biasa (Bebas)</div>
+                    </label>
+                </div>
+            </div>
+
             <div id="cropper-container" class="cropper-circle-mode" style="display: none; margin-bottom: 1rem;">
                 <div style="width: 100%; max-height: 300px; overflow: hidden; border-radius: 0.5rem; border: 1px solid #2A2A2A;">
                     <img id="cropper-image" style="max-width: 100%; display: block;">
@@ -2552,6 +2807,7 @@ window.tambahKlien = function() {
             const fileInput = document.getElementById('swal-c-file');
             const cropperContainer = document.getElementById('cropper-container');
             const cropperImage = document.getElementById('cropper-image');
+            const shapeSelector = document.getElementById('crop-shape-selector');
             
             window.clientCropper = null;
             
@@ -2561,6 +2817,11 @@ window.tambahKlien = function() {
                     const reader = new FileReader();
                     reader.onload = (event) => {
                         cropperContainer.style.display = 'block';
+                        shapeSelector.style.display = 'block';
+                        
+                        const circleRadio = document.querySelector('input[name="crop_shape"][value="circle"]');
+                        if (circleRadio) circleRadio.checked = true;
+                        cropperContainer.classList.add('cropper-circle-mode');
                         
                         cropperImage.onload = () => {
                             if (window.clientCropper) {
@@ -2585,6 +2846,7 @@ window.tambahKlien = function() {
                     reader.readAsDataURL(file);
                 } else {
                     cropperContainer.style.display = 'none';
+                    shapeSelector.style.display = 'none';
                     if (window.clientCropper) {
                         window.clientCropper.destroy();
                         window.clientCropper = null;
@@ -2596,6 +2858,10 @@ window.tambahKlien = function() {
             const name = document.getElementById('swal-c-name').value;
             const logoUrl = document.getElementById('swal-c-logo').value;
             const fileInput = document.getElementById('swal-c-file');
+            
+            const shapeEl = document.querySelector('input[name="crop_shape"]:checked');
+            const shape = shapeEl ? shapeEl.value : 'circle';
+
             if (!name) {
                 Swal.showValidationMessage('Nama Klien wajib diisi!');
                 return false;
@@ -2604,20 +2870,20 @@ window.tambahKlien = function() {
             if (window.clientCropper) {
                 return new Promise((resolve) => {
                     window.clientCropper.getCroppedCanvas({
-                        width: 400,
-                        height: 400,
-                        fillColor: '#ffffff'
+                        maxWidth: 800,
+                        maxHeight: 800,
+                        fillColor: 'transparent'
                     }).toBlob((blob) => {
-                        const croppedFile = new File([blob], "client_logo.jpg", { type: "image/jpeg" });
-                        resolve({ name, logoUrl: '', file: croppedFile });
-                    }, 'image/jpeg', 0.9);
+                        const croppedFile = new File([blob], "client_logo.png", { type: "image/png" });
+                        resolve({ name, logoUrl: '', file: croppedFile, shape });
+                    }, 'image/png', 1);
                 });
             } else {
                 if (!logoUrl && (!fileInput.files || fileInput.files.length === 0)) {
                     Swal.showValidationMessage('Silakan pilih file logo atau masukkan URL!');
                     return false;
                 }
-                return { name, logoUrl, file: fileInput.files && fileInput.files.length > 0 ? fileInput.files[0] : null };
+                return { name, logoUrl, file: fileInput.files && fileInput.files.length > 0 ? fileInput.files[0] : null, shape };
             }
         }
     }).then(async (result) => {

@@ -9,9 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Leaflet CSS for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    
     <!-- Cropper.js CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
@@ -50,21 +47,14 @@
         /* Circle Progress Map */
         .circle-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
         
-        /* Map Dark Mode filter */
-        .dark .leaflet-layer,
-        .dark .leaflet-control-zoom-in,
-        .dark .leaflet-control-zoom-out,
-        .dark .leaflet-control-attribution {
-            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-        }
         /* Round Crop Box for Cropper.js (Specific Mode) */
         .cropper-circle-mode .cropper-view-box, .cropper-circle-mode .cropper-face {
             border-radius: 50%;
         }
     </style>
-  <script type="module" crossorigin src="/assets/dashboard-CBS0XjaQ.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-service-oQMaTyfC.js">
-  <link rel="stylesheet" crossorigin href="/assets/firebase-service-B_F3xpz9.css">
+  <script type="module" crossorigin src="/assets/dashboard-CbFRX82M.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-service-CVGET8i4.js">
+  <link rel="stylesheet" crossorigin href="/assets/firebase-service-DcK6FMz1.css">
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
 
@@ -109,6 +99,9 @@
                 </a>
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-news">
                     <i class="fas fa-newspaper w-5 text-center"></i> <span>Berita</span>
+                </a>
+                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
+                    <i class="fas fa-truck-loading w-5 text-center"></i> <span>Monitoring Supplier</span>
                 </a>
                 <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports">
                     <i class="fas fa-file-pdf w-5 text-center"></i> <span>Laporan</span>
@@ -241,14 +234,14 @@
                     
                     <!-- Map & Activity Feed -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative h-[336px]">
                             <div class="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-lg shadow border border-slate-200 dark:border-slate-700">
-                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Peta Lokasi Proyek</h3>
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Lokasi Kantor</h3>
                             </div>
-                            <div id="projectMap" class="w-full h-80 rounded-xl z-0"></div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.026363740263!2d107.57508491537494!3d-6.887462095022831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6873a8cc5a1%3A0x6a0a75f1b203c9d7!2sJl.%20Sarimadu%20Barat%20No.18%2C%20Sarijadi%2C%20Kec.%20Sukajadi%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040164!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" class="w-full h-full rounded-xl z-0 border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col">
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col h-[336px]">
                             <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Aktivitas Terkini</h3>
                             <div id="activity-feed" class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-6 pb-2 flex-1 overflow-y-auto pr-2">
                                 <!-- Aktivitas dirender via JS -->
@@ -415,6 +408,7 @@
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Kode Proyek</label><input type="text" id="html-p-code" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: PRJ-001" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Nama Proyek</label><input type="text" id="html-p-name" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Klien</label><input type="text" id="html-p-client" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
+                <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Project Manager (PIC)</label><input type="text" id="html-p-pic" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Nama Manager Proyek" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Lokasi / Koordinat Peta</label><input type="text" id="html-p-loc" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: Jakarta Selatan atau -6.2, 106.8" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Nilai Anggaran</label><input type="text" id="html-p-val" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" placeholder="Cth: Rp 45 M" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Tanggal Mulai</label><input type="date" id="html-p-start" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
@@ -450,7 +444,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>

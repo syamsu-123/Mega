@@ -20,6 +20,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     
@@ -27,9 +30,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <!-- Main CSS -->
-  <script type="module" crossorigin src="/assets/firebase-service-oQMaTyfC.js"></script>
-  <script type="module" crossorigin src="/assets/main-fo6eQb0h.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/firebase-service-B_F3xpz9.css">
+  <script type="module" crossorigin src="/assets/firebase-service-CVGET8i4.js"></script>
+  <script type="module" crossorigin src="/assets/main-BIW5RU3R.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/firebase-service-DcK6FMz1.css">
 </head>
 <body>
     <!-- Scroll Progress Bar -->
@@ -104,26 +107,26 @@
                 <!-- Contact Form -->
                 <div data-aos="fade-right">
                     <h3 class="text-2xl font-bold text-corporate-dark mb-6">Kirim Pesan Kami</h3>
-                    <form class="space-y-4">
+                    <form action="https://formspree.io/f/meewvyrn" method="POST" class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nama Lengkap</label>
-                            <input type="text" class="form-input" placeholder="Nama Anda">
+                            <input type="text" name="from_name" class="form-input" placeholder="Nama Anda" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Email</label>
-                            <input type="email" class="form-input" placeholder="email@example.com">
+                            <input type="email" name="from_email" class="form-input" placeholder="email@example.com" required>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nomor Telepon</label>
-                            <input type="tel" class="form-input" placeholder="+62 xxx xxxx xxxx">
+                            <input type="tel" name="from_phone" class="form-input" placeholder="+62 xxx xxxx xxxx">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Nama Perusahaan</label>
-                            <input type="text" class="form-input" placeholder="Nama Perusahaan Anda">
+                            <input type="text" name="from_company" class="form-input" placeholder="Nama Perusahaan Anda">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-corporate-dark mb-2">Pesan</label>
-                            <textarea class="form-textarea" placeholder="Tuliskan pesan Anda..."></textarea>
+                            <textarea name="message" class="form-textarea" placeholder="Tuliskan pesan Anda..." required></textarea>
                         </div>
                         <button type="submit" class="w-full btn-primary">
                             <i class="fas fa-paper-plane mr-2"></i> Kirim Pesan
@@ -142,7 +145,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-corporate-dark mb-1">Alamat</h4>
-                                <p class="text-gray-700">Jl. Sudirman No. 123<br>Jakarta Selatan 12190<br>Indonesia</p>
+                                <p class="text-gray-700">Jl. Sarimadu Barat No.18, Sarijadi, Kec. Sukajadi<br>Kota Bandung, Jawa Barat 40164<br>Indonesia</p>
                             </div>
                         </div>
 
@@ -200,7 +203,7 @@
 
             <!-- Google Maps Embed -->
             <div class="mt-12 rounded-xl overflow-hidden shadow-lg" data-aos="zoom-in">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.3662108968507!2d106.7918!3d-6.2297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f40f8acb1c7b%3A0x1e6e3b6e3b6e3b6e!2sJl.%20Sudirman%2C%20Jakarta%20Selatan%2012190!5e0!3m2!1sid!2sid!4v" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.026363740263!2d107.57508491537494!3d-6.887462095022831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6873a8cc5a1%3A0x6a0a75f1b203c9d7!2sJl.%20Sarimadu%20Barat%20No.18%2C%20Sarijadi%2C%20Kec.%20Sukajadi%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040164!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
@@ -258,7 +261,7 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jakarta Selatan</li>
+                        <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jl. Sarimadu Barat No.18, Sarijadi, Kec. Sukajadi, Kota Bandung, Jawa Barat 40164</li>
                         <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>info@megatama.com</li>
                         <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
                     </ul>

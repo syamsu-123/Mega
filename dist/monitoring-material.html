@@ -24,9 +24,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
 
     <!-- Main CSS -->
-  <script type="module" crossorigin src="/assets/monitoringMaterial-CZXdrM1a.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-service-oQMaTyfC.js">
-  <link rel="stylesheet" crossorigin href="/assets/firebase-service-B_F3xpz9.css">
+  <script type="module" crossorigin src="/assets/monitoringMaterial-Bz8PITXQ.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-service-CVGET8i4.js">
+  <link rel="stylesheet" crossorigin href="/assets/firebase-service-DcK6FMz1.css">
 </head>
 <body class="min-h-screen bg-slate-50 dark:bg-[#0A0A0A] text-slate-800 dark:text-[#FFFFFF] transition-colors duration-300 font-['Inter']">
 
@@ -49,15 +49,21 @@
                 </div>
             </div>
             
-            <!-- Admin Actions -->
-            <div class="flex items-center gap-3" id="admin-actions" style="display: none;">
-                <input type="file" id="import-excel-file" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleImportExcel(event)">
-                <button onclick="showImportInstructions()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 md:px-4 rounded-lg text-sm font-bold shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all flex items-center gap-2">
-                    <i class="fas fa-file-import"></i> <span class="hidden sm:inline">Import Excel</span>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="flex items-center justify-center gap-1.5 w-10 h-10 rounded-full text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i class="fas fa-moon text-lg"></i>
                 </button>
-                <button onclick="openAddMaterialModal()" class="bg-[#FF7A00] hover:bg-[#FFA726] text-white px-4 py-2 rounded-lg text-sm font-bold shadow-[0_0_15px_rgba(255,122,0,0.3)] transition-all flex items-center gap-2">
-                    <i class="fas fa-plus"></i> Tambah Material
-                </button>
+                <!-- Admin Actions -->
+                <div class="flex items-center gap-2 sm:gap-3" id="admin-actions" style="display: none;">
+                    <input type="file" id="import-excel-file" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleImportExcel(event)">
+                    <button onclick="showImportInstructions()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 md:px-4 rounded-lg text-sm font-bold shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all flex items-center gap-2">
+                        <i class="fas fa-file-import"></i> <span class="hidden sm:inline">Import Excel</span>
+                    </button>
+                    <button onclick="openAddMaterialModal()" class="bg-[#FF7A00] hover:bg-[#FFA726] text-white px-4 py-2 rounded-lg text-sm font-bold shadow-[0_0_15px_rgba(255,122,0,0.3)] transition-all flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Tambah Material
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -76,7 +82,7 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="relative">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" oninput="filterBySearch(this.value)" placeholder="Cari Kode / Item..." class="bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] text-slate-800 dark:text-white text-xs rounded-lg pl-8 pr-3 py-1.5 focus:border-[#FF7A00] outline-none w-40 sm:w-52 shadow-sm transition-colors">
+                        <input type="text" oninput="filterBySearch(this.value)" placeholder="Cari Kode / Item / No PO..." class="bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] text-slate-800 dark:text-white text-xs rounded-lg pl-8 pr-3 py-1.5 focus:border-[#FF7A00] outline-none w-40 sm:w-52 shadow-sm transition-colors">
                     </div>
                     <select id="po-filter" onchange="filterByPoStatus(this.value)" class="bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] text-slate-800 dark:text-white text-xs rounded-lg px-3 py-1.5 focus:border-[#FF7A00] outline-none cursor-pointer shadow-sm">
                         <option value="All">Semua Status PO</option>
@@ -97,6 +103,15 @@
                 <table class="w-full text-left border-collapse" id="materials-table">
                     <!-- Tabel diisi oleh JS -->
                 </table>
+            </div>
+            
+            <!-- Pagination Controls -->
+            <div id="pagination-controls" class="flex flex-col sm:flex-row justify-between items-center p-4 border-t border-slate-200 dark:border-[#2A2A2A] bg-slate-50 dark:bg-[#121212] transition-colors gap-3 hidden">
+                <span id="pagination-info" class="text-xs text-slate-500 dark:text-[#A1A1AA]">Menampilkan 0 - 0 dari 0 data</span>
+                <div class="flex gap-2">
+                    <button id="btn-prev-page" onclick="prevPage()" class="px-3 py-1.5 bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] rounded-lg text-xs text-slate-600 dark:text-white hover:text-[#FF7A00] hover:border-[#FF7A00] disabled:opacity-50 disabled:cursor-not-allowed transition-all"><i class="fas fa-chevron-left mr-1"></i> Prev</button>
+                    <button id="btn-next-page" onclick="nextPage()" class="px-3 py-1.5 bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] rounded-lg text-xs text-slate-600 dark:text-white hover:text-[#FF7A00] hover:border-[#FF7A00] disabled:opacity-50 disabled:cursor-not-allowed transition-all">Next <i class="fas fa-chevron-right ml-1"></i></button>
+                </div>
             </div>
         </div>
     </main>

@@ -13,6 +13,10 @@ export default defineConfig({
         detailBerita: resolve(__dirname, 'detail-berita.html'),
         monitoringMaterial: resolve(__dirname, 'monitoring-material.html'),
         monitoringSupplier: resolve(__dirname, 'monitoring-supplier.html'),
+        perbandinganHarga: resolve(__dirname, 'perbandingan-harga.html'),
+        privacy: resolve(__dirname, 'privacy.html'),
+        terms: resolve(__dirname, 'terms.html'),
+        siteMap: resolve(__dirname, 'sitemap.html'),
       }
     }
   }

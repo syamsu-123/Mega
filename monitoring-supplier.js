@@ -80,7 +80,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Show admin buttons if user has access
     if (userRole !== 'Viewer') {
-        document.getElementById('admin-actions').style.display = 'flex';
+        const adminActionsContainer = document.getElementById('admin-actions');
+        adminActionsContainer.style.display = 'flex';
     }
 
     await loadSuppliers();
@@ -99,8 +100,12 @@ function renderStats() {
     const statsContainer = document.getElementById('supplier-stats');
     const total = suppliersList.length;
     let active = 0;
-    suppliersList.forEach(s => { if (s.status === 'Aktif') active++; });
-
+    const uniqueMaterials = new Set();
+    suppliersList.forEach(s => { 
+        if (s.status === 'Aktif') active++; 
+        if (s.material && s.material.trim()) uniqueMaterials.add(s.material.trim().toLowerCase());
+    });
+    const uniqueMaterialCount = uniqueMaterials.size;
     statsContainer.innerHTML = `
         <div class="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-slate-200 dark:border-[#2A2A2A] shadow-sm transition-colors duration-300">
             <div class="flex justify-between items-start">
@@ -123,8 +128,8 @@ function renderStats() {
         <div class="bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-slate-200 dark:border-[#2A2A2A] shadow-sm transition-colors duration-300">
             <div class="flex justify-between items-start">
                 <div>
-                    <p class="text-slate-500 dark:text-[#A1A1AA] text-xs font-semibold uppercase tracking-wider mb-1">Barang Dilacak</p>
-                    <h3 class="text-3xl font-bold text-[#FF7A00]">${total}</h3>
+                    <p class="text-slate-500 dark:text-[#A1A1AA] text-xs font-semibold uppercase tracking-wider mb-1">Material Unik Dilacak</p>
+                    <h3 class="text-3xl font-bold text-[#FF7A00]">${uniqueMaterialCount}</h3>
                 </div>
                 <div class="w-10 h-10 rounded-full bg-orange-50 dark:bg-[#FF7A00]/10 flex items-center justify-center text-[#FF7A00]"><i class="fas fa-box-open"></i></div>
             </div>
@@ -144,6 +149,19 @@ function renderTable() {
         );
     }
     
+    // --- START: Price Comparison Logic ---
+    const bestPrices = {};
+    // First pass: find the best price for each material from the *entire* list, not just the filtered one.
+    // This ensures the "best price" badge is accurate globally.
+    suppliersList.forEach(s => {
+        if (s.material && s.price > 0) {
+            const materialKey = s.material.trim().toLowerCase();
+            if (!bestPrices[materialKey] || s.price < bestPrices[materialKey]) {
+                bestPrices[materialKey] = s.price;
+            }
+        }
+    });
+    
     if (displayList.length === 0) {
         tableContainer.innerHTML = '<tr><td colspan="9" class="p-8 text-center text-slate-500 dark:text-[#A1A1AA] italic">Tidak ada data supplier / harga.</td></tr>';
         return;
@@ -157,13 +175,25 @@ function renderTable() {
         const priceFmt = s.price ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(s.price) : '-';
         const dateFmt = s.timestamp ? new Date(s.timestamp).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
 
+        // --- START: Best Price Badge Logic ---
+        let bestPriceBadge = '';
+        if (s.material && s.price > 0) {
+            const materialKey = s.material.trim().toLowerCase();
+            if (bestPrices[materialKey] === s.price) {
+                bestPriceBadge = '<span class="ml-2 px-2 py-0.5 bg-green-100 dark:bg-green-500/10 text-green-600 dark:text-green-400 rounded-full text-[10px] font-bold border border-green-200 dark:border-green-500/20"><i class="fas fa-star text-yellow-400 text-[9px] mr-1"></i>Harga Terbaik</span>';
+            }
+        }
+
         return `
             <tr class="border-b border-slate-200 dark:border-[#2A2A2A] hover:bg-slate-50 dark:hover:bg-[#121212] transition-colors">
                 <td class="p-4 text-sm text-center text-slate-500 dark:text-[#A1A1AA]">${index + 1}</td>
                 <td class="p-4"><p class="text-sm font-semibold text-slate-800 dark:text-white">${s.name}</p></td>
                 <td class="p-4 text-sm text-slate-500 dark:text-[#A1A1AA]">${s.material}</td>
                 <td class="p-4 text-right">
-                    <p class="text-sm font-bold text-[#FF7A00]">${priceFmt}</p>
+                    <div class="flex items-center justify-end">
+                        <p class="text-sm font-bold text-[#FF7A00]">${priceFmt}</p>
+                        ${bestPriceBadge}
+                    </div>
                     <p class="text-[10px] text-slate-500 dark:text-[#A1A1AA]">per ${s.unit}</p>
                 </td>
                 <td class="p-4 text-sm text-slate-500 dark:text-[#A1A1AA]">${s.contact || '-'}</td>

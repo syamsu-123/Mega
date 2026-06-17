@@ -668,4 +668,159 @@ document.addEventListener('DOMContentLoaded', () => {
     loadNews();
     loadClients();
     loadGallery();
+    initChatbot(); // Initialize AI Chatbot
 });
+
+// ==========================================
+// AI CUSTOMER SERVICE CHATBOT (GEMINI API)
+// ==========================================
+function initChatbot() {
+    // 1. Inject HTML Chatbot ke dalam Body
+    const chatbotHTML = `
+        <div id="ai-chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+            <!-- Chat Window -->
+            <div id="ai-chat-window" class="w-80 sm:w-96 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-[#2A2A2A] overflow-hidden flex-col transition-all duration-300 mb-4 origin-bottom-right scale-0 opacity-0 pointer-events-auto" style="display: none; height: 450px;">
+                <!-- Header -->
+                <div class="bg-corporate-dark text-white p-4 flex justify-between items-center shadow-md z-10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                            <i class="fas fa-robot text-corporate-bright text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm tracking-wide">MEGATAMA AI</h3>
+                            <p class="text-[10px] text-gray-300 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse"></span> Online 24/7</p>
+                        </div>
+                    </div>
+                    <button id="close-chat" class="w-8 h-8 rounded-full hover:bg-white/10 transition-colors flex items-center justify-center"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <!-- Body / Messages -->
+                <div id="chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-slate-50 dark:bg-[#121212] scroll-smooth">
+                    <!-- Welcome Message -->
+                    <div class="flex gap-3 max-w-[85%]">
+                        <div class="w-8 h-8 rounded-full bg-corporate-dark flex-shrink-0 flex items-center justify-center"><i class="fas fa-robot text-xs text-corporate-bright"></i></div>
+                        <div class="bg-white dark:bg-[#2A2A2A] p-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 dark:border-[#333] text-sm text-gray-800 dark:text-gray-200">
+                            Halo! Saya Asisten AI MEGATAMA. Ada yang bisa saya bantu terkait layanan konstruksi, portofolio, atau informasi perusahaan kami?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer / Input -->
+                <div class="p-3 bg-white dark:bg-[#1A1A1A] border-t border-gray-200 dark:border-[#2A2A2A] flex gap-2 items-center">
+                    <input type="text" id="chat-input" placeholder="Ketik pesan Anda di sini..." class="flex-1 bg-slate-100 dark:bg-[#121212] text-gray-800 dark:text-white rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-1 focus:ring-corporate-bright border border-transparent dark:border-[#2A2A2A] transition-all">
+                    <button id="send-chat" class="w-10 h-10 bg-corporate-bright hover:bg-orange-600 text-white rounded-xl flex items-center justify-center transition-transform hover:scale-105 shadow-md shadow-corporate-bright/30 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Toggle Button -->
+            <button id="toggle-chat" class="w-14 h-14 bg-corporate-bright hover:bg-orange-600 text-white rounded-full shadow-[0_0_20px_rgba(255,122,0,0.4)] flex items-center justify-center text-2xl transition-transform hover:scale-110 pointer-events-auto z-50">
+                <i class="fas fa-comment-dots"></i>
+            </button>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+
+    // 2. Element References
+    const chatWindow = document.getElementById('ai-chat-window');
+    const toggleBtn = document.getElementById('toggle-chat');
+    const closeBtn = document.getElementById('close-chat');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-chat');
+    const messagesContainer = document.getElementById('chat-messages');
+
+    // 3. Konfigurasi API Gemini
+    // PERINGATAN: Untuk production, pindahkan pemanggilan ini ke Firebase Cloud Functions agar API Key aman!
+    const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"; // Ganti dengan API Key Anda
+    
+    // Sistem Prompt (Konteks agar AI tahu dia siapa)
+    const systemPrompt = `Anda adalah Customer Service AI yang ramah dan profesional untuk PT MEGATAMA, sebuah perusahaan konstruksi. 
+    Tugas Anda menjawab pertanyaan pengunjung web seputar layanan (Sipil, Arsitektur, MEP, Interior). 
+    Jawablah dengan ringkas, sopan, dan dalam bahasa Indonesia. Jika ada pertanyaan spesifik tentang harga, arahkan mereka untuk klik tombol "Hubungi Kami" atau halaman Kontak.`;
+    
+    // Riwayat percakapan untuk konteks AI
+    let chatHistory = [ { role: "user", parts: [{ text: systemPrompt }] }, { role: "model", parts: [{ text: "Dimengerti. Saya akan bertindak sebagai asisten CS MEGATAMA." }] } ];
+
+    // 4. Toggle Chat Logic
+    const toggleChat = () => {
+        if (chatWindow.style.display === 'none') {
+            chatWindow.style.display = 'flex';
+            setTimeout(() => { chatWindow.classList.remove('scale-0', 'opacity-0'); chatWindow.classList.add('scale-100', 'opacity-100'); }, 10);
+            toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+            chatInput.focus();
+        } else {
+            chatWindow.classList.remove('scale-100', 'opacity-100');
+            chatWindow.classList.add('scale-0', 'opacity-0');
+            setTimeout(() => { chatWindow.style.display = 'none'; }, 300);
+            toggleBtn.innerHTML = '<i class="fas fa-comment-dots"></i>';
+        }
+    };
+
+    toggleBtn.addEventListener('click', toggleChat);
+    closeBtn.addEventListener('click', toggleChat);
+
+    // 5. Fungsi Mengirim Pesan
+    const appendMessage = (message, isUser = false) => {
+        const msgHTML = isUser ? `
+            <div class="flex gap-3 max-w-[85%] self-end flex-row-reverse">
+                <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-[#333] flex-shrink-0 flex items-center justify-center"><i class="fas fa-user text-xs text-slate-500 dark:text-slate-400"></i></div>
+                <div class="bg-corporate-light dark:bg-corporate-dark p-3 rounded-2xl rounded-tr-sm shadow-sm text-sm text-corporate-dark dark:text-white border border-corporate-bright/20">
+                    ${message}
+                </div>
+            </div>
+        ` : `
+            <div class="flex gap-3 max-w-[85%]">
+                <div class="w-8 h-8 rounded-full bg-corporate-dark flex-shrink-0 flex items-center justify-center"><i class="fas fa-robot text-xs text-corporate-bright"></i></div>
+                <div class="bg-white dark:bg-[#2A2A2A] p-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 dark:border-[#333] text-sm text-gray-800 dark:text-gray-200">
+                    ${message}
+                </div>
+            </div>
+        `;
+        messagesContainer.insertAdjacentHTML('beforeend', msgHTML);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+
+    const handleSend = async () => {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Tampilkan pesan user
+        appendMessage(text, true);
+        chatInput.value = '';
+        sendBtn.disabled = true;
+        
+        // Tampilkan indikator loading (typing...)
+        const loadingId = 'loading-' + Date.now();
+        appendMessage(`<span id="${loadingId}" class="flex gap-1 items-center h-4"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></span>`);
+
+        try {
+            chatHistory.push({ role: "user", parts: [{ text: text }] });
+
+            // Panggil Gemini API
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: chatHistory })
+            });
+
+            const data = await response.json();
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            
+            chatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+            
+            document.getElementById(loadingId).closest('.flex.gap-3').remove(); // Hapus loading
+            appendMessage(aiResponse.replace(/\n/g, '<br>')); // Tampilkan jawaban AI
+        } catch (error) {
+            document.getElementById(loadingId).closest('.flex.gap-3').remove();
+            appendMessage('<span class="text-red-500">Maaf, saya sedang mengalami gangguan koneksi. Silakan hubungi via WhatsApp.</span>');
+            console.error("AI Chat Error:", error);
+        } finally {
+            sendBtn.disabled = false;
+            chatInput.focus();
+        }
+    };
+
+    sendBtn.addEventListener('click', handleSend);
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+}

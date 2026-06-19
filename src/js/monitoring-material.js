@@ -275,6 +275,7 @@ function renderTable() {
                 <th class="p-4 font-semibold text-right w-24 whitespace-nowrap">MTO</th>
                 <th class="p-4 font-semibold text-right w-32 whitespace-nowrap">Quantity PO</th>
                 <th class="p-4 font-semibold text-center">Satuan</th>
+                <th class="p-4 font-semibold">Tanggal Update</th>
                 <th class="p-4 font-semibold text-center">Status Material</th>
                 <th class="p-4 font-semibold text-center">Status PO</th>
                 <th class="p-4 font-semibold">No PO</th>
@@ -296,6 +297,7 @@ function renderTable() {
         let rowNumber = startIndex + index + 1;
         const mto = m.mto || 0;
         const qtyPo = m.target || 0;
+        const dateFmt = m.timestamp ? new Date(m.timestamp).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
 
         let totalCumulativePo = qtyPo;
         if (m.itemCode && m.itemCode.trim() !== '') {
@@ -337,6 +339,7 @@ function renderTable() {
                     ${(m.used || 0) > 0 ? `<p class="text-[10px] text-blue-500">Terpakai: ${(m.used || 0).toLocaleString('id-ID')}</p>` : ''}
                 </td>
                 <td class="p-4 text-sm text-slate-500 dark:text-[#A1A1AA] text-center">${m.unit}</td>
+                <td class="p-4 text-sm text-slate-500 dark:text-[#A1A1AA]">${dateFmt}</td>
                 <td class="p-4 text-center">${statusBadge}</td>
                 <td class="p-4 text-center">${poStatusBadge}</td>
                 <td class="p-4 text-sm text-slate-500 dark:text-[#A1A1AA]">${m.poNumber || '-'}</td>

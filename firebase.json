@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "megatama-e41d3",
     "public": "dist",
     "ignore": [
       "firebase.json",

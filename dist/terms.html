@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - MEGATAMA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="/logo-APzS9lAT.png">
+  <script type="module" crossorigin src="/firebase-service-BtA-uc5p.js"></script>
+  <script type="module" crossorigin src="/main-BSRJZNnm.js"></script>
+  <link rel="stylesheet" crossorigin href="/firebase-service-B0bYcONi.css">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar bg-corporate-dark scrolled border-b border-white/5" style="background-color: #0B1F3A !important;">
+        <div class="navbar-container flex items-center justify-between w-full h-[80px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            
+            <!-- Logo (Left) -->
+            <div class="flex-1 flex items-center justify-start z-50 pointer-events-none">
+                <a href="index.html" class="navbar-logo text-white flex items-center flex-shrink-0 whitespace-nowrap pointer-events-auto">
+                    <img src="/logo-APzS9lAT.png" style="width: 35px;" alt="MEGATAMA Logo">
+                    <div class="flex flex-col justify-center ml-2">
+                        <span class="text-xl font-bold leading-none tracking-wide text-white">MEGATAMA</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Mobile Overlay -->
+            <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/60 z-40 hidden xl:hidden backdrop-blur-md transition-opacity duration-300 opacity-0"></div>
+            
+            <!-- Sidebar Menu (Mobile) / Regular (Desktop) -->
+            <div class="navbar-menu text-white fixed top-0 left-0 h-screen w-[85%] max-w-xs bg-corporate-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl xl:relative xl:h-auto xl:w-auto xl:transform-none xl:flex-row xl:items-center xl:justify-center xl:p-0 xl:bg-transparent xl:shadow-none" style="display: flex !important;">
+                <!-- Mobile Header -->
+                <div class="flex justify-between items-center p-5 xl:hidden border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <img src="/logo-APzS9lAT.png" class="w-9 h-9 object-contain" alt="Logo">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg leading-none">MEGATAMA</span>
+                            <span class="text-[9px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
+                        </div>
+                    </div>
+                    <button id="closeMenuBtn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors"><i class="fas fa-times"></i></button>
+                </div>
+                <!-- Navigation Links -->
+                <nav class="flex-grow p-5 space-y-1 overflow-y-auto xl:p-0 xl:flex xl:items-center xl:justify-center xl:space-y-0 xl:gap-5 xl:overflow-visible xl:mx-auto">
+                    <a href="index.html" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Beranda</a>
+                    <a href="index.html#about" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Tentang Kami</a>
+                    <a href="index.html#projects" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Proyek</a>
+                    <a href="kontak.html" class="group relative block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:p-0 xl:rounded-none xl:hover:bg-transparent font-medium text-[15px] whitespace-nowrap">Kontak</a>
+                    <a href="login.html" class="block px-4 py-3 rounded-lg hover:bg-white/10 transition-colors xl:hidden text-corporate-bright font-bold border-t border-white/10 mt-2 pt-4"><i class="fas fa-lock mr-2"></i> Login</a>
+                </nav>
+            </div>
+            
+            <!-- Portal Button (Right) & Mobile Toggle -->
+            <div class="flex-1 flex items-center justify-end gap-4 z-50 relative pointer-events-none">
+                <a href="login.html" class="hidden xl:flex items-center justify-center gap-2 bg-white/10 hover:bg-corporate-bright border border-white/20 hover:border-corporate-bright text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 group whitespace-nowrap flex-shrink-0 pointer-events-auto">
+                    <i class="fas fa-lock text-sm group-hover:scale-110 transition-transform"></i>
+                    <span>Login</span>
+                </a>
+                <button class="navbar-toggle text-white text-2xl xl:hidden p-2 pointer-events-auto"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow pt-32 pb-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-gray-100">
+            <h1 class="text-3xl md:text-4xl font-bold text-corporate-dark mb-6">Syarat dan Ketentuan (Terms of Service)</h1>
+            <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                <p>Terakhir diperbarui: 24 Mei 2024</p>
+                
+                <p>Selamat datang di situs web MEGATAMA. Dengan mengakses atau menggunakan situs web kami, Anda setuju untuk terikat oleh Syarat dan Ketentuan ini.</p>
+
+                <h2>1. Penggunaan Situs</h2>
+                <p>Anda setuju untuk menggunakan situs ini hanya untuk tujuan yang sah dan sesuai dengan semua hukum yang berlaku. Anda tidak boleh menggunakan situs ini dengan cara apa pun yang dapat merusak, menonaktifkan, atau mengganggu situs atau server kami.</p>
+
+                <h2>2. Hak Kekayaan Intelektual</h2>
+                <p>Semua konten di situs ini, termasuk teks, grafik, logo, gambar, dan perangkat lunak, adalah milik MEGATAMA atau pemberi lisensinya dan dilindungi oleh undang-undang hak cipta dan kekayaan intelektual lainnya. Anda tidak boleh mereproduksi, mendistribusikan, atau membuat karya turunan dari konten apa pun tanpa izin tertulis dari kami.</p>
+
+                <h2>3. Batasan Tanggung Jawab</h2>
+                <p>Informasi di situs ini disediakan "sebagaimana adanya" tanpa jaminan apa pun. MEGATAMA tidak bertanggung jawab atas kerugian atau kerusakan apa pun yang timbul dari penggunaan situs ini atau ketergantungan pada informasi yang terkandung di dalamnya.</p>
+
+                <h2>4. Tautan ke Situs Pihak Ketiga</h2>
+                <p>Situs kami mungkin berisi tautan ke situs web pihak ketiga. Tautan ini disediakan untuk kenyamanan Anda saja. Kami tidak memiliki kendali atas konten situs-situs tersebut dan tidak bertanggung jawab atasnya.</p>
+
+                <h2>5. Hukum yang Mengatur</h2>
+                <p>Syarat dan Ketentuan ini diatur oleh dan ditafsirkan sesuai dengan hukum yang berlaku di Republik Indonesia.</p>
+
+                <h2>6. Hubungi Kami</h2>
+                <p>Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan ini, silakan hubungi kami melalui halaman <a href="kontak.html" class="text-blue-600 hover:underline">Kontak</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-corporate-dark text-white py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2024 MEGATAMA Construction & Engineering. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="privacy.html" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
+                    <a href="sitemap.html" class="hover:text-corporate-bright transition-colors">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

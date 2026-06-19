@@ -481,7 +481,15 @@ function updateDashboardStats() {
         if (role === 'Viewer') {
             // Sembunyikan elemen kartu (card) terluar yang membungkus stat-anggaran
             const card = anggaranEl.closest('.rounded-2xl') || anggaranEl.closest('.rounded-xl') || anggaranEl.parentElement;
-            if (card) card.style.display = 'none';
+            if (card) {
+                card.style.display = 'none';
+                // Ubah grid menjadi 3 kolom agar layout terisi penuh dan rapi
+                const statsGrid = card.parentElement;
+                if (statsGrid && statsGrid.classList.contains('lg:grid-cols-4')) {
+                    statsGrid.classList.remove('lg:grid-cols-4');
+                    statsGrid.classList.add('lg:grid-cols-3');
+                }
+            }
         } else {
             anggaranEl.innerText = strAnggaran;
             anggaranEl.title = fullAnggaran;
@@ -707,7 +715,7 @@ function renderProjectCards() {
                             'bg-[#F59E0B] text-white border-transparent');
         
         return `
-        <div class="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-[#2A2A2A] hover:border-[#FF7A00]/50 hover:shadow-[0_8px_30px_rgba(255,122,0,0.15)] transition-all duration-300 cursor-pointer relative overflow-hidden group flex flex-col h-[19rem] sm:h-72" onclick="viewDetail('${p.id}')">
+        <div class="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-[#2A2A2A] hover:border-[#FF7A00]/50 hover:shadow-[0_8px_30px_rgba(255,122,0,0.15)] transition-all duration-300 cursor-pointer relative overflow-hidden group flex flex-col h-[22rem] sm:h-[21rem]" onclick="viewDetail('${p.id}')">
             
             ${p.imageUrl ? `
             <img src="${p.imageUrl}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70 z-0">
@@ -729,7 +737,17 @@ function renderProjectCards() {
                 
                 <div class="mt-auto">
                     <h3 class="text-lg sm:text-xl font-bold text-[#FFFFFF] mb-1 group-hover:text-[#FF7A00] transition-colors drop-shadow-md line-clamp-1">${p.name}</h3>
-                    <p class="text-gray-300 text-sm mb-4 drop-shadow-md line-clamp-1"><i class="fas fa-map-marker-alt mr-1 text-[#FF7A00]"></i> ${p.location}</p>
+                    <p class="text-gray-300 text-sm mb-2 drop-shadow-md line-clamp-1"><i class="fas fa-map-marker-alt mr-1 text-[#FF7A00]"></i> ${p.location}</p>
+                    
+                    ${!isViewer ? `
+                    <div class="flex flex-col gap-1 mb-3">
+                        ${p.kasLink ? `
+                        <a href="${p.kasLink}" target="_blank" onclick="event.stopPropagation();" class="mt-1 w-full text-center text-xs font-semibold text-blue-400 hover:text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 py-1.5 rounded transition-colors border border-blue-500/20">
+                            <i class="fas fa-external-link-alt mr-1"></i> Buka Laporan Kas
+                        </a>
+                        ` : ''}
+                    </div>
+                    ` : ''}
                     
                     <div class="flex items-center justify-between border-t border-white/20 pt-4">
                         <div>
@@ -919,6 +937,7 @@ window.viewDetail = function(id) {
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-building mr-2 text-center w-5"></i>Klien</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.client}</span></div>
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-user-tie mr-2 text-center w-5"></i>Project Manager</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.pic}</span></div>
                         ${!isViewer ? `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-money-bill-wave mr-2 text-center w-5"></i>Anggaran</span><span class="text-[#FF7A00] font-bold drop-shadow-[0_0_5px_rgba(255,122,0,0.5)] text-left sm:text-right break-words">${displayAnggaran}</span></div>` : ''}
+                        ${!isViewer && p.kasLink ? `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#2A2A2A] pb-3 gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-link mr-2 text-center w-5"></i>Laporan Kas</span><a href="${p.kasLink}" target="_blank" class="text-blue-400 hover:text-blue-300 font-semibold text-left sm:text-right break-words underline">Buka Laporan</a></div>` : ''}
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0"><span class="text-[#A1A1AA] text-xs sm:text-sm"><i class="fas fa-calendar-alt mr-2 text-center w-5"></i>Deadline</span><span class="text-white font-semibold text-left sm:text-right break-words">${p.end}</span></div>
                         </div>
                     </div>
@@ -985,12 +1004,21 @@ window.viewDetail = function(id) {
                 </div>
 
                 ${!isViewer ? `
-                <!-- Monitoring Material Button -->
-                <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A]">
-                    <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-4">Logistik & Material</h3>
-                    <button onclick="window.location.href='monitoring-material.html?id=${p.id}'" class="w-full bg-[#121212] border border-[#2A2A2A] text-white hover:border-[#FF7A00] hover:text-[#FF7A00] shadow-[0_0_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,122,0,0.3)] py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
-                        <i class="fas fa-boxes"></i> Monitoring Material
-                    </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Monitoring Material Button -->
+                    <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A]">
+                        <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-4">Logistik & Material</h3>
+                        <button onclick="window.location.href='monitoring-material.html?id=${p.id}'" class="w-full bg-[#121212] border border-[#2A2A2A] text-white hover:border-[#FF7A00] hover:text-[#FF7A00] shadow-[0_0_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,122,0,0.3)] py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-boxes"></i> Monitoring Material
+                        </button>
+                    </div>
+                     <!-- Monitoring Kas Button -->
+                    <div class="bg-[#1A1A1A]/80 backdrop-blur-md rounded-2xl p-6 border border-[#2A2A2A]">
+                        <h3 class="text-[#A1A1AA] text-sm font-semibold uppercase tracking-wider mb-4">Keuangan Lapangan</h3>
+                        <button onclick="window.location.href='monitoring-kas.html?id=${p.id}'" class="w-full bg-[#121212] border border-[#2A2A2A] text-white hover:border-blue-500 hover:text-blue-400 shadow-[0_0_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-file-invoice-dollar"></i> Monitoring Kas
+                        </button>
+                    </div>
                 </div>
                 ` : ''}
             </div>
@@ -2017,6 +2045,7 @@ window.editProyek = function(id) {
     if(document.getElementById('html-p-pic')) document.getElementById('html-p-pic').value = p.pic || '';
     document.getElementById('html-p-loc').value = p.location || '';
     document.getElementById('html-p-val').value = p.value || '';
+    if(document.getElementById('html-p-kas-link')) document.getElementById('html-p-kas-link').value = p.kasLink || '';
     document.getElementById('html-p-start').value = p.start || '';
     document.getElementById('html-p-end').value = p.end || '';
     if (document.getElementById('html-p-start') && document.getElementById('html-p-start').value) {
@@ -2050,6 +2079,7 @@ window.updateProjectData = async function(id) {
     const pic = document.getElementById('html-p-pic') ? document.getElementById('html-p-pic').value : '';
     const location = document.getElementById('html-p-loc').value;
     const value = document.getElementById('html-p-val').value;
+    const kasLink = document.getElementById('html-p-kas-link') ? document.getElementById('html-p-kas-link').value : '';
     const start = document.getElementById('html-p-start').value;
     const end = document.getElementById('html-p-end').value;
     const imageUrl = document.getElementById('html-p-img') ? document.getElementById('html-p-img').value : '';
@@ -2083,6 +2113,7 @@ window.updateProjectData = async function(id) {
     });
 
     let updatedProject = {
+        ...p, code, name, client, pic, location, value, kasLink, start, end, imageUrl, totalWeeks, weeklyPlans,
         ...p, code, name, client, pic, location, value, start, end, imageUrl, totalWeeks, weeklyPlans,
         hasSipil, hasArs, hasMep, hasInt
     };
@@ -2170,6 +2201,7 @@ window.saveProject = async function() {
     const pic = document.getElementById('html-p-pic') ? document.getElementById('html-p-pic').value : '';
     const location = document.getElementById('html-p-loc').value;
     const value = document.getElementById('html-p-val').value;
+    const kasLink = document.getElementById('html-p-kas-link') ? document.getElementById('html-p-kas-link').value : '';
     const start = document.getElementById('html-p-start').value;
     const end = document.getElementById('html-p-end').value;
     const imageUrl = document.getElementById('html-p-img') ? document.getElementById('html-p-img').value : '';
@@ -2200,6 +2232,7 @@ window.saveProject = async function() {
     });
 
     let newProject = {
+        code, name, client, pic, location, value, kasLink, start, end,
         code, name, client, pic, location, value, start, end,
         imageUrl: imageUrl,
         status: "Perencanaan",
@@ -2275,12 +2308,81 @@ window.hapusProyek = function(id, fileId) {
     });
 };
 
-// window.generateReport = function() {
-//     Swal.fire({ title: 'Kompilasi Data...', text: 'Menyiapkan dokumen laporan analitik anda', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-//     setTimeout(() => {
-//         Swal.fire({ icon: 'success', title: 'Export Berhasil', text: 'Laporan telah diunduh ke perangkat Anda.', confirmButtonColor: '#FF7A00' });
-//     }, 2000);
-// };
+window.generateReport = function() {
+    if (!window.currentProjectId) {
+        Swal.fire('Gagal', 'Pilih proyek terlebih dahulu', 'error');
+        return;
+    }
+    const p = currentProjects.find(x => String(x.id) === String(window.currentProjectId));
+    if (!p) return;
+
+    Swal.fire({ title: 'Kompilasi Data...', text: 'Menyiapkan dokumen laporan analitik anda', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+    
+    setTimeout(async () => {
+        try {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // --- Header Dokumen ---
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Laporan Progres Proyek', 14, 22);
+            doc.setFontSize(11);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Proyek: ${p.name || '-'}`, 14, 30);
+            doc.text(`Kode: ${p.code || '-'}`, 14, 36);
+            doc.text(`Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}`, 14, 42);
+
+            // --- Tabel Ringkasan Proyek ---
+            const summaryBody = [
+                ['Klien', p.client || '-'],
+                ['Lokasi', p.location || '-'],
+                ['PIC', p.pic || '-'],
+                ['Status', p.status || '-'],
+                ['Progress Total', `${p.progress || 0}%`],
+                ['Tanggal Mulai', p.start || '-'],
+                ['Target Selesai', p.end || '-'],
+                ['Anggaran', p.value || '-']
+            ];
+            doc.autoTable({
+                startY: 50,
+                head: [['Detail', 'Informasi']],
+                body: summaryBody,
+                theme: 'grid',
+                headStyles: { fillColor: [30, 30, 30] }
+            });
+            
+            // --- Tabel Riwayat Update Mingguan ---
+            if (p.weeklyUpdates && Object.keys(p.weeklyUpdates).length > 0) {
+                const weeklyHead = [['Minggu Ke', 'Total (%)', 'Sipil (%)', 'Ars (%)', 'MEP (%)', 'Int (%)', 'Catatan']];
+                const weeklyBody = [];
+                const weeks = Object.keys(p.weeklyUpdates).sort((a,b) => Number(a) - Number(b));
+                weeks.forEach(w => {
+                    const u = p.weeklyUpdates[w];
+                    weeklyBody.push([
+                        w, u.total || 0, u.sipil || 0, u.ars || 0, u.mep || 0, u.int || 0, u.note || '-'
+                    ]);
+                });
+
+                doc.autoTable({
+                    startY: doc.lastAutoTable.finalY + 10,
+                    head: weeklyHead,
+                    body: weeklyBody,
+                    theme: 'striped',
+                    headStyles: { fillColor: [30, 30, 30] }
+                });
+            }
+            
+            const fileName = (p.code || p.name).replace(/[^a-zA-Z0-9]/g, '_');
+            doc.save(`Report_Proyek_${fileName}.pdf`);
+
+            Swal.fire({ icon: 'success', title: 'Export Berhasil', text: 'Laporan telah diunduh dalam format PDF.', confirmButtonColor: '#FF7A00' });
+        } catch (error) {
+            console.error("Export error:", error);
+            Swal.fire({ icon: 'error', title: 'Export Gagal', text: 'Terjadi kesalahan saat membuat file report.', confirmButtonColor: '#FF7A00' });
+        }
+    }, 1500);
+};
 
 window.viewPhoto = function(url) {
     Swal.fire({ imageUrl: url, imageWidth: '100%', imageAlt: 'Dokumentasi', showConfirmButton: false, backdrop: 'rgba(0,0,0,0.85)' });

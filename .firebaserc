@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "megatama-e41d3"
-  }
+  },
+  "targets": {
+    "megatama-e41d3": {
+      "hosting": {
+        "app": [
+          "megatama-e41d3"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

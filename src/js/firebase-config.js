@@ -7,12 +7,12 @@ import { getAuth } from 'firebase/auth';
 // dan mengaktifkan Firestore Database.
 // Copy config dari Firebase Console -> Project Settings -> General -> Your apps
 const firebaseConfig = {
-    apiKey: "AIzaSyADbMmTEy3yv0HOT-ANNninThczT3pvooQ",
-    authDomain: "megatama-e41d3.firebaseapp.com",
-    projectId: "megatama-e41d3",
-    storageBucket: "megatama-e41d3.firebasestorage.app",
-    messagingSenderId: "70172643509",
-    appId: "1:70172643509:web:8bbe31ee858c1f1633aefc"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

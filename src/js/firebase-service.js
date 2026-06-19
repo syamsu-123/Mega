@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, setDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db, app, firebaseConfig } from './firebase-config.js';
 import { initializeApp, deleteApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -27,9 +27,12 @@ const materialsCollection = collection(db, 'materials');
 // Reference ke koleksi 'suppliers'
 const suppliersCollection = collection(db, 'suppliers');
 
+// Reference ke koleksi 'kas'
+const kasCollection = collection(db, 'kas');
+
 // --- Konfigurasi Google Drive via Apps Script ---
 // Ganti dengan Web App URL yang Anda dapatkan setelah deploy Google Apps Script
-const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbxXwk58ZcWT7iwlPUMIzW_fQHkR_jHEQCMKVs3vIiBNGywbrxF04658pqOnE6m7nr21/exec";
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
 // Upload File Gambar ke Google Drive
 export const uploadImageFile = async (file, folderPath = 'uploads') => {
@@ -123,6 +126,72 @@ export const deleteMaterial = async (id) => {
         return true;
     } catch (error) {
         console.error("Error deleting material: ", error);
+        return false;
+    }
+};
+
+// --- CRUD MONITORING KAS ---
+
+export const getKasByProjectId = async (projectId) => {
+    try {
+        const q = query(kasCollection, where("projectId", "==", projectId));
+        const snapshot = await getDocs(q);
+        const kasList = [];
+        snapshot.forEach((doc) => {
+            kasList.push({ ...doc.data(), id: doc.id });
+        });
+        // Urutkan berdasarkan tanggal transaksi
+        kasList.sort((a, b) => (a.tanggal || '').localeCompare(b.tanggal || ''));
+        return kasList;
+    } catch (error) {
+        console.error("Error fetching kas: ", error);
+        return [];
+    }
+};
+
+export const addKas = async (kasData) => {
+    try {
+        const docRef = await addDoc(kasCollection, kasData);
+        return { ...kasData, id: docRef.id };
+    } catch (error) {
+        console.error("Error adding kas: ", error);
+        throw error; // Melempar error agar bisa ditangkap di UI
+    }
+};
+
+export const listenToKasByProjectId = (projectId, callback) => {
+    const q = query(kasCollection, where("projectId", "==", projectId));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+        const kasList = [];
+        snapshot.forEach((doc) => {
+            kasList.push({ ...doc.data(), id: doc.id });
+        });
+        // Urutkan berdasarkan tanggal transaksi
+        kasList.sort((a, b) => (a.tanggal || '').localeCompare(b.tanggal || ''));
+        callback(kasList);
+    }, (error) => {
+        console.error("Error listening to kas updates: ", error);
+        callback([], error); // Kirim array kosong dan error jika gagal
+    });
+    return unsubscribe; // Kembalikan fungsi untuk berhenti mendengarkan
+};
+
+export const updateKas = async (id, kasData) => {
+    try {
+        await setDoc(doc(db, 'kas', String(id)), kasData, { merge: true });
+        return true;
+    } catch (error) {
+        console.error("Error updating kas: ", error);
+        return false;
+    }
+};
+
+export const deleteKas = async (id) => {
+    try {
+        await deleteDoc(doc(db, 'kas', id));
+        return true;
+    } catch (error) {
+        console.error("Error deleting kas: ", error);
         return false;
     }
 };
@@ -283,6 +352,22 @@ export const getProjectById = async (id) => {
         console.error("Error fetching project: ", error);
         return null;
     }
+};
+
+export const listenToProjectById = (id, callback) => {
+    const projectDoc = doc(db, 'projects', id);
+    const unsubscribe = onSnapshot(projectDoc, (docSnap) => {
+        if (docSnap.exists()) {
+            callback({ id: docSnap.id, ...docSnap.data() });
+        } else {
+            console.log("No such project to listen to!");
+            callback(null);
+        }
+    }, (error) => {
+        console.error("Error listening to project updates: ", error);
+        callback(null, error);
+    });
+    return unsubscribe; // Return the unsubscribe function
 };
 
 // Menambahkan project baru

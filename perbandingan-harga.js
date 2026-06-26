@@ -35,8 +35,6 @@ function initThemeToggle() {
 
 // --- Main Logic ---
 document.addEventListener('DOMContentLoaded', async () => {
-    initThemeToggle();
-
     const loadingIndicator = document.getElementById('loading-indicator');
     const mainContent = document.getElementById('main-content');
 
@@ -241,7 +239,15 @@ function renderComparisonLayout() {
                 <button onclick="window.location.href='dashboard.html'" class="w-10 h-10 rounded-full bg-white dark:bg-[#1A1A1A] border border-slate-200 dark:border-[#2A2A2A] text-slate-500 dark:text-[#A1A1AA] hover:text-[#FF7A00] dark:hover:text-[#FF7A00] hover:border-[#FF7A00] transition-all flex items-center justify-center shadow-sm">
                     <i class="fas fa-arrow-left"></i>
                 </button>
-                <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Perbandingan Harga</h2>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Perbandingan Harga</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Bandingkan harga material dari berbagai supplier.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" title="Ganti Tema">
+                    <i class="fas fa-moon text-lg"></i>
+                </button>
             </div>
         </div>
 
@@ -350,10 +356,7 @@ function renderComparisonLayout() {
     // Timpa seluruh isi main-content dengan layout tabel
     container.innerHTML = layout;
     
-    // Hapus elemen header pencarian/filter lama jika ada karena sekarang tidak pakai list
-    const headerFilter = document.querySelector('.mb-6.flex.flex-col.sm\\:flex-row.gap-4.justify-between.items-start.sm\\:items-center');
-    if (headerFilter) headerFilter.style.display = 'none';
-
+    initThemeToggle(); // Panggil setelah tombolnya ada di DOM
     renderComparisonTable();
 }
 
@@ -393,7 +396,7 @@ function renderComparisonTable() {
                 <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-0"><input type="number" class="w-full h-full min-w-[80px] p-3 border-none bg-transparent hover:bg-slate-100/50 dark:hover:bg-[#1A1A1A] focus:bg-white dark:focus:bg-[#1A1A1A] text-center focus:ring-2 focus:ring-inset focus:ring-blue-500 outline-none dark:text-white transition-colors" value="${item.qty}" onchange="updateItem(${item.id}, 'qty', this.value)"></td>
                 <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-0"><input type="text" class="w-full h-full min-w-[120px] p-3 border-none bg-transparent hover:bg-slate-100/50 dark:hover:bg-[#1A1A1A] focus:bg-white dark:focus:bg-[#1A1A1A] text-center focus:ring-2 focus:ring-inset focus:ring-blue-500 outline-none dark:text-white transition-colors uppercase" value="${item.satuan}" onchange="updateItem(${item.id}, 'satuan', this.value)" placeholder="Satuan"></td>
                 
-                <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-0 bg-blue-50/50 dark:bg-blue-900/10"><input type="text" class="w-full h-full min-w-[140px] p-3 border-none bg-transparent hover:bg-blue-100/50 dark:hover:bg-blue-900/20 focus:bg-white dark:focus:bg-[#1A1A1A] text-right focus:ring-2 focus:ring-inset focus:ring-blue-500 outline-none dark:text-white font-semibold text-blue-900 dark:text-blue-300 transition-colors" value="${item.hargaRap.toLocaleString('id-ID')}" onchange="updateItem(${item.id}, 'hargaRap', this.value)" onkeyup="formatInput(this)"></td>
+                <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-0 bg-blue-50/50 dark:bg-blue-900/10"><input type="text" class="w-full h-full min-w-[140px] p-3 border-none bg-transparent hover:bg-blue-100/50 dark:hover:bg-blue-900/20 focus:bg-white dark:focus:bg-[#1A1A1A] text-right focus:ring-2 focus:ring-inset focus:ring-blue-500 outline-none font-semibold text-blue-900 dark:text-blue-300 transition-colors" value="${item.hargaRap.toLocaleString('id-ID')}" onchange="updateItem(${item.id}, 'hargaRap', this.value)" onkeyup="formatInput(this)"></td>
                 <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-3 text-right bg-blue-50/50 dark:bg-blue-900/10 font-bold text-slate-800 dark:text-white min-w-[140px] whitespace-nowrap">${formatRp(tRap)}</td>
                 
                 <td class="border-r border-slate-200 dark:border-[#2A2A2A] p-0"><input type="text" class="w-full h-full min-w-[140px] p-3 border-none bg-transparent hover:bg-slate-100/50 dark:hover:bg-[#1A1A1A] focus:bg-white dark:focus:bg-[#1A1A1A] text-right focus:ring-2 focus:ring-inset focus:ring-blue-500 outline-none transition-colors ${colorA}" value="${item.hargaA.toLocaleString('id-ID')}" onchange="updateItem(${item.id}, 'hargaA', this.value)" onkeyup="formatInput(this)"></td>

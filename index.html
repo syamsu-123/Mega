@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="MEGATAMA - Premium Corporate Construction & Engineering Company. Pengalaman lebih dari 10 tahun melayani proyek konstruksi, engineering, dan pengembangan properti dengan standar internasional.">
     <meta name="keywords" content="konstruksi, engineering, kontractor, perusahaan konstruksi, properti development">
     <meta name="author" content="MEGATAMA">
@@ -49,7 +49,7 @@
             <!-- Logo (Left) -->
             <div class="flex-1 flex items-center justify-start z-50 pointer-events-none">
                 <a href="index.html" class="navbar-logo text-white flex items-center flex-shrink-0 whitespace-nowrap pointer-events-auto">
-                    <img src="src/assets/images/logo.png" style="width: 35px;" alt="MEGATAMA Logo">
+                    <img src="src/assets/images/logo.png" class="w-[35px]" alt="MEGATAMA Logo">
                     <div class="flex flex-col justify-center ml-2">
                         <span class="text-xl font-bold leading-none tracking-wide text-white">MEGATAMA</span>
                         <span class="text-[10px] font-bold tracking-[0.2em] text-corporate-bright mt-1 leading-none">SOLUSINDO</span>
@@ -58,7 +58,7 @@
             </div>
             
             <!-- Sidebar Menu (Mobile) / Regular (Desktop) -->
-            <div class="navbar-menu text-white fixed top-0 left-0 h-screen w-[85%] max-w-xs bg-corporate-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl xl:relative xl:h-auto xl:w-auto xl:transform-none xl:flex-row xl:items-center xl:justify-center xl:p-0 xl:bg-transparent xl:shadow-none" style="display: flex !important;">
+            <div class="navbar-menu text-white fixed top-0 left-0 h-screen w-[85%] max-w-xs bg-corporate-dark z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl xl:relative xl:h-auto xl:w-auto xl:transform-none xl:flex-row xl:items-center xl:justify-center xl:p-0 xl:bg-transparent xl:shadow-none">
                 <!-- Mobile Header -->
                 <div class="flex justify-between items-center p-5 xl:hidden border-b border-white/10">
                     <div class="flex items-center gap-3">
@@ -101,11 +101,11 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-corporate-dark pt-20">
+<section id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-corporate-dark pt-20">
         
         <!-- Background Layer (Memastikan tidak meluber dan proporsional) -->
         <div class="absolute inset-0 w-full h-full z-0">
-            <div class="w-full h-full object-cover opacity-40" style="background: url('src/assets/images/bg-hero.jpeg') center/cover no-repeat;"></div>
+            <div class="w-full h-full object-cover opacity-40 bg-[url('src/assets/images/bg-hero.jpeg')] bg-center bg-cover bg-no-repeat" style="background-image: url('src/assets/images/bg-hero.jpeg');"></div>
             <!-- Overlay Gradien yang menutupi seluruh dimensi absolute parent-nya -->
             <div class="absolute inset-0 bg-gradient-to-b from-corporate-dark/90 via-corporate-dark/60 to-corporate-dark"></div>
         </div>
@@ -118,13 +118,13 @@
             </div>
             
             <!-- Hero Title (Ukuran teks dinamis dari mobile -> desktop) -->
-            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-md" data-aos="fade-up">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-md" data-aos="fade-up">
                 Membangun Masa Depan <br class="hidden sm:block" />
                 <span class="text-corporate-bright">Dengan Inovasi & Kualitas</span>
             </h1>
             
             <!-- Hero Description -->
-            <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 drop-shadow-sm" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-sm sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 drop-shadow-sm" data-aos="fade-up" data-aos-delay="100">
                 Kami menyediakan layanan konstruksi, engineering, konsultasi, mekanikal, elektrikal, plumbing, dan pengembangan properti dengan standar profesional internasional.
             </p>
             
@@ -138,27 +138,27 @@
                 </button>
             </div>
 
-            <!-- Statistics Grid (Mobile: 1 Kolom, Tablet: 2 Kolom, Desktop: 4 Kolom) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full max-w-6xl mx-auto" data-aos="zoom-in" data-aos-delay="300">
+            <!-- Statistics Grid (Mobile: 2 Kolom, Tablet: 2 Kolom, Desktop: 4 Kolom) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 w-full max-w-6xl mx-auto" data-aos="zoom-in" data-aos-delay="300">
                 <!-- Stat Item 1 -->
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="10">0+</div>
-                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Tahun Pengalaman</p>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="10">0+</div>
+                    <p class="text-xs sm:text-base text-gray-300 font-medium uppercase tracking-wider">Tahun Pengalaman</p>
                 </div>
                 <!-- Stat Item 2 -->
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="500">0</div>
-                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Proyek Selesai</p>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="500">0</div>
+                    <p class="text-xs sm:text-base text-gray-300 font-medium uppercase tracking-wider">Proyek Selesai</p>
                 </div>
                 <!-- Stat Item 3 -->
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="100">0</div>
-                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Klien Puas</p>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="100">0</div>
+                    <p class="text-xs sm:text-base text-gray-300 font-medium uppercase tracking-wider">Klien Puas</p>
                 </div>
                 <!-- Stat Item 4 -->
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="50">0</div>
-                    <p class="text-sm md:text-base text-gray-300 font-medium uppercase tracking-wider">Tenaga Ahli</p>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10 transition-colors">
+                    <div class="text-3xl sm:text-4xl md:text-5xl font-black text-corporate-bright mb-2" data-target="50">0</div>
+                    <p class="text-xs sm:text-base text-gray-300 font-medium uppercase tracking-wider">Tenaga Ahli</p>
                 </div>
             </div>
             
@@ -168,9 +168,9 @@
     <!-- ABOUT US SECTION -->
     <section id="about" class="section bg-corporate-light">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <!-- Left: Images -->
-                <div class="relative h-96 md:h-full" data-aos="fade-right">
+                <div class="relative h-64 sm:h-80 md:h-full" data-aos="fade-right">
                     <div class="absolute inset-0 bg-gradient-to-br from-corporate-bright to-corporate-dark rounded-2xl opacity-10"></div>
                     <img src="src/assets/images/per.jpeg" alt="Company" class="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10">
                     <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-corporate-bright rounded-xl shadow-lg opacity-20 -z-10"></div>
@@ -271,59 +271,59 @@ dimiliki.
             <h2 class="section-title" data-aos="fade-up">Bidang Usaha Kami</h2>
             <p class="section-subtitle" data-aos="fade-up">Layanan komprehensif untuk semua kebutuhan konstruksi dan engineering</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
                 <!-- Card 1 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-building"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konstruksi Bangunan</h3>
-                    <p class="text-gray-700">Pembangunan gedung bertingkat, perkantoran, dan fasilitas komersial dengan teknologi konstruksi modern.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Konstruksi Bangunan</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Pembangunan gedung bertingkat, perkantoran, dan fasilitas komersial dengan teknologi konstruksi modern.</p>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="100">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-cogs"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Mechanical Engineering</h3>
-                    <p class="text-gray-700">Desain dan implementasi sistem mekanik untuk HVAC, pneumatik, dan sistem produksi.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Mechanical Engineering</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Desain dan implementasi sistem mekanik untuk HVAC, pneumatik, dan sistem produksi.</p>
                 </div>
                 
                 <!-- Card 3 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="200">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Electrical Engineering</h3>
-                    <p class="text-gray-700">Instalasi sistem kelistrikan, panel kontrol, dan renewable energy solutions.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Electrical Engineering</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Instalasi sistem kelistrikan, panel kontrol, dan renewable energy solutions.</p>
                 </div>
                 
                 <!-- Card 4 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-water"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Plumbing System</h3>
-                    <p class="text-gray-700">Sistem pipa, sanitasi, dan water treatment dengan standar internasional.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Plumbing System</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Sistem pipa, sanitasi, dan water treatment dengan standar internasional.</p>
                 </div>
                 
                 <!-- Card 5 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="400">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-drafting-compass"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Konsultan Perencanaan</h3>
-                    <p class="text-gray-700">Konsultasi desain, perencanaan proyek, dan feasibility study mendalam.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Konsultan Perencanaan</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Konsultasi desain, perencanaan proyek, dan feasibility study mendalam.</p>
                 </div>
                 
                 <!-- Card 6 -->
-                <div class="p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="500">
-                    <div class="text-5xl text-corporate-bright mb-4">
+                <div class="p-6 sm:p-8 bg-gradient-to-br from-white to-corporate-light rounded-xl shadow-lg card-hover card-shine" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-4xl sm:text-5xl text-corporate-bright mb-4">
                         <i class="fas fa-home"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-corporate-dark mb-3">Property Development</h3>
-                    <p class="text-gray-700">Pengembangan properti residensial dan komersial dengan lokasi strategis.</p>
+                    <h3 class="text-xl sm:text-2xl font-bold text-corporate-dark mb-3">Property Development</h3>
+                    <p class="text-gray-700 text-sm sm:text-base">Pengembangan properti residensial dan komersial dengan lokasi strategis.</p>
                 </div>
             </div>
         </div>
@@ -335,13 +335,13 @@ dimiliki.
             <h2 class="section-title" data-aos="fade-up">Layanan Unggulan Kami</h2>
             <p class="section-subtitle" data-aos="fade-up">Solusi terpadu untuk semua kebutuhan proyek konstruksi</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                <div class="group relative p-5 sm:p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-industry text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pabrikasi Panel & Manufaktur</h3>
-                        <p class="text-gray-700 mb-3">Kami melayani perancangan dan produksi berbagai jenis panel kelistrikan, antara lain:</p>
+                        <i class="fas fa-industry text-3xl sm:text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-lg sm:text-xl font-bold text-corporate-dark mb-3">Pabrikasi Panel & Manufaktur</h3>
+                        <p class="text-gray-700 mb-3 text-sm">Kami melayani perancangan dan produksi berbagai jenis panel kelistrikan, antara lain:</p>
                         <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
                             <li>Panel Tegangan Menengah</li>
                             <li>Panel Daya Tegangan Rendah</li>
@@ -355,12 +355,12 @@ dimiliki.
                     </div>
                 </div>
 
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                <div class="group relative p-5 sm:p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-tools text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan Khusus</h3>
-                        <p class="text-gray-700 mb-3">Kami menyediakan solusi untuk lingkungan dengan standar tinggi dan regulasi ketat, seperti:</p>
+                        <i class="fas fa-tools text-3xl sm:text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-lg sm:text-xl font-bold text-corporate-dark mb-3">Pekerjaan Khusus</h3>
+                        <p class="text-gray-700 mb-3 text-sm">Kami menyediakan solusi untuk lingkungan dengan standar tinggi dan regulasi ketat, seperti:</p>
                         <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
                             <li>Clean Room</li>
                             <li>Ruang Operasi & Modular Operating Theater</li>
@@ -377,12 +377,12 @@ dimiliki.
                     </div>
                 </div>
 
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                <div class="group relative p-5 sm:p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-building text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan Arsitektur, Sipil & Interior</h3>
-                        <p class="text-gray-700 mb-3">Kami menangani proyek konstruksi dan desain untuk berbagai jenis bangunan, antara lain:</p>
+                        <i class="fas fa-building text-3xl sm:text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-lg sm:text-xl font-bold text-corporate-dark mb-3">Pekerjaan Arsitektur, Sipil & Interior</h3>
+                        <p class="text-gray-700 mb-3 text-sm">Kami menangani proyek konstruksi dan desain untuk berbagai jenis bangunan, antara lain:</p>
                         <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
                             <li>Rumah Tinggal</li>
                             <li>Sarana Pendidikan</li>
@@ -394,12 +394,12 @@ dimiliki.
                     </div>
                 </div>
 
-                <div class="group relative p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                <div class="group relative p-5 sm:p-8 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
                     <div class="absolute inset-0 bg-gradient-to-r from-corporate-bright to-corporate-dark opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
                     <div class="relative z-10">
-                        <i class="fas fa-bolt text-4xl text-corporate-bright mb-4"></i>
-                        <h3 class="text-xl font-bold text-corporate-dark mb-3">Pekerjaan MEP untuk Gedung Umum</h3>
-                        <p class="text-gray-700 mb-3">Kami menyediakan layanan instalasi Mekanikal, Elektrikal, dan Plumbing (MEP) untuk:</p>
+                        <i class="fas fa-bolt text-3xl sm:text-4xl text-corporate-bright mb-4"></i>
+                        <h3 class="text-lg sm:text-xl font-bold text-corporate-dark mb-3">Pekerjaan MEP untuk Gedung Umum</h3>
+                        <p class="text-gray-700 mb-3 text-sm">Kami menyediakan layanan instalasi Mekanikal, Elektrikal, dan Plumbing (MEP) untuk:</p>
                         <ul class="text-gray-600 text-sm space-y-1.5 list-disc list-inside ml-1">
                             <li>Gedung Perkantoran</li>
                             <li>Gedung Sekolah</li>
@@ -442,44 +442,44 @@ dimiliki.
     <!-- COMPANY STRENGTH SECTION -->
     <section id="strength" class="section bg-corporate-dark text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">Kekuatan Perusahaan</h2>
-            <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto" data-aos="fade-up">Komitmen kami terhadap keunggulan dalam setiap aspek bisnis</p>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4" data-aos="fade-up">Kekuatan Perusahaan</h2>
+            <p class="text-center text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base" data-aos="fade-up">Komitmen kami terhadap keunggulan dalam setiap aspek bisnis</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in">
-                    <div class="text-5xl mb-4">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                <div class="text-center p-5 sm:p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in">
+                    <div class="text-3xl sm:text-5xl mb-3 sm:mb-4">
                         <i class="fas fa-users text-corporate-bright"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Profesional</h3>
-                    <p class="text-gray-300">Tim bersertifikat dan berpengalaman di bidangnya</p>
-                    <p class="text-4xl font-bold text-corporate-bright mt-4">50+</p>
+                    <h3 class="text-lg sm:text-2xl font-bold mb-2">Profesional</h3>
+                    <p class="text-gray-300 text-xs sm:text-base">Tim bersertifikat dan berpengalaman di bidangnya</p>
+                    <p class="text-3xl sm:text-4xl font-bold text-corporate-bright mt-3 sm:mt-4">50+</p>
                 </div>
 
-                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="text-5xl mb-4">
+                <div class="text-center p-5 sm:p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="text-3xl sm:text-5xl mb-3 sm:mb-4">
                         <i class="fas fa-clock text-corporate-bright"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Tepat Waktu</h3>
-                    <p class="text-gray-300">Penyelesaian proyek sesuai jadwal yang disepakati</p>
-                    <p class="text-4xl font-bold text-corporate-bright mt-4">100%</p>
+                    <h3 class="text-lg sm:text-2xl font-bold mb-2">Tepat Waktu</h3>
+                    <p class="text-gray-300 text-xs sm:text-base">Penyelesaian proyek sesuai jadwal yang disepakati</p>
+                    <p class="text-3xl sm:text-4xl font-bold text-corporate-bright mt-3 sm:mt-4">100%</p>
                 </div>
 
-                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="text-5xl mb-4">
+                <div class="text-center p-5 sm:p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="text-3xl sm:text-5xl mb-3 sm:mb-4">
                         <i class="fas fa-certificate text-corporate-bright"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Berkualitas</h3>
-                    <p class="text-gray-300">Standar internasional dalam setiap pekerjaan</p>
-                    <p class="text-4xl font-bold text-corporate-bright mt-4">ISO</p>
+                    <h3 class="text-lg sm:text-2xl font-bold mb-2">Berkualitas</h3>
+                    <p class="text-gray-300 text-xs sm:text-base">Standar internasional dalam setiap pekerjaan</p>
+                    <p class="text-3xl sm:text-4xl font-bold text-corporate-bright mt-3 sm:mt-4">ISO</p>
                 </div>
 
-                <div class="text-center p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="text-5xl mb-4">
+                <div class="text-center p-5 sm:p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-corporate-bright/50 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="text-3xl sm:text-5xl mb-3 sm:mb-4">
                         <i class="fas fa-handshake text-corporate-bright"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Terpercaya</h3>
-                    <p class="text-gray-300">Dipercaya oleh ratusan klien dari berbagai sektor</p>
-                    <p class="text-4xl font-bold text-corporate-bright mt-4">500+</p>
+                    <h3 class="text-lg sm:text-2xl font-bold mb-2">Terpercaya</h3>
+                    <p class="text-gray-300 text-xs sm:text-base">Dipercaya oleh ratusan klien dari berbagai sektor</p>
+                    <p class="text-3xl sm:text-4xl font-bold text-corporate-bright mt-3 sm:mt-4">500+</p>
                 </div>
             </div>
         </div>

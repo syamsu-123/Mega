@@ -56,11 +56,10 @@
     <div class="w-full lg:w-1/2 flex flex-col relative bg-transparent lg:bg-white dark:lg:bg-slate-900 transition-colors duration-300 overflow-y-auto overflow-x-hidden min-h-screen">
         
         <!-- Mobile Background (Diagonal Split) -->
-        <div class="absolute inset-0 z-0 lg:hidden pointer-events-none bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541888086925-ebbc31bc0888?q=80&w=800&auto=format&fit=crop');">
+        <div class="absolute inset-0 z-0 lg:hidden pointer-events-none bg-[url('https://images.unsplash.com/photo-1541888086925-ebbc31bc0888?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-800/90 via-slate-700/80 to-slate-800/90"></div>
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-40"></div>
-            <!-- White Diagonal Overlay -->
-            <div class="absolute inset-0 bg-white dark:bg-slate-900" style="clip-path: polygon(0 25vh, 100% 10vh, 100% 100%, 0 100%);"></div>
+            <div class="absolute inset-0 bg-white dark:bg-slate-900 [clip-path:polygon(0_25vh,100%_10vh,100%_100%,0_100%)]"></div>
         </div>
         
         <!-- Back Button -->

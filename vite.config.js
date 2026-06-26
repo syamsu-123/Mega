@@ -12,8 +12,8 @@ export default defineConfig({
         compact: true,
         controlFlowFlattening: true,
         deadCodeInjection: false,
-        debugProtection: true, // Fitur Anti-Inspect: Membuat DevTools hang/freeze
-        debugProtectionInterval: 4000,
+        debugProtection: false, // Fitur Anti-Inspect: Membuat DevTools hang/freeze
+        debugProtectionInterval: 0,
         disableConsoleOutput: true, // Menghapus semua console.log di production
         identifierNamesGenerator: 'hexadecimal',
         stringArray: true,
@@ -22,6 +22,7 @@ export default defineConfig({
     })
   ],
   build: {
+    chunkSizeWarningLimit: 700, // Naikkan batas peringatan ukuran chunk menjadi 700kB
     sourcemap: false, // Mencegah browser membangun ulang struktur folder asli (src)
     rollupOptions: {
       output: {

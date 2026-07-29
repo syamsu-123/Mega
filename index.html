@@ -436,6 +436,28 @@ dimiliki.
             <div id="publicProjectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Data proyek dari Firestore akan dimuat di sini oleh main.js -->
             </div>
+
+            <template id="projectCardTemplate">
+                <div class="project-card flex flex-col" data-aos="fade-up">
+                    <div class="project-card-image">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-card-status"></span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div>
+                            <p class="text-base font-bold text-white line-clamp-1 project-name"></p>
+                            <p class="text-xs text-gray-400 line-clamp-1 mb-4 project-location"></p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
+                            <a href="#" class="project-link text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
+                                Lihat Detail
+                            </a>
+                            <div class="project-progress text-corporate-bright font-bold text-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
         </div>
     </section>
 
@@ -617,6 +639,7 @@ dimiliki.
                         <a href="privacy.html" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
                         <a href="terms.html" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
                         <a href="sitemap.html" class="hover:text-corporate-bright transition-colors">Sitemap</a>
+                       <p class="text-gray-400">©Copyright By </p>
                     </div>
                 </div>
             </div>

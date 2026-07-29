@@ -49,12 +49,15 @@
 
             <nav class="px-4 space-y-1.5 overflow-y-auto h-[calc(100vh-200px)] text-sm font-medium text-slate-600 dark:text-slate-400">
                 <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-4">Menu Utama</p>
-                <a href="#" class="nav-item active flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-overview">
-                    <i class="fas fa-chart-pie w-5 text-center"></i> <span>Overview</span>
+                <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-overview">
+                    <i class="fas fa-tachometer-alt w-5 text-center"></i> <span>Overview</span>
                 </a>
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-projects">
-                    <i class="fas fa-project-diagram w-5 text-center"></i> <span>Projects Board</span>
+                    <i class="fas fa-project-diagram w-5 text-center"></i> <span>Project Board</span>
                 </a>
+                <!-- <a href="monitoring-material.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" hidden>
+                    <i class="fas fa-boxes w-5 text-center"></i> <span>Monitoring Material</span>
+                </a> -->
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-docs">
                     <i class="fas fa-images w-5 text-center"></i> <span>Portofolio</span>
                 </a>
@@ -64,14 +67,17 @@
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-news">
                     <i class="fas fa-newspaper w-5 text-center"></i> <span>Berita</span>
                 </a>
-                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
-                    <i class="fas fa-truck-loading w-5 text-center"></i> <span>Monitoring Supplier</span>
+                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-truck w-5 text-center"></i> <span>Monitoring Supplier</span>
                 </a>
-                <a href="perbandingan-harga.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
-                    <i class="fas fa-balance-scale-right w-5 text-center"></i> <span>Perbandingan Harga</span>
+                <a href="cashflow/frontend/cashflow.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-wallet w-5 text-center"></i> <span>Cash Flow Project</span>
                 </a>
-                <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports">
-                    <i class="fas fa-file-pdf w-5 text-center"></i> <span>Laporan</span>
+                <a href="perbandingan-harga.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-scale-balanced w-5 text-center"></i> <span>Perbandingan Harga</span>
+                </a>
+                <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports" hidden>
+                    <i class="fas fa-file-alt w-5 text-center"></i> <span>Laporan</span>
                 </a> -->
                 
                 <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 admin-only">Sistem</p>
@@ -80,10 +86,7 @@
                 </a>
                 
                 <div class="absolute bottom-6 left-4 right-4">
-                    <a href="index.html" class="flex items-center gap-3 px-4 py-2 mb-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
-                        <i class="fas fa-globe w-5 text-center"></i> <span>Situs Utama</span>
-                    </a>
-                    <a href="#" id="logoutBtn" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
+                    <a href="#" id="logoutBtn" class="flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
                         <i class="fas fa-sign-out-alt w-5 text-center"></i> <span>Logout</span>
                     </a>
                 </div>
@@ -115,7 +118,7 @@
                     
                     <button class="relative w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <i class="fas fa-bell text-sm"></i>
-                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hidden flex h-4 w-4">
+                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hiddenflex h-4 w-4">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span id="notificationCount" class="relative inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-[9px] font-bold text-white border border-white dark:border-slate-800">0</span>
                         </span>
@@ -379,6 +382,10 @@
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Tanggal Mulai</label><input type="date" id="html-p-start" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Target Selesai</label><input type="date" id="html-p-end" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
                 <div class="col-span-2 text-sm text-slate-500 dark:text-slate-400 -mt-2 ml-1" id="html-p-duration"></div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Deskripsi Proyek</label>
+                    <textarea id="html-p-description" rows="3" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white resize-none" placeholder="Masukkan deskripsi atau keterangan tambahan untuk proyek ini..."></textarea>
+                </div>
                 
                 <div id="html-p-plan-container" class="col-span-2 hidden mt-2 pt-4 border-t border-slate-100 dark:border-slate-700">
                     <label class="block text-sm font-medium mb-3 text-slate-700 dark:text-slate-300">Target Progress Rencana Mingguan (%) <span class="text-xs text-orange-500 font-normal ml-2">(Opsional)</span></label>

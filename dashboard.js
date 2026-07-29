@@ -31,14 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Menu Rendering Logic ---
     const menuContainer = document.getElementById('dashboard-menu');
-    let selectedProjectId = localStorage.getItem('selectedProjectId');
 
     const allMenuItems = [
         {
             title: 'Monitoring Material',
             description: 'Lacak progres dan status semua material proyek.',
             icon: 'fa-boxes',
-            href: `monitoring-material.html?projectId=${selectedProjectId}`,
+            href: 'monitoring-material.html', // akan di-set setelah proyek valid tersedia
             roles: ['Project Manager', 'Viewer'],
             id: 'monitoring-material-card'
         },
@@ -92,39 +91,72 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- Project Selection Logic (for PM/Viewer) ---
+    const getValidSelectedProjectId = (projects) => {
+        const stored = localStorage.getItem('selectedProjectId');
+        if (stored && projects.some(p => String(p.id) === String(stored))) return stored;
+        return projects?.[0]?.id || null;
+    };
+
     if (userRole === 'Project Manager' || userRole === 'Viewer') {
         const projectContainer = document.getElementById('project-selection-container');
         const projectSelector = document.getElementById('project-selector');
         projectContainer.classList.remove('hidden');
 
-        const projects = await getProjects();
-        if (projects.length > 0) {
-            projectSelector.innerHTML = projects.map(p => `<option value="${p.id}" ${p.id === selectedProjectId ? 'selected' : ''}>${p.name}</option>`).join('');
-            
-            if (!selectedProjectId && projects.length > 0) {
-                selectedProjectId = projects[0].id;
-                localStorage.setItem('selectedProjectId', selectedProjectId);
+        let projects = await getProjects();
+
+        // Ambil proyek valid untuk dijadikan default/selectedProjectId
+        let selectedProjectId = getValidSelectedProjectId(projects);
+        if (!selectedProjectId && projects.length > 0) {
+            selectedProjectId = projects[0].id;
+        }
+
+        // Jika tidak ada proyek, disable kartu yang butuh project
+        if (!projects || projects.length === 0) {
+            const hseCard = document.getElementById('hse-kpi-card');
+            if (hseCard) {
+                hseCard.removeAttribute('href');
+                hseCard.classList.add('opacity-50', 'pointer-events-none');
             }
-            
-            // Update link kartu monitoring material
+
             const materialCard = document.getElementById('monitoring-material-card');
             if (materialCard) {
-                materialCard.href = `monitoring-material.html?projectId=${selectedProjectId}`;
+                materialCard.removeAttribute('href');
+                materialCard.classList.add('opacity-50', 'pointer-events-none');
             }
 
-            projectSelector.addEventListener('change', (e) => {
-                const newProjectId = e.target.value;
-                localStorage.setItem('selectedProjectId', newProjectId);
-                if (materialCard) {
-                    materialCard.href = `monitoring-material.html?projectId=${newProjectId}`;
-                }
-                // Optional: auto-refresh or show a notification
-            });
-
-        } else {
             projectContainer.innerHTML = `<p class="text-slate-500 dark:text-[#A1A1AA]">Tidak ada proyek yang terdaftar.</p>`;
-            const materialCard = document.getElementById('monitoring-material-card');
-            if (materialCard) materialCard.classList.add('opacity-50', 'pointer-events-none');
+            return;
         }
+
+        // Render selector
+        projectSelector.innerHTML = projects.map(p => `<option value="${p.id}" ${String(p.id) === String(selectedProjectId) ? 'selected' : ''}>${p.name}</option>`).join('');
+        localStorage.setItem('selectedProjectId', selectedProjectId);
+
+        // Update link kartu monitoring material
+        const materialCard = document.getElementById('monitoring-material-card');
+        if (materialCard) {
+            materialCard.href = `monitoring-material.html?projectId=${selectedProjectId}`;
+        }
+
+        projectSelector.addEventListener('change', (e) => {
+            const newProjectId = e.target.value;
+            if (!newProjectId) return;
+
+            // Pastikan id masih ada di daftar proyek yang ada
+            const isValid = projects.some(p => String(p.id) === String(newProjectId));
+            if (!isValid) {
+                if (window.Swal) {
+                    Swal.fire('Proyek tidak valid', 'Silakan pilih proyek dari daftar yang tersedia.', 'warning');
+                } else {
+                    console.warn('Proyek tidak valid:', newProjectId);
+                }
+                return;
+            }
+
+            localStorage.setItem('selectedProjectId', newProjectId);
+            if (materialCard) {
+                materialCard.href = `monitoring-material.html?projectId=${newProjectId}`;
+            }
+        });
     }
 });

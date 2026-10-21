@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistem Penilaian HSE Proyek - MEGATAMA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="/logo-APzS9lAT.png">
+    <link href="https://fonts.cdnfonts.com/css/calibri-light" rel="stylesheet">
+    <style>
+                body { background: #0F172A; color: #FFFFFF; }
+        .dashboard-card { background: linear-gradient(180deg, #111827, #182235); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; box-shadow: 0 24px 70px rgba(0,0,0,0.24); }
+        .evaluation-table { table-layout: fixed; width: 100%; border-collapse: separate; border-spacing: 0; }
+        .sticky-header th {
+            position: sticky;
+            z-index: 10;
+        }
+        .sticky-header tr:first-child th {
+            top: 0;
+        }
+        .sticky-header tr:last-child th {
+            top: 52px;
+        }
+        .evaluation-table tbody tr.group-row { background: rgba(255,255,255,0.04); }
+        .evaluation-table tbody tr.child-row td:first-child { padding-left: 1rem; }
+        .section-card { min-height: 100px; }
+        .status-chip { display: inline-flex; align-items: center; gap: 0.35rem; }
+        .status-chip span { display: inline-flex; align-items: center; justify-content: center; width: 0.95rem; height: 0.95rem; border-radius: 9999px; }
+        .table-header { background: rgba(248,250,252,0.95); backdrop-filter: blur(10px); }
+        .table-header.dark th { background: rgba(15,23,42,0.95); }
+        .radio-segment { display:flex; gap:0.5rem; }
+        .radio-segment label { cursor: pointer; border: 1px solid #334155; border-radius: 12px; min-width: 80px; height: 50px; display:flex; align-items:center; justify-content:center; transition: all 0.15s ease; }
+        .radio-segment label div { width:100%; text-align:center; color:#cbd5e1; }
+        .radio-segment input:checked + div { background: #f97316; color: #fff; border-color: #fb923c; }
+        .radio-segment input:checked + div[data-status="ada"] { background: #22c55e; border-color: #22c55e; color:#fff; }
+        .radio-segment input:checked + div[data-status="tidak"] { background: #ef4444; border-color: #ef4444; color:#fff; }
+        .radio-segment input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .status-toggle { display:flex; gap:0.65rem; flex-wrap: wrap; }
+        .status-toggle button { min-width:100px; height:42px; border-radius:12px; border:1px solid rgba(148,163,184,0.18); background: rgba(255,255,255,0.03); color:#E2E8F0; display:flex; align-items:center; justify-content:center; gap:0.35rem; font-size:0.85rem; transition: all .2s ease; cursor:pointer; }
+        .status-toggle button.active { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.45); color:#D1FAE5; }
+        .status-toggle button.active[data-status="tidak"] { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.45); color:#FECACA; }
+        .status-toggle button:hover { transform: translateY(-1px); background: rgba(255,255,255,0.06); }
+        .status-toggle button i { font-size:14px; }
+        .evaluation-table td, .evaluation-table th {
+            border-right: 1px solid rgba(255,255,255,0.08);
+            vertical-align: middle;
+            padding: 0.9rem 0.95rem;
+            color: #E2E8F0;
+        }
+        .evaluation-table th { text-align: left; color: #FFD6A0; letter-spacing: 0.08em; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+        thead.hse-table-header th { background: #111827; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .evaluation-table tbody tr.child-row { transition: background .2s ease; background: rgba(255,255,255,0.015); }
+        .evaluation-table tbody tr.child-row:hover { background: rgba(255,255,255,0.06); }
+        .evaluation-table tbody tr.group-row td { border-right: none; }
+        .evaluation-table tbody tr.group-row .group-cell { padding: 1rem 1.25rem; }
+        .evaluation-table tbody tr.child-row td { background: transparent; }
+        .icon-btn { width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center; border-radius:9999px; background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); cursor:pointer; transition: all .2s ease; }
+        .icon-btn i { font-size:18px; color: #94A3B8; }
+        .icon-btn.edit:hover i { color:#2563EB; }
+        .icon-btn.delete:hover i { color:#EF4444; }
+        .val-input { max-width: 100px; width: 100px; margin: 0 auto; display:block; height:44px; border-radius:12px; background: #0F172A; border:1px solid rgba(255,255,255,0.12); color:#F8FAFC; padding:0 0.85rem; }
+        .val-input:focus { outline:none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        .keterangan-cell { text-align: left; white-space: normal; word-break: break-word; }
+        .keterangan-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .keterangan-text { color:#F8FAFC; }
+        .footer-summary { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; color:#94A3B8; }
+        .footer-summary .highlight { color: #F59E0B; font-weight: 700; }
+        .footer-card { padding:1rem 1.25rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; }
+        .doc-col, .status-col { width: 13%; }
+        .sub-col { width: 8%; }
+        .no-col { width: 4%; }
+        .jenis-col { width: 22%; }
+        .max-col { width: 9%; }
+        .real-col { width: 8%; }
+        .sub-input { width: 100%; max-width: 70px; height: 40px; margin: 0 auto; display:block; border-radius: 10px; background: #0F172A; border: 1px solid rgba(255,255,255,0.12); color:#F8FAFC; padding:0 0.5rem; text-align:center; font-size:0.8rem; }
+        .sub-input:focus { outline:none; border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+        .sub-input-ada:focus { border-color: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,0.15); }
+        .sub-input-tidak:focus { border-color: #ef4444; box-shadow: 0 0 0 2px rgba(239,68,68,0.15); }
+        .group-row .group-cell button { width:100%; display:flex; align-items:center; gap:0.8rem; font-size:1rem; color:#F8FAFC; background:transparent; border:none; cursor:pointer; padding:1rem 0; }
+        .group-row .group-cell button:hover { color: #FFFFFF; }
+        .group-row .group-cell button i { color:#FBBF24; }
+        .group-row .group-cell button .fa-folder { color:#FBBF24; }
+        .group-row .group-cell button .fa-chevron-down, .group-row .group-cell button .fa-chevron-right { color:#94A3B8; }
+        /* History / Audit Log styles */
+        .history-container { background: #111827; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; }
+        .history-header { display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:1rem; padding:1.5rem 1.75rem 1rem; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .history-header-left p { margin:0; color:#94A3B8; font-size:0.9rem; }
+        .history-header-left h2 { margin:0.25rem 0 0; font-size:1.75rem; font-weight:800; color:#F8FAFC; }
+        .history-header-left .history-subtitle { margin-top:0.5rem; color:#94A3B8; max-width:34rem; line-height:1.6; }
+        .history-clear-btn { display:inline-flex; align-items:center; gap:0.5rem; border:1px solid rgba(239,68,68,0.35); color:#F87171; background:transparent; padding:0.9rem 1rem; border-radius:9999px; font-size:0.85rem; font-weight:700; transition: all .2s ease; }
+        .history-clear-btn:hover { background:rgba(239,68,68,0.12); border-color:#EF4444; color:#EF4444; transform: translateY(-1px); }
+        .history-scroll { max-height:64vh; overflow-y:auto; padding:1rem 0.8rem 1.2rem 1rem; }
+        .history-scroll::-webkit-scrollbar { width:8px; }
+        .history-scroll::-webkit-scrollbar-track { background: transparent; }
+        .history-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius:9999px; border: 2px solid transparent; background-clip: padding-box; }
+        .history-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+        .history-timeline { position:relative; padding-left:1.5rem; }
+        .history-timeline::before { content:''; position:absolute; left:0.8rem; top:0; bottom:0; width:2px; background: rgba(255,255,255,0.08); border-radius:9999px; }
+        .history-row-wrapper { position:relative; margin-bottom:1rem; }
+        .history-row-wrapper::before { content:''; position:absolute; left:0.4rem; top:1rem; width:0.75rem; height:0.75rem; border-radius:50%; background:#0F172A; border:2px solid #3B82F6; box-shadow:0 0 0 4px rgba(59,130,246,0.14); }
+        .history-card { position:relative; overflow:hidden; background:#111827; border:1px solid rgba(255,255,255,0.08); box-shadow:0 18px 40px rgba(0,0,0,0.22); border-radius:20px; padding:1.4rem; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+        .history-card:hover { transform: translateY(-2px) scale(1.01); border-color: rgba(59,130,246,0.68); box-shadow:0 24px 56px rgba(0,0,0,0.28); }
+        .history-card-header { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; flex-wrap:wrap; }
+        .history-card-title { display:flex; align-items:center; gap:0.75rem; font-size:1.03rem; font-weight:700; color:#F8FAFC; }
+        .history-activity-icon { width:2.1rem; height:2.1rem; display:grid; place-items:center; border-radius:16px; background: rgba(59,130,246,0.14); color:#93C5FD; flex-shrink:0; }
+        .history-card-meta { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem; color:#94A3B8; font-size:0.95rem; }
+        .history-card-meta span { display:inline-flex; gap:0.5rem; align-items:center; }
+        .history-card-divider { height:1px; margin:1.4rem 0; background: rgba(255,255,255,0.08); }
+        .history-detail-grid { display:grid; gap:1rem; }
+        .history-detail-row { display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start; }
+        .history-detail-label { min-width:120px; width:160px; color:#94A3B8; font-size:0.85rem; font-weight:600; }
+        .history-detail-value { color:#F8FAFC; font-weight:600; line-height:1.6; word-break:break-word; }
+        .history-detail-value small { color:#94A3B8; font-weight:400; }
+        .history-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.85rem; border-radius:9999px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+        .history-badge-create { background: rgba(34,197,94,0.18); color:#86EFAC; border:1px solid rgba(34,197,94,0.32); }
+        .history-badge-update { background: rgba(251,191,0,0.18); color:#FDE68A; border:1px solid rgba(251,191,0,0.35); }
+        .history-badge-delete { background: rgba(239,68,68,0.18); color:#FECACA; border:1px solid rgba(239,68,68,0.35); }
+        .history-badge-upload { background: rgba(59,130,246,0.18); color:#93C5FD; border:1px solid rgba(59,130,246,0.35); }
+        .history-badge-warning { background: rgba(249,115,22,0.18); color:#FCD34D; border:1px solid rgba(249,115,22,0.35); }
+        .history-badge-info { background: rgba(148,163,184,0.18); color:#CAD8E8; border:1px solid rgba(148,163,184,0.35); }
+        .history-object-debug { margin:0.5rem 0 0; padding:0.85rem; background: rgba(148,163,184,0.08); border-radius:16px; color:#E2E8F0; overflow-x:auto; font-size:0.82rem; }
+        @media (max-width: 768px) {
+            .history-card { padding:1.15rem; }
+            .history-card-header { flex-direction:column; align-items:flex-start; }
+            .history-detail-row { flex-direction:column; }
+            .history-card-title { font-size:0.98rem; }
+        }
+    </style>
+  <script type="module" crossorigin src="/hseAssessment-CqjEgLnV.js"></script>
+  <link rel="modulepreload" crossorigin href="/firebase-service-XH6v9WVw.js">
+  <link rel="stylesheet" crossorigin href="/style-DPfaC2LA.css">
+  <link rel="stylesheet" crossorigin href="/monitoring-kas-DJFJhvWR.css">
+</head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="fixed inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-900 z-50 transition-opacity duration-300">
+        <i class="fas fa-spinner fa-spin text-4xl text-[#FF7A00]"></i>
+        <p class="mt-4 text-slate-500 dark:text-[#A1A1AA] font-medium">Memuat data penilaian...</p>
+    </div>
+
+    <div id="main-content" class="hidden p-3 sm:p-5 lg:p-8 max-w-[1600px] mx-auto space-y-4 sm:space-y-6">
+            <header class="mb-6 glass-panel rounded-3xl border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center gap-2 rounded-full bg-orange-100 text-orange-700 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] dark:bg-orange-500/10 dark:text-orange-300">HSE Performance</div>
+                        <div class="space-y-2">
+                            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Sistem Penilaian Kinerja HSE Proyek</h1>
+                            <p class="max-w-2xl text-slate-600 dark:text-slate-400">Evaluasi kelengkapan dokumen HSE setiap proyek dengan tampilan modern, responsif, dan auto-save.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 flex-wrap items-center">
+                        <button onclick="window.history.back()" class="no-print mt-1 w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:text-[#FF7A00] dark:hover:text-[#FF7A00] transition-all flex items-center justify-center">
+                            <i class="fas fa-arrow-left text-sm sm:text-base"></i>
+                        </button>
+                        <button id="themeToggle" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-[#FF7A00] transition-colors shrink-0">
+                            <i class="fas fa-moon text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-[1.45fr_0.95fr] gap-6 mb-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm animated-shadow">
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Proyek (otomatis)</label>
+                            <div id="projectDisplay" class="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 p-3">-</div>
+                            <select id="projectSelector" class="hidden"></select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Progress Proyek s/d Saat Ini (%)</label>
+                            <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3">
+                                <div class="flex items-center gap-3">
+                                    <input id="projectProgressInput" type="number" min="0" max="100" step="1" disabled class="w-24 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/30 dark:bg-slate-950/30 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none transition" />
+                                    <span id="projectProgressValue" class="text-sm font-semibold text-slate-700 dark:text-slate-100">0%</span>
+                                </div>
+                                <div class="mt-3 w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                                    <div id="projectProgressBar" class="h-full rounded-full bg-gradient-to-r from-orange-500 to-rose-500 transition-all"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-600 dark:text-slate-300">Status Simpan</label>
+                            <div id="autoSaveStatus" class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3 text-sm text-slate-600 dark:text-slate-300">Memuat...</div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 mt-6 md:grid-cols-2">
+                        <div class="space-y-2">
+                            <label for="assessor-name" class="text-sm font-semibold text-slate-600 dark:text-slate-300">Assessor</label>
+                            <input id="assessor-name" type="text" placeholder="Nama assessor" class="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-3 outline-none focus:border-orange-500 transition" />
+                        </div>
+                        <div class="space-y-2">
+                            <label for="assessment-notes" class="text-sm font-semibold text-slate-600 dark:text-slate-300">Catatan Evaluasi</label>
+                            <textarea id="assessment-notes" rows="4" placeholder="Masukkan catatan singkat" class="w-full rounded-3xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-3 outline-none focus:border-orange-500 transition"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid gap-4">
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm animated-shadow section-card">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Ringkasan</p>
+                                <h2 id="summaryStatus" class="mt-3 text-2xl font-bold text-slate-900 dark:text-white">Belum ada proyek</h2>
+                            </div>
+                            <!-- <span id="summaryBadge" class="status-chip rounded-full border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200"><span id="summaryBadgeDot" class="bg-orange-500"></span></span> -->
+                        </div>
+                        <div class="mt-6 grid grid-cols-2 gap-3">
+                            <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 p-4">
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Nama Proyek</p>
+                                <p id="projectNameValue" class="mt-2 text-lg font-semibold text-slate-900 dark:text-white">-</p>
+                            </div>
+                                <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 p-4">
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Total Nilai Maksimal</p>
+                                    <p id="projectTotalMax" class="mt-2 text-lg font-semibold text-slate-900 dark:text-white">0</p>
+                                </div>
+                                <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 p-4">
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Total Nilai Real</p>
+                                    <p id="projectTotalReal" class="mt-2 text-lg font-semibold text-slate-900 dark:text-white">0</p>
+                                </div>
+                                <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 p-4">
+                                    <p class="text-sm text-slate-500 dark:text-slate-400">Persentase Nilai</p>
+                                    <p id="projectPercentage" class="mt-2 text-lg font-semibold text-slate-900 dark:text-white">0%</p>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm animated-shadow">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Search & Filter</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Cari nama laporan atau pilih kategori.</p>
+                            </div>
+                        </div>
+                        <div class="mt-5 space-y-4">
+                            <input id="searchInput" type="search" placeholder="Cari jenis laporan..." class="w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3 text-slate-900 dark:text-slate-100 outline-none focus:border-orange-500 transition" />
+                            <div id="categoryFilters" class="flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid gap-6 lg:grid-cols-[1fr_360px]">
+                <div class="dashboard-card rounded-[20px] overflow-hidden flex flex-col h-[65vh]">
+                    <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/90 sticky-top backdrop-blur-sm">
+                        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Tabel Penilaian Dokumen HSE</h2>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Lihat dan nilai setiap item dokumen HSE untuk proyek terpilih.</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button id="createTableBtn" type="button" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition"> <i class="fas fa-table"></i> Buat Tabel</button>
+                                 <!-- <button id="finalizeButton" type="button" class="inline-flex items-center gap-2 rounded-2xl bg-orange-600 px-4 py-3 text-sm font-semibold text-white hover:bg-orange-700 transition"> <i class="fas fa-check-double"></i> Finalize & Simpan</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper overflow-auto flex-1 min-h-0">
+                        <div class="overflow-x-auto">
+                            <table class="evaluation-table kas-table w-full text-left border-separate border-spacing-0">
+                            <colgroup>
+                                <col class="no-col" />
+                                <col class="jenis-col" />
+                                <col class="sub-col" />
+                                <col class="sub-col" />
+                                <col class="sub-col" />
+                                <col class="sub-col" />
+                                <col class="max-col" />
+                                <col class="real-col" />
+                                <col />
+                            </colgroup>
+                            <thead class="hse-table-header bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700 sticky-header">
+                                <tr>
+                                    <th rowspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 border-r border-slate-200 dark:border-slate-700">No</th>
+                                    <th rowspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 border-r border-slate-200 dark:border-slate-700">Jenis Laporan</th>
+                                    <th colspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-400 text-center border-r border-slate-200 dark:border-slate-700">Bukti Dokumen</th>
+                                    <th colspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-400 text-center border-r border-slate-200 dark:border-slate-700">Status</th>
+                                    <th rowspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 text-center border-r border-slate-200 dark:border-slate-700">Nilai Maks</th>
+                                    <th rowspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 text-center border-r border-slate-200 dark:border-slate-700">Nilai Real</th>
+                                    <th rowspan="2" class="px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Keterangan</th>
+                                </tr>
+                                <tr>
+                                    <th class="px-2 py-2 text-xs font-bold uppercase tracking-[0.15em] text-emerald-400 dark:text-emerald-400 text-center border-r border-slate-200 dark:border-slate-700 bg-emerald-50/30 dark:bg-emerald-900/10">Ada</th>
+                                    <th class="px-2 py-2 text-xs font-bold uppercase tracking-[0.15em] text-red-400 dark:text-red-400 text-center border-r border-slate-200 dark:border-slate-700 bg-red-50/30 dark:bg-red-900/10">Tidak Ada</th>
+                                    <th class="px-2 py-2 text-xs font-bold uppercase tracking-[0.15em] text-emerald-400 dark:text-emerald-400 text-center border-r border-slate-200 dark:border-slate-700 bg-emerald-50/30 dark:bg-emerald-900/10">Ada</th>
+                                    <th class="px-2 py-2 text-xs font-bold uppercase tracking-[0.15em] text-red-400 dark:text-red-400 text-center border-r border-slate-200 dark:border-slate-700 bg-red-50/30 dark:bg-red-900/10">Tidak Ada</th>
+                                </tr>
+                            </thead>
+                            <tbody id="evaluationTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/90">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-slate-600">Total Keseluruhan</div>
+                            <div class="text-sm font-semibold text-slate-900 dark:text-white">
+                                <span id="tableFooterTotalMax">0</span> / <span id="tableFooterTotalReal">0</span> — <span id="tableFooterPercentage">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm animated-shadow overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Riwayat Perubahan</p>
+                        <button id="clearHistoryBtn" class="text-xs text-slate-500 hover:text-red-500">Bersihkan</button>
+                    </div>
+                    <div id="changeHistory" class="max-h-[64vh] overflow-y-auto rounded-md p-2 bg-slate-50 dark:bg-slate-950 text-sm text-slate-700 dark:text-slate-200">
+                        Belum ada riwayat perubahan.
+                    </div>
+                </aside>
+            </div>
+
+            <div class="grid gap-4 xl:grid-cols-[1fr_auto]">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm animated-shadow">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Rekap Nilai</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Total nilai dan persentase otomatis dihitung dari setiap item.</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-lg font-semibold text-slate-900 dark:text-white" id="footerTotalMax">Total Maks: 0</p>
+                            <p class="text-lg font-semibold text-slate-900 dark:text-white" id="footerTotalReal">Total Real: 0</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400" id="footerPercentage">Persentase: 0%</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 h-4 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                        <div id="footerProgressBar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 transition-all"></div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm animated-shadow flex flex-col justify-between">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500 mb-3">Status Penilaian</p>
+                        <div class="space-y-3">
+                            <div class="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 bg-slate-50 dark:bg-slate-950">
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Label status</p>
+                                <p id="footerStatus" class="mt-2 text-xl font-bold text-slate-900 dark:text-white">Belum Dinilai</p>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 dark:border-slate-700 p-4 bg-slate-50 dark:bg-slate-950">
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Judul evaluasi</p>
+                                <p id="footerStatusDetail" class="mt-2 text-lg font-medium text-slate-700 dark:text-slate-200">Lengkapi semua laporan HSE untuk menghasilkan skor akhir.</p>
+                            </div>
+                        </div>
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Create/Edit Table Modal -->
+    <div id="tableModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-700 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-100">Buat / Edit Tabel Penilaian</h3>
+                <button id="modalCloseBtn" type="button" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Nama Tabel</label>
+                    <input id="modalTableName" class="w-full rounded-2xl border border-slate-200 dark:border-slate-700 p-3 mt-2 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100" />
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Keterangan</label>
+                    <textarea id="modalTableDesc" rows="2" class="w-full rounded-2xl border border-slate-200 dark:border-slate-700 p-3 mt-2 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100"></textarea>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Children</label>
+                        <button id="modalAddChild" type="button" class="text-sm text-slate-600 dark:text-slate-300 bg-transparent hover:bg-slate-50 dark:hover:bg-slate-700 px-3 py-1 rounded-md transition">+ Tambah Child</button>
+                    </div>
+                    <div id="modalChildrenList" class="mt-2 space-y-2"></div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-700 pt-4">
+                <button id="modalCancelTable" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-900">Batal</button>
+                <button id="modalSaveTable" class="px-4 py-2 rounded-xl bg-orange-600 text-white">Simpan</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function(){
+        const themeToggleBtn = document.getElementById('themeToggle');
+
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun text-lg"></i>';
+        } else {
+            document.documentElement.classList.remove('dark');
+            if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+        }
+
+        if (!themeToggleBtn) return;
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.innerHTML = isDark ? '<i class="fas fa-sun text-lg"></i>' : '<i class="fas fa-moon text-lg"></i>';
+            if (window.renderPage) window.renderPage();
+            if (window.renderEvaluationTable) window.renderEvaluationTable();
+        });
+    })();
+    </script>
+</body>
+</html>

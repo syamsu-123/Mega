@@ -2,7 +2,7 @@
 <html lang="id" class="antialiased">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard Enterprise - MEGATAMA</title>
     
     <!-- Fonts & Icons -->
@@ -16,45 +16,11 @@
     <link rel="icon" type="image/png" href="/logo-APzS9lAT.png">
 
     <!-- Tailwind via Main Style -->
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
-        
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        .dark .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .nav-item.active {
-            background: rgba(37, 99, 235, 0.1);
-            color: #2563EB;
-            font-weight: 600;
-        }
-        .dark .nav-item.active {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60A5FA;
-        }
-        /* Circle Progress Map */
-        .circle-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
-        
-        /* Round Crop Box for Cropper.js (Specific Mode) */
-        .cropper-circle-mode .cropper-view-box, .cropper-circle-mode .cropper-face {
-            border-radius: 50%;
-        }
-    </style>
-  <script type="module" crossorigin src="/dashboard-Ce6wFrs5.js"></script>
-  <link rel="modulepreload" crossorigin href="/firebase-service-BtA-uc5p.js">
-  <link rel="stylesheet" crossorigin href="/firebase-service-B0bYcONi.css">
+    
+  <script type="module" crossorigin src="/dashboard-CyccY5wX.js"></script>
+  <link rel="modulepreload" crossorigin href="/firebase-service-XH6v9WVw.js">
+  <link rel="stylesheet" crossorigin href="/dashboard-ys0e9Dxs.css">
+  <link rel="stylesheet" crossorigin href="/style-DPfaC2LA.css">
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden">
 
@@ -85,12 +51,15 @@
 
             <nav class="px-4 space-y-1.5 overflow-y-auto h-[calc(100vh-200px)] text-sm font-medium text-slate-600 dark:text-slate-400">
                 <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-4">Menu Utama</p>
-                <a href="#" class="nav-item active flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-overview">
-                    <i class="fas fa-chart-pie w-5 text-center"></i> <span>Overview</span>
+                <a href="dashboard.html" class="nav-item active flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-overview">
+                    <i class="fas fa-tachometer-alt w-5 text-center"></i> <span>Overview</span>
                 </a>
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-projects">
-                    <i class="fas fa-project-diagram w-5 text-center"></i> <span>Projects Board</span>
+                    <i class="fas fa-project-diagram w-5 text-center"></i> <span>Project Board</span>
                 </a>
+                <!-- <a href="monitoring-material.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" hidden>
+                    <i class="fas fa-boxes w-5 text-center"></i> <span>Monitoring Material</span>
+                </a> -->
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-docs">
                     <i class="fas fa-images w-5 text-center"></i> <span>Portofolio</span>
                 </a>
@@ -100,14 +69,17 @@
                 <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-news">
                     <i class="fas fa-newspaper w-5 text-center"></i> <span>Berita</span>
                 </a>
-                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
-                    <i class="fas fa-truck-loading w-5 text-center"></i> <span>Monitoring Supplier</span>
+                <a href="monitoring-supplier.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-truck w-5 text-center"></i> <span>Monitoring Supplier</span>
                 </a>
-                <a href="perbandingan-harga.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white admin-manager-only">
-                    <i class="fas fa-balance-scale-right w-5 text-center"></i> <span>Perbandingan Harga</span>
+                <a href="cashflow/frontend/cashflow.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-wallet w-5 text-center"></i> <span>Cash Flow Project</span>
                 </a>
-                <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports">
-                    <i class="fas fa-file-pdf w-5 text-center"></i> <span>Laporan</span>
+                <a href="perbandingan-harga.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fas fa-scale-balanced w-5 text-center"></i> <span>Perbandingan Harga</span>
+                </a>
+                <!-- <a href="#" class="nav-item flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white" data-target="view-reports" hidden>
+                    <i class="fas fa-file-alt w-5 text-center"></i> <span>Laporan</span>
                 </a> -->
                 
                 <p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 admin-only">Sistem</p>
@@ -116,10 +88,7 @@
                 </a>
                 
                 <div class="absolute bottom-6 left-4 right-4">
-                    <a href="index.html" class="flex items-center gap-3 px-4 py-2 mb-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
-                        <i class="fas fa-globe w-5 text-center"></i> <span>Situs Utama</span>
-                    </a>
-                    <a href="#" id="logoutBtn" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
+                    <a href="#" id="logoutBtn" class="flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl text-red-500 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
                         <i class="fas fa-sign-out-alt w-5 text-center"></i> <span>Logout</span>
                     </a>
                 </div>
@@ -130,29 +99,28 @@
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
             
             <!-- Floating Topbar -->
-            <header class="glass-panel mx-8 mt-6 mb-2 rounded-2xl h-16 flex items-center justify-between px-6 z-40 shadow-sm border border-slate-200/50 dark:border-slate-700/50">
-                <div class="flex items-center gap-4 w-full">
-                    
-                    <button id="mobileMenuBtn" class="xl:hidden w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-500 shadow-sm border border-slate-200 dark:border-slate-700">
-                        <i class="fas fa-bars"></i>
+            <header class="glass-panel mx-3 sm:mx-8 mt-4 sm:mt-6 mb-2 rounded-2xl h-14 sm:h-16 flex items-center justify-between px-3 sm:px-6 z-40 shadow-sm border border-slate-200/50 dark:border-slate-700/50">
+                <div class="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+                    <button id="mobileMenuBtn" class="xl:hidden w-9 h-9 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-500 shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
+                        <i class="fas fa-bars text-sm"></i>
                     </button>
                     <!-- Search -->
-                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-4 py-2 flex-1 max-w-md border border-transparent focus-within:border-orange-500 transition-colors">
-                        <i class="fas fa-search text-slate-400"></i>
-                        <input type="text" placeholder="Cari project, dokumen, atau user..." class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2 text-slate-700 dark:text-slate-200 placeholder-slate-400">
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-3 py-2 flex-1 min-w-0 border border-transparent focus-within:border-orange-500 transition-colors">
+                        <i class="fas fa-search text-slate-400 text-xs sm:text-sm shrink-0"></i>
+                        <input type="text" placeholder="Cari..." class="bg-transparent border-none focus:ring-0 text-xs sm:text-sm w-full ml-2 text-slate-700 dark:text-slate-200 placeholder-slate-400 min-w-0">
                     </div>
                 </div>
                 
-                <div class="flex items-center gap-4">
-                    <div class="text-sm font-medium text-slate-500 dark:text-slate-400 block mr-2" id="currentDate"></div>
+                <div class="flex items-center gap-1 sm:gap-4 ml-2 shrink-0">
+                    <div class="text-xs font-medium text-slate-500 dark:text-slate-400 hidden sm:block" id="currentDate"></div>
                     
-                    <button id="themeToggle" class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                        <i class="fas fa-moon text-lg"></i>
+                    <button id="themeToggle" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-moon text-sm"></i>
                     </button>
                     
-                    <button class="relative w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                        <i class="fas fa-bell text-lg"></i>
-                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hidden flex h-4 w-4">
+                    <button class="relative w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-bell text-sm"></i>
+                        <span id="notificationBadgeContainer" class="absolute top-1.5 right-1.5 hiddenflex h-4 w-4">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                             <span id="notificationCount" class="relative inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-[9px] font-bold text-white border border-white dark:border-slate-800">0</span>
                         </span>
@@ -161,93 +129,92 @@
             </header>
 
             <!-- Content Area -->
-            <main class="flex-1 overflow-y-auto p-8">
+            <main class="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8">
                 
                 <!-- VIEW: OVERVIEW -->
                 <div id="view-overview" class="view-section">
                     
                     <!-- Hero Section -->
-                    <div class="bg-gradient-to-r from-orange-600 to-indigo-700 rounded-3xl p-8 mb-8 text-white relative overflow-hidden shadow-xl shadow-orange-600/20 flex flex-col justify-center min-h-[220px]">
+                    <div class="bg-gradient-to-r from-orange-600 to-indigo-700 rounded-2xl sm:rounded-3xl p-5 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden shadow-xl shadow-orange-600/20 flex flex-col justify-center min-h-[180px] sm:min-h-[220px]">
                         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
-                        <div class="relative z-10 w-2/3">
-                            <h1 class="text-4xl font-bold mb-3 tracking-tight">Selamat Datang Kembali, <span id="heroUserName">User</span> 👋</h1>
-                            <p class="text-orange-100 text-lg mb-8 max-w-xl leading-relaxed">Berikut adalah ringkasan progres keseluruhan proyek konstruksi MEGATAMA yang sedang berjalan bulan ini.</p>
+                        <div class="relative z-10 w-full sm:w-2/3">
+                            <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 tracking-tight">Selamat Datang, <span id="heroUserName">User</span> 👋</h1>
+                            <p class="text-orange-100 text-xs sm:text-base lg:text-lg mb-4 sm:mb-8 max-w-xl leading-relaxed">Ringkasan progres keseluruhan proyek konstruksi MEGATAMA yang sedang berjalan.</p>
                             
-                            <div class="flex flex-wrap gap-8">
+                            <div class="flex flex-wrap gap-4 sm:gap-8">
                                 <div>
-                                    <p class="text-orange-200 text-sm font-medium mb-1">Total Proyek Aktif</p>
-                                    <p class="text-3xl font-bold" id="hero-total-proyek">0 <span class="text-base font-medium opacity-80">Proyek</span></p>
+                                    <p class="text-orange-200 text-xs font-medium mb-1">Total Proyek Aktif</p>
+                                    <p class="text-xl sm:text-3xl font-bold" id="hero-total-proyek">0 <span class="text-sm font-medium opacity-80">Proyek</span></p>
                                 </div>
-                                <div class="w-px h-12 bg-white/20 block"></div>
+                                <div class="w-px h-10 bg-white/20 block"></div>
                                 <div>
-                                    <p class="text-orange-200 text-sm font-medium mb-1">Overall Progress</p>
-                                    <div class="flex items-center gap-3">
-                                        <p class="text-3xl font-bold text-green-300" id="hero-overall-progress">0%</p>
-                                        <div class="w-24 h-2 bg-white/20 rounded-full overflow-hidden"><div id="hero-overall-bar" class="h-full bg-green-400 rounded-full transition-all duration-1000" style="width: 0%"></div></div>
+                                    <p class="text-orange-200 text-xs font-medium mb-1">Overall Progress</p>
+                                    <div class="flex items-center gap-2 sm:gap-3">
+                                        <p class="text-xl sm:text-3xl font-bold text-green-300" id="hero-overall-progress">0%</p>
+                                        <div class="w-16 sm:w-24 h-2 bg-white/20 rounded-full overflow-hidden"><div id="hero-overall-bar" class="h-full bg-green-400 rounded-full transition-all duration-1000" style="width: 0%"></div></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/construction-project-management-8114624-6447225.png" class="absolute right-0 bottom-0 h-[120%] object-contain opacity-100 mix-blend-luminosity transform translate-x-10 translate-y-10" alt="Illustration">
+                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/construction-project-management-8114624-6447225.png" class="absolute right-0 bottom-0 h-full sm:h-[120%] object-contain opacity-60 sm:opacity-100 mix-blend-luminosity transform translate-x-6 sm:translate-x-10 translate-y-4 sm:translate-y-10" alt="Illustration">
                     </div>
 
                     <!-- Stat Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
                             <div>
-                                <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-building"></i></div>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Total Anggaran</p>
-                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-anggaran">Rp 0 M</p>
+                                <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center text-base sm:text-xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-building"></i></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Total Anggaran</p>
+                                <p class="text-base sm:text-2xl font-bold text-slate-800 dark:text-white mt-1 truncate" id="stat-anggaran">Rp 0 M</p>
                             </div>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
                             <div>
-                                <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-check-circle"></i></div>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Proyek Selesai</p>
-                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-selesai">0</p>
+                                <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 flex items-center justify-center text-base sm:text-xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-check-circle"></i></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Proyek Selesai</p>
+                                <p class="text-base sm:text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-selesai">0</p>
                             </div>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
                             <div>
-                                <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-clock"></i></div>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Dalam Proses</p>
-                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-berjalan">0</p>
+                                <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-base sm:text-xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-clock"></i></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Dalam Proses</p>
+                                <p class="text-base sm:text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-berjalan">0</p>
                             </div>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md hover:-translate-y-1 transition-all group">
                             <div>
-                                <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-exclamation-triangle"></i></div>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Isu & Tertunda</p>
-                                <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-tertunda">0</p>
+                                <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-base sm:text-xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-exclamation-triangle"></i></div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Isu & Tertunda</p>
+                                <p class="text-base sm:text-2xl font-bold text-slate-800 dark:text-white mt-1" id="stat-tertunda">0</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Charts -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Trend Progress Pembangunan</h3>
-                            <div class="h-64"><canvas id="lineChart"></canvas></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-sm sm:text-lg font-bold mb-4 sm:mb-6 text-slate-800 dark:text-white">Trend Progress Pembangunan</h3>
+                            <div class="h-48 sm:h-64"><canvas id="lineChart"></canvas></div>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Status Proyek</h3>
-                            <div class="h-56 relative flex justify-center"><canvas id="pieChart"></canvas></div>
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <h3 class="text-sm sm:text-lg font-bold mb-4 sm:mb-6 text-slate-800 dark:text-white">Status Proyek</h3>
+                            <div class="h-44 sm:h-56 relative flex justify-center"><canvas id="pieChart"></canvas></div>
                         </div>
                     </div>
                     
                     <!-- Map & Activity Feed -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative h-[336px]">
-                            <div class="absolute top-6 left-6 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-4 py-2 rounded-lg shadow border border-slate-200 dark:border-slate-700">
-                                <h3 class="text-sm font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-2"></i> Lokasi Kantor</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-2 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative h-56 sm:h-[336px]">
+                            <div class="absolute top-4 left-4 z-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1.5 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+                                <h3 class="text-xs font-bold text-slate-800 dark:text-white"><i class="fas fa-map-marker-alt text-orange-500 mr-1"></i> Lokasi Kantor</h3>
                             </div>
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.026363740263!2d107.57508491537494!3d-6.887462095022831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6873a8cc5a1%3A0x6a0a75f1b203c9d7!2sJl.%20Sarimadu%20Barat%20No.18%2C%20Sarijadi%2C%20Kec.%20Sukajadi%2C%20Kota%20Bandung%2C%20Jawa%20Barat%2040164!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" class="w-full h-full rounded-xl z-0 border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
-                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col h-[336px]">
-                            <h3 class="text-lg font-bold mb-6 text-slate-800 dark:text-white">Aktivitas Terkini</h3>
-                            <div id="activity-feed" class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-6 pb-2 flex-1 overflow-y-auto pr-2">
-                                <!-- Aktivitas dirender via JS -->
+                        <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden flex flex-col h-56 sm:h-[336px]">
+                            <h3 class="text-sm sm:text-lg font-bold mb-4 sm:mb-6 text-slate-800 dark:text-white">Aktivitas Terkini</h3>
+                            <div id="activity-feed" class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-4 sm:space-y-6 pb-2 flex-1 overflow-y-auto pr-2">
                             </div>
                         </div>
                     </div>
@@ -255,12 +222,12 @@
 
                 <!-- VIEW: PROJECTS -->
                 <div id="view-projects" class="view-section hidden">
-                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Project Board</h2>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Monitor status dan kemajuan semua proyek aktif secara real-time.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-1">Project Board</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Monitor status dan kemajuan semua proyek aktif secara real-time.</p>
                         </div>
-                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="openAddProjectModal()">
+                        <button class="bg-orange-600 text-white px-4 py-2 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only shrink-0" onclick="openAddProjectModal()">
                             <i class="fas fa-plus mr-2"></i> Tambah Proyek
                         </button>
                     </div>
@@ -303,12 +270,12 @@
 
                 <!-- VIEW: DOCS & REPORTS (Mock Views) -->
                 <div id="view-docs" class="view-section hidden">
-                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Portofolio Proyek</h2>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Portofolio visual dari berbagai proyek yang sedang dan telah berjalan.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-1">Portofolio Proyek</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Portofolio visual dari berbagai proyek yang sedang dan telah berjalan.</p>
                         </div>
-                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahPortofolio()">
+                        <button class="bg-orange-600 text-white px-4 py-2 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only shrink-0" onclick="tambahPortofolio()">
                             <i class="fas fa-upload mr-2"></i> Upload Foto
                         </button>
                     </div>
@@ -350,12 +317,12 @@
 
                 <!-- VIEW: CLIENTS -->
                 <div id="view-clients" class="view-section hidden">
-                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Klien</h2>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Kelola daftar logo klien yang bekerja sama dengan perusahaan.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Klien</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Kelola daftar logo klien yang bekerja sama dengan perusahaan.</p>
                         </div>
-                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahKlien()">
+                        <button class="bg-orange-600 text-white px-4 py-2 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only shrink-0" onclick="tambahKlien()">
                             <i class="fas fa-plus mr-2"></i> Tambah Klien
                         </button>
                     </div>
@@ -367,12 +334,12 @@
 
                 <!-- VIEW: NEWS -->
                 <div id="view-news" class="view-section hidden">
-                    <div class="flex flex-row justify-between items-center mb-8 gap-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Berita</h2>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm">Publikasikan artikel, pembaruan, dan pencapaian terbaru.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white mb-1">Manajemen Berita</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Publikasikan artikel, pembaruan, dan pencapaian terbaru.</p>
                         </div>
-                        <button class="bg-orange-600 text-white px-5 py-2.5 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only" onclick="tambahBerita()">
+                        <button class="bg-orange-600 text-white px-4 py-2 rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/30 font-medium text-sm flex items-center admin-manager-only shrink-0" onclick="tambahBerita()">
                             <i class="fas fa-plus mr-2"></i> Tulis Berita
                         </button>
                     </div>
@@ -417,6 +384,10 @@
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Tanggal Mulai</label><input type="date" id="html-p-start" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
                 <div><label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Target Selesai</label><input type="date" id="html-p-end" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" required></div>
                 <div class="col-span-2 text-sm text-slate-500 dark:text-slate-400 -mt-2 ml-1" id="html-p-duration"></div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium mb-1.5 text-slate-700 dark:text-slate-300">Deskripsi Proyek</label>
+                    <textarea id="html-p-description" rows="3" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-orange-500 dark:text-white resize-none" placeholder="Masukkan deskripsi atau keterangan tambahan untuk proyek ini..."></textarea>
+                </div>
                 
                 <div id="html-p-plan-container" class="col-span-2 hidden mt-2 pt-4 border-t border-slate-100 dark:border-slate-700">
                     <label class="block text-sm font-medium mb-3 text-slate-700 dark:text-slate-300">Target Progress Rencana Mingguan (%) <span class="text-xs text-orange-500 font-normal ml-2">(Opsional)</span></label>

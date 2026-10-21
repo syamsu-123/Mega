@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perbandingan Harga Material - MEGATAMA</title>
-    <!-- Pada perbandingan-harga.html -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <link rel="icon" type="image/png" href="/logo-APzS9lAT.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script type="module" crossorigin src="/perbandinganHarga-mmrj1-hw.js"></script>
-  <link rel="modulepreload" crossorigin href="/firebase-service-BtA-uc5p.js">
-  <link rel="stylesheet" crossorigin href="/firebase-service-B0bYcONi.css">
+  <script type="module" crossorigin src="/perbandinganHarga-Bazt189K.js"></script>
+  <link rel="modulepreload" crossorigin href="/firebase-service-XH6v9WVw.js">
+  <link rel="stylesheet" crossorigin href="/style-DPfaC2LA.css">
 </head>
 <body class="bg-slate-100 dark:bg-[#121212] font-sans transition-colors duration-300">
     <div id="loading-indicator" class="fixed inset-0 bg-slate-100 dark:bg-[#121212] flex items-center justify-center z-50">
@@ -24,42 +18,13 @@
         </div>
     </div>
 
-    <div id="main-content" class="hidden">
-        <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
-                <div>
-                    <div class="flex items-center gap-3">
-                        <a href="javascript:history.back()" class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="Kembali">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        <div>
-                            <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Perbandingan Harga Material</h1>
-                            <p class="text-slate-500 dark:text-[#A1A1AA]">Bandingkan harga material dari berbagai supplier.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors" title="Ganti Tema">
-                        <i class="fas fa-moon text-lg"></i>
-                    </div>
-                </div>
-            </div>
+    <main id="main-content" class="max-w-screen-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8 hidden">
+        <!-- Content is rendered by perbandingan-harga.js -->
+    </main>
 
-            <!-- Search & Filter -->
-            <div class="mb-6">
-                <div class="relative">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="searchInput" onkeyup="filterData(this.value)" placeholder="Cari berdasarkan nama supplier atau material..." class="w-full pl-12 pr-4 py-3 bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md border border-slate-200 dark:border-[#2A2A2A] rounded-xl text-slate-800 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all">
-                </div>
-            </div>
-
-            <!-- Comparison Results -->
-            <div id="comparison-results" class="space-y-6">
-                <!-- Hasil perbandingan akan dirender di sini -->
-            </div>
-        </main>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </body>
 </html>

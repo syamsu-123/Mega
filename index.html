@@ -108,6 +108,8 @@
             <div class="w-full h-full object-cover opacity-40 bg-[url('src/assets/images/bg-hero.jpeg')] bg-center bg-cover bg-no-repeat" style="background-image: url('src/assets/images/bg-hero.jpeg');"></div>
             <!-- Overlay Gradien yang menutupi seluruh dimensi absolute parent-nya -->
             <div class="absolute inset-0 bg-gradient-to-b from-corporate-dark/90 via-corporate-dark/60 to-corporate-dark"></div>
+            <!-- Particle Animation Canvas -->
+            <canvas id="heroParticles" class="absolute inset-0 w-full h-full"></canvas>
         </div>
 
         <!-- Content Container (Dibatasi dengan max-w-7xl agar rapi di Desktop) -->
@@ -424,6 +426,13 @@ dimiliki.
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
                 <!-- Data galeri dari Firestore akan dimuat di sini oleh main.js -->
             </div>
+
+            <div class="text-center mt-10">
+                <button id="seeAllGalleryBtn" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-300" style="display:none;">
+                    Lihat Semua
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -627,7 +636,7 @@ dimiliki.
                     <ul class="space-y-2 text-gray-400">
                         <li><i class="fas fa-map-marker-alt text-corporate-bright mr-2"></i>Jl. Sarimadu Barat No.18, Sarijadi, Kec. Sukajadi, Kota Bandung, Jawa Barat 40164</li>
                         <li><i class="fas fa-envelope text-corporate-bright mr-2"></i>amegatamasolusindo@gmail.com</li>
-                        <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 21 1234 5678</li>
+                        <li><i class="fas fa-phone text-corporate-bright mr-2"></i>+62 . 22 . 087782982</li>
                     </ul>
                 </div>
             </div>
@@ -639,7 +648,7 @@ dimiliki.
                         <a href="privacy.html" class="hover:text-corporate-bright transition-colors">Privacy Policy</a>
                         <a href="terms.html" class="hover:text-corporate-bright transition-colors">Terms of Service</a>
                         <a href="sitemap.html" class="hover:text-corporate-bright transition-colors">Sitemap</a>
-                       <p class="text-gray-400">©Copyright By </p>
+                       <p class="text-gray-400">© Copyright by DymSy Labs</p>
                     </div>
                 </div>
             </div>

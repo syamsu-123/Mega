@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cash Flow Project | Megatama Solusindo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body, .sidebar, .page, .panel, .metrics article,
+    .search input, .filters select, .filters input,
+    .table-scroll table, .table-scroll th, .table-scroll td,
+    .topbar .role, .button.ghost, .icon-button,
+    #transactionDialog, #transactionDialog form,
+    .form-grid input, .form-grid select,
+    thead, dialog, dialog form {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+  </style>
+  <script type="module" crossorigin src="/cashflow/frontend/cashflow-QDkgSM0h.js"></script>
+  <link rel="modulepreload" crossorigin href="/firebase-service-XH6v9WVw.js">
+  <link rel="stylesheet" crossorigin href="/cashflow-BWXbwy6D.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="../../dashboard.html"><img src="/logo-APzS9lAT.png" alt="Megatama"><span>MEGATAMA<small>SOLUSINDO</small></span></a>
+    <nav>
+      <a href="../../dashboard.html"><i class="fa-solid fa-grid-2"></i>Dashboard</a>
+      <!-- <a href="../../dashboard.html#view-projects"><i class="fa-solid fa-diagram-project"></i>Monitoring Proyek</a>
+      <a href="../../monitoring-material.html" hidden><i class="fa-solid fa-boxes-stacked"></i>Monitoring Material</a>
+      <a href="../../monitoring-supplier.html"><i class="fa-solid fa-truck"></i>Monitoring Supplier</a> -->
+      <a class="active" href="cashflow.html"><i class="fa-solid fa-wallet"></i>Cash Flow Project</a>
+      <a href="cashflow.html#report"><i class="fa-solid fa-file-lines"></i>Laporan</a>
+      <!-- <a href="../../dashboard.html#view-users"><i class="fa-solid fa-users-gear"></i>User Management</a> -->
+    </nav>
+    <!-- <button class="logout" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i>Logout</button> -->
+  </aside>
+  <div class="overlay" id="overlay"></div>
+  <main class="page">
+    <header class="topbar"><button class="icon-button mobile-menu" id="mobileMenu" aria-label="Buka menu"><i class="fa-solid fa-bars"></i></button><div><p class="eyebrow">MONITORING KEUANGAN</p><h1>Cash Flow Project</h1></div><div class="top-actions"><span class="role" id="roleLabel">Memuat peran...</span><button class="icon-button" id="themeToggleCashflow" title="Toggle Tema"><i class="fa-solid fa-moon" id="themeIconCashflow"></i></button><button class="button ghost" id="templateBtn"><i class="fa-solid fa-file-arrow-down"></i><span>Template</span></button><button class="button" id="uploadBtn"><i class="fa-solid fa-file-import"></i><span>Upload Excel</span></button><button class="button primary staff-only" id="newBtn"><i class="fa-solid fa-plus"></i><span>Input SPB</span></button></div></header>
+    <section class="metrics" aria-label="Ringkasan cash flow">
+      <article><i class="fa-solid fa-arrow-trend-up metric-icon in"></i><span>Total Cash In</span><strong id="cashIn">Rp0</strong></article>
+      <article><i class="fa-solid fa-arrow-trend-down metric-icon out"></i><span>Total Cash Out</span><strong id="cashOut">Rp0</strong></article>
+      <article><i class="fa-solid fa-scale-balanced metric-icon balance"></i><span>Saldo Berjalan</span><strong id="balance">Rp0</strong></article>
+      <article><i class="fa-solid fa-triangle-exclamation metric-icon critical"></i><span>SPB Kritis</span><strong id="critical">0</strong></article>
+      <article><i class="fa-solid fa-clock metric-icon attention"></i><span>SPB Perhatian</span><strong id="attention">0</strong></article>
+      <article><i class="fa-solid fa-building metric-icon projects"></i><span>Proyek Aktif</span><strong id="projects">0</strong></article>
+    </section>
+    <section class="charts"><article class="panel wide"><div class="panel-head"><div><h2>Cash In vs Cash Out</h2><p>Perbandingan transaksi per bulan</p></div></div><div class="chart-wrap"><canvas id="monthlyChart"></canvas></div></article><article class="panel"><div class="panel-head"><div><h2>Saldo Berjalan</h2><p>Posisi kas kumulatif</p></div></div><div class="chart-wrap"><canvas id="balanceChart"></canvas></div></article><article class="panel wide" id="report"><div class="panel-head"><div><h2>Pengeluaran per Proyek</h2><p>Distribusi cash out proyek</p></div><button class="icon-button" id="pdfBtn" title="Export PDF"><i class="fa-solid fa-file-pdf"></i></button></div><div class="chart-wrap"><canvas id="projectChart"></canvas></div></article></section>
+    <section class="panel table-panel"><div class="panel-head table-heading"><div><h2>Monitoring SPB</h2><p id="tableSummary">Memuat transaksi...</p></div><div class="filters"><label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Cari SPB atau tagihan"></label><select id="projectFilter"><option value="">Semua proyek</option></select><select id="statusFilter"><option value="">Semua status</option><option>Kritis</option><option>Perhatian</option><option>Normal</option></select><input type="date" id="dateFilter" title="Filter tanggal"></div></div><div class="table-scroll"><table><thead><tr><th>Tanggal</th><th>Nomor SPB</th><th>Proyek</th><th>Detail Tagihan</th><th>Nilai</th><th>Status</th><th>Keterangan</th><th>Aksi</th></tr></thead><tbody id="transactionRows"></tbody></table></div><footer class="pagination"><button class="icon-button" id="prevPage" title="Halaman sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><span id="pageLabel">Halaman 1</span><button class="icon-button" id="nextPage" title="Halaman berikutnya"><i class="fa-solid fa-chevron-right"></i></button></footer></section>
+  </main>
+  <input id="excelFile" type="file" accept=".xlsx,.xls,.csv" hidden>
+  <dialog id="transactionDialog"><form method="dialog" id="transactionForm"><header><div><p class="eyebrow">DATA SPB</p><h2 id="formTitle">Input Transaksi</h2></div><button class="icon-button" value="cancel" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button></header><input type="hidden" id="transactionId"><div class="form-grid"><label>Tanggal<input id="date" type="date" required></label><label>Nomor SPB<input id="spbNumber" maxlength="100" required></label><label>Proyek<input id="project" maxlength="100" placeholder="Contoh: A 001" required></label><label>Detail Tagihan<input id="detail" maxlength="150" required></label><label>Nilai Tagihan<input id="amount" type="number" min="0" step="0.01" required></label><label>Jenis Transaksi<select id="type"><option value="OUT">Cash Out</option><option value="IN">Cash In</option></select></label><label>Status<select id="status"><option value="Normal">Normal</option><option value="Perhatian">Perhatian</option><option value="Kritis">Kritis</option></select></label><label>Keterangan<input id="notes" maxlength="255" required></label></div><footer><button class="button ghost" id="cancelBtn" value="cancel">Batal</button><button class="button primary staff-only" id="saveBtn" value="default">Simpan Transaksi</button></footer></form></dialog>
+  <dialog id="importDialog"><form method="dialog"><header><div><p class="eyebrow">VALIDASI UPLOAD</p><h2>Konfirmasi data Excel</h2></div><button class="icon-button" value="cancel"><i class="fa-solid fa-xmark"></i></button></header><p id="importMessage"></p><div class="import-preview table-scroll"><table><thead><tr><th>Tanggal</th><th>Nomor SPB</th><th>Proyek</th><th>Detail</th><th>Nilai</th><th>Hasil</th></tr></thead><tbody id="importRows"></tbody></table></div><footer><button class="button ghost" value="cancel">Batal</button><button class="button primary staff-only" id="confirmImport" value="default">Simpan Data Valid</button></footer></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</body></html>
+

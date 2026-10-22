@@ -1,48 +1,68 @@
-# 1. Create a new movie (accessible only to authenticated users)
-mutation CreateMovie($title: String!, $year: Int!, $summary: String, $genres: [String!], $runtime: Int) @auth(level: USER) {
-  movie_insert(data: {
-    title: $title,
-    year: $year,
-    createdAt_expr: "request.time",
-    summary: $summary,
-    genres: $genres,
-    runtime: $runtime
-  })
-}
+# Example queries for a simple movie app.
 
-# 2. Get all public lists (accessible to anyone)
-query GetAllPublicLists @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
-  lists(where: {isPublic: {eq: true}}) {
+# @auth() directives control who can call each operation.
+# Anyone should be able to list all movies, so the auth level is set to PUBLIC
+query ListMovies @auth(level: PUBLIC, insecureReason: "Anyone can list all movies.") {
+  movies {
     id
-    name
-    description
-    user {
-      displayName
+    title
+    genres
+  }
+}
+
+# List all users, only admins should be able to list all users, so we use NO_ACCESS
+query ListUsers @auth(level: NO_ACCESS) {
+  users {
+    id
+  }
+}
+
+# Logged in users can list all their reviews and movie titles associated with the review
+# Since the query uses the uid of the current authenticated user, we set auth level to USER
+query ListUserReviews @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    id
+    # <field>_on_<foreign_key_field> makes it easy to grab info from another table
+    # Here, we use it to grab all the reviews written by the user.
+    reviews: reviews_on_user {
+      id
+      rating
+      createdAt
+      reviewText
+      movie {
+        id
+        title
+      }
     }
   }
 }
 
-# 3. Get movies watched by the current user (accessible only to authenticated users)
-query MyWatchedMovies @auth(level: USER) {
-  watches(where: {userId: {eq_expr: "auth.uid"}}) {
-    watchDate
-    movie {
-      title
-      year
+# Get movie by id
+query GetMovieById($id: UUID!) @auth(level: PUBLIC, insecureReason: "Anyone can get a movie by id.") {
+  movie(id: $id) {
+    id
+    title
+    genres
+    reviews: reviews_on_movie {
+      reviewText
+      createdAt
+      rating
+      user {
+        id
+      }
     }
   }
 }
 
-# 4. Add a review to a movie (accessible only to authenticated users)
-mutation AddMovieReview($movieId: UUID!, $watchId: UUID!, $rating: Int!, $reviewText: String, $isPublic: Boolean) @auth(level: USER) {
-  review_insert(data: {
-    movieId: $movieId,
-    userId_expr: "auth.uid",
-    watchId: $watchId,
-    rating: $rating,
-    createdAt_expr: "request.time",
-    updatedAt_expr: "request.time",
-    reviewText: $reviewText,
-    isPublic: $isPublic
-  })
+# Search for movies, actors, and reviews
+query SearchMovie($titleInput: String, $genre: String) @auth(level: PUBLIC, insecureReason: "Anyone can search for movies.") {
+  movies(
+    where: {
+      _and: [{ genres: { containsAny: [$genre] } }, { title: { contains: $titleInput } }]
+    }
+  ) {
+    id
+    title
+    genres
+  }
 }

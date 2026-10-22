@@ -1,0 +1,34 @@
+# Example mutations for a simple movie app
+
+# Create a movie based on user input
+mutation CreateMovie($title: String!, $genres: [String!])
+@auth(level: USER_EMAIL_VERIFIED, insecureReason: "Any email verified users can create a new movie.") {
+  movie_insert(data: { title: $title, genres: $genres })
+}
+
+# Upsert (update or insert) a user's username based on their auth.uid
+mutation UpsertUser @auth(level: USER) {
+  # The "auth.uid" server value ensures that users can only register their own user.
+  user_upsert(data: { id_expr: "auth.uid" })
+}
+
+# Add a review for a movie
+mutation AddReview($movieId: UUID!, $rating: Int!, $reviewText: String!)
+@auth(level: USER) {
+  review_upsert(
+    data: {
+      userId_expr: "auth.uid"
+      movieId: $movieId
+      rating: $rating
+      reviewText: $reviewText
+      # reviewDate defaults to today in the schema. No need to set it manually.
+    }
+  )
+}
+
+# Logged in user can delete their review for a movie
+# The mutation now takes the review's own ID.
+# The backend must have a rule to ensure users can only delete their own reviews.
+mutation DeleteReview($id: UUID!) @auth(level: USER) {
+  review_delete(key: { id: $id })
+}
